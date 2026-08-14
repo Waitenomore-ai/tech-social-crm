@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#111216" />
+  <meta name="description" content="Tech Social CRM — plan, approve and publish social media content." />
+  <title>Tech Social CRM — Where Tech Meets Social</title>
+  <link rel="icon" href="tech-social-mark.png" type="image/png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="auth-gate" id="authGate">
+    <div class="auth-visual">
+      <div class="auth-grid"></div>
+      <img src="tech-social-mark.png" alt="" />
+      <div class="auth-brand"><p>TECH LAB WORKSPACE</p><h1>Plan. Collaborate.<br /><em>Publish.</em></h1><span>A secure home for your social content, campaigns and publishing schedule.</span></div>
+      <div class="auth-security"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg><span><strong>Protected team access</strong><small>Supabase authentication and row-level database security</small></span></div>
+    </div>
+    <section class="auth-panel" id="loginPanel">
+      <div class="auth-logo"><img src="tech-social-mark.png" alt="Tech Social" /><span><strong><em>TECH</em> SOCIAL</strong><small>CONTENT CRM</small></span></div>
+      <div class="auth-copy"><p>SECURE WORKSPACE</p><h2 id="authTitle">Welcome back</h2><span id="authSubtitle">Sign in with your approved team email.</span></div>
+      <div class="auth-tabs" id="authTabs"><button class="active" type="button" data-auth-mode="signin">Sign in</button><button type="button" data-auth-mode="signup">Create account</button></div>
+      <form id="authForm">
+        <label><span>EMAIL ADDRESS</span><input id="authEmail" type="email" autocomplete="email" required placeholder="name@company.co.uk" /></label>
+        <label><span>PASSWORD</span><input id="authPassword" type="password" autocomplete="current-password" required minlength="8" placeholder="At least 8 characters" /></label>
+        <button class="button button-primary auth-submit" id="authSubmitButton" type="submit">Sign in securely</button>
+      </form>
+      <button class="forgot-button" id="forgotPasswordButton" type="button">Forgot your password?</button>
+      <p class="auth-message" id="authMessage" role="alert"></p>
+      <p class="auth-terms">Access is limited to email addresses approved by the Tech Social administrator.</p>
+    </section>
+    <section class="auth-panel setup-panel" id="setupPanel" hidden>
+      <div class="auth-logo"><img src="tech-social-mark.png" alt="Tech Social" /><span><strong><em>TECH</em> SOCIAL</strong><small>SETUP REQUIRED</small></span></div>
+      <div class="setup-icon"><svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></div>
+      <div class="auth-copy"><p>ONE-TIME CONFIGURATION</p><h2>Connect Supabase</h2><span>This build is ready for secure cloud data. Complete the project setup, then add the public Project URL and anon key to <code>config.js</code>.</span></div>
+      <ol class="setup-steps"><li><b>1</b><span>Create a Supabase project</span></li><li><b>2</b><span>Run <code>supabase-setup.sql</code></span></li><li><b>3</b><span>Add approved staff emails</span></li><li><b>4</b><span>Update <code>config.js</code></span></li></ol>
+      <button class="button button-outline setup-recheck" id="recheckConfigButton" type="button">I’ve updated the configuration</button>
+    </section>
+  </div>
+
+  <div class="cloud-loading" id="cloudLoading" hidden><img src="tech-social-mark.png" alt="" /><strong>Opening Tech Social CRM</strong><span>Loading your shared workspace…</span></div>
+
+  <div class="mobile-header">
+    <button class="mobile-menu" id="mobileMenuButton" type="button" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="mobile-logo"><img src="tech-social-mark.png" alt="" /><strong>TECH <span>SOCIAL</span></strong></div>
+    <button class="mobile-add" type="button" data-new-post aria-label="New post">+</button>
+  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" data-view-link="dashboard">
+      <img src="tech-social-mark.png" alt="Tech Lab circuit logo" />
+      <div><strong><em>TECH</em> SOCIAL</strong><small>CONTENT CRM</small></div>
+    </a>
+
+    <div class="workspace-chip"><span>TL</span><div><strong>Tech Lab</strong><small>Social workspace</small></div><i></i></div>
+
+    <p class="nav-label">WORKSPACE</p>
+    <nav class="side-nav" aria-label="Main navigation">
+      <button class="nav-item active" type="button" data-view-link="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></button>
+      <button class="nav-item" type="button" data-view-link="calendar"><svg viewBox="0 0 24 24"><path d="M4 5h16v16H4Z"/><path d="M4 9h16M8 2v5M16 2v5"/></svg><span>Content calendar</span><b id="calendarNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="posts"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 12h8M8 16h6M15 3v4h4"/></svg><span>All posts</span><b id="postsNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="campaigns"><svg viewBox="0 0 24 24"><path d="M4 18V6l11-3v18L4 18Z"/><path d="m15 8 5 2v8l-5 3M8 8v7"/></svg><span>Campaigns</span></button>
+    </nav>
+
+    <p class="nav-label second">PUBLISHING</p>
+    <nav class="side-nav">
+      <button class="nav-item" type="button" data-view-link="queue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Publishing queue</span><b class="red-count" id="queueNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="accounts"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="7" r="2.5"/><path d="M2.5 20v-2a5.5 5.5 0 0 1 11 0v2M14 13a4.5 4.5 0 0 1 7.5 3.3V18"/></svg><span>Social accounts</span><b id="accountsNavCount">0</b></button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="privacy-note"><span><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="3"/></svg></span><div><strong>Secure team workspace</strong><small>Shared cloud database</small></div></div>
+      <div class="data-actions"><button id="exportButton" type="button">Export</button><button id="importButton" type="button">Import</button><input id="importInput" type="file" accept="application/json" hidden /></div>
+    </div>
+  </aside>
+  <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+  <main class="main-shell">
+    <header class="topbar">
+      <div class="page-identity"><p id="pageKicker">TECH SOCIAL / OVERVIEW</p><h1 id="pageTitle">Content dashboard</h1></div>
+      <div class="top-actions">
+        <label class="global-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="globalSearch" type="search" placeholder="Search posts…" /><kbd>⌘ K</kbd></label>
+        <button class="button button-primary" type="button" data-new-post><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New post</button>
+        <div class="user-menu-wrap"><button class="user-chip" id="userMenuButton" type="button"><span id="userInitials">TL</span><span><strong id="userDisplayName">Team member</strong><small id="userEmailLabel">Signed in</small></span><svg viewBox="0 0 24 24"><path d="m7 9 5 5 5-5"/></svg></button><div class="user-dropdown" id="userDropdown" hidden><div><strong id="dropdownEmail">Team member</strong><small>Approved Tech Social user</small></div><button id="logoutButton" type="button"><svg viewBox="0 0 24 24"><path d="M10 4H4v16h6M14 8l4 4-4 4M8 12h10"/></svg>Sign out</button></div></div>
+      </div>
+    </header>
+
+    <section class="view active" id="dashboardView" data-view="dashboard">
+      <div class="welcome-row"><div><p id="todayLabel">FRIDAY, 14 AUGUST</p><h2 id="greetingLabel">Good evening, Tech Lab.</h2><span>Here’s what is happening across your social content.</span></div><button class="workspace-status" type="button" data-view-link="accounts"><i></i><span><strong id="workspaceStatusText">0 of 6 accounts ready</strong><small>Account status</small></span><b>→</b></button></div>
+
+      <section class="dashboard-hero">
+        <div class="hero-grid"></div><img src="tech-social-mark.png" alt="" />
+        <div class="hero-copy"><p>CONTENT COMMAND CENTRE</p><h2>Plan with purpose.<br /><em>Publish with confidence.</em></h2><span>Keep every idea, campaign and social channel organised in one private workspace.</span><button class="button button-light" type="button" data-new-post>Create your next post <b>→</b></button></div>
+        <div class="hero-next"><small>NEXT TO PUBLISH</small><strong id="heroNextTitle">Nothing scheduled</strong><span id="heroNextTime">Create a post to start your queue</span></div>
+      </section>
+
+      <div class="stats-grid">
+        <article><span class="stat-icon red"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 12h8M8 16h6"/></svg></span><div><small>ALL CONTENT</small><strong id="totalPostsStat">0</strong><p>Posts in your CRM</p></div><button data-view-link="posts">→</button></article>
+        <article><span class="stat-icon amber"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><small>DUE SOON</small><strong id="duePostsStat">0</strong><p>Ready within 48 hours</p></div><button data-view-link="queue">→</button></article>
+        <article><span class="stat-icon dark"><svg viewBox="0 0 24 24"><path d="M4 5h16v16H4Z"/><path d="M4 9h16M8 2v5M16 2v5"/></svg></span><div><small>SCHEDULED</small><strong id="scheduledPostsStat">0</strong><p>Future posts planned</p></div><button data-view-link="calendar">→</button></article>
+        <article><span class="stat-icon green"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg></span><div><small>PUBLISHED</small><strong id="publishedPostsStat">0</strong><p>Marked complete</p></div><button data-view-link="posts">→</button></article>
+      </div>
+
+      <div class="dashboard-grid">
+        <section class="panel upcoming-panel">
+          <div class="panel-heading"><div><p>UPCOMING CONTENT</p><h3>Publishing schedule</h3></div><button class="text-button" type="button" data-view-link="calendar">View calendar</button></div>
+          <div class="upcoming-list" id="upcomingList"></div>
+        </section>
+        <section class="panel accounts-panel">
+          <div class="panel-heading"><div><p>YOUR NETWORK</p><h3>Account readiness</h3></div><button class="text-button" type="button" data-view-link="accounts">Manage</button></div>
+          <div class="mini-accounts" id="miniAccounts"></div>
+          <div class="account-legend"><span><i class="ready"></i> Ready</span><span><i></i> Setup needed</span></div>
+        </section>
+      </div>
+
+      <section class="panel recent-panel">
+        <div class="panel-heading"><div><p>RECENT ACTIVITY</p><h3>Latest posts</h3></div><button class="text-button" type="button" data-view-link="posts">View all posts</button></div>
+        <div class="table-wrap"><table><thead><tr><th>POST</th><th>CHANNELS</th><th>CAMPAIGN</th><th>DATE</th><th>STATUS</th><th></th></tr></thead><tbody id="recentPostsBody"></tbody></table></div>
+      </section>
+    </section>
+
+    <section class="view" id="calendarView" data-view="calendar" hidden>
+      <div class="view-heading"><div><p>CONTENT PLANNER</p><h2>Publishing calendar</h2><span>See every planned post and choose the next publishing day.</span></div><button class="button button-primary" type="button" data-new-post><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Schedule post</button></div>
+      <section class="calendar-shell panel">
+        <div class="calendar-toolbar"><button class="calendar-arrow" id="previousMonthButton" type="button">←</button><h3 id="calendarMonthTitle">August 2026</h3><button class="calendar-arrow" id="nextMonthButton" type="button">→</button><button class="today-button" id="todayButton" type="button">Today</button><div class="calendar-legend"><span><i class="draft"></i>Draft</span><span><i class="scheduled"></i>Scheduled</span><span><i class="ready"></i>Ready</span><span><i class="published"></i>Published</span></div></div>
+        <div class="calendar-weekdays"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </section>
+    </section>
+
+    <section class="view" id="postsView" data-view="posts" hidden>
+      <div class="view-heading"><div><p>CONTENT LIBRARY</p><h2>All posts</h2><span>Manage every draft, scheduled post and published update.</span></div><button class="button button-primary" type="button" data-new-post><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New post</button></div>
+      <section class="panel library-panel">
+        <div class="filter-bar"><label class="list-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="postSearch" type="search" placeholder="Search captions, campaigns or hashtags…" /></label><select id="statusFilter"><option value="all">All statuses</option><option value="draft">Draft</option><option value="approval">Awaiting approval</option><option value="scheduled">Scheduled</option><option value="ready">Ready to publish</option><option value="published">Published</option></select><select id="platformFilter"><option value="all">All channels</option><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="facebook">Facebook</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option></select><button id="clearFiltersButton" type="button">Clear</button></div>
+        <div class="table-wrap"><table class="posts-table"><thead><tr><th>POST</th><th>CHANNELS</th><th>CAMPAIGN</th><th>PUBLISHING TIME</th><th>STATUS</th><th></th></tr></thead><tbody id="allPostsBody"></tbody></table></div>
+        <div class="empty-state" id="postsEmpty" hidden><span><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 12h8M8 16h6"/></svg></span><h3>No posts found</h3><p>Change your filters or create a new social post.</p><button class="button button-primary" type="button" data-new-post>Create post</button></div>
+      </section>
+    </section>
+
+    <section class="view" id="campaignsView" data-view="campaigns" hidden>
+      <div class="view-heading"><div><p>CONTENT GROUPS</p><h2>Campaigns</h2><span>Organise related posts around promotions, services and announcements.</span></div><button class="button button-primary" id="newCampaignButton" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New campaign</button></div>
+      <div class="campaign-grid" id="campaignGrid"></div>
+    </section>
+
+    <section class="view" id="queueView" data-view="queue" hidden>
+      <div class="view-heading"><div><p>PUBLISHING DESK</p><h2>Publishing queue</h2><span>Posts are ordered by publishing time. Open each network when a post is due.</span></div><button class="button button-primary" type="button" data-new-post><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add to queue</button></div>
+      <div class="queue-list" id="queueList"></div>
+      <div class="empty-state standalone" id="queueEmpty" hidden><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3>Your queue is clear</h3><p>Schedule a post and it will appear here.</p><button class="button button-primary" type="button" data-new-post>Schedule post</button></div>
+    </section>
+
+    <section class="view" id="accountsView" data-view="accounts" hidden>
+      <div class="view-heading"><div><p>OFFICIAL SIGN-IN</p><h2>Social accounts</h2><span>Open each network’s official website and let your browser remember the session.</span></div><div class="security-badge"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>No passwords stored</div></div>
+      <div class="accounts-grid" id="accountsGrid"></div>
+      <div class="account-help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>How account connections work</strong><p>“Open sign-in” takes you to the real social-network website. Your browser manages the login cookie. “Mark ready” is a shared team reminder; it does not give the CRM access to your social account.</p></div></div>
+    </section>
+
+    <footer><span>© 2026 Tech Social CRM. A Tech Lab workspace.</span><span><i></i> Supabase secured & synchronised</span></footer>
+  </main>
+
+  <div class="modal-backdrop" id="postModal" hidden>
+    <section class="modal post-modal" role="dialog" aria-modal="true" aria-labelledby="postModalTitle">
+      <div class="modal-header"><div><p>CONTENT RECORD</p><h2 id="postModalTitle">Create social post</h2></div><button class="close-button" type="button" data-close-modal aria-label="Close">×</button></div>
+      <form id="postForm">
+        <input id="postId" type="hidden" />
+        <div class="form-grid">
+          <div class="form-main">
+            <label class="field-label" for="postCaption">CAPTION <span>REQUIRED</span></label>
+            <div class="caption-box"><textarea id="postCaption" rows="8" required placeholder="What would Tech Lab like to share?"></textarea><div><span>Saved as a reusable content record</span><strong id="postCaptionCount">0 characters</strong></div></div>
+            <div class="two-fields"><label><span>LINK</span><input id="postLink" type="url" placeholder="https://techfixlab.co.uk/…" /></label><label><span>HASHTAGS</span><input id="postHashtags" type="text" placeholder="TechLab Worthing Repair" /></label></div>
+            <label class="field-label" for="postNotes">INTERNAL NOTES</label><textarea class="notes-input" id="postNotes" rows="3" placeholder="Notes for your team — these are never copied into the post."></textarea>
+          </div>
+          <aside class="form-side">
+            <label class="field-label">CHANNELS <span>SELECT AT LEAST ONE</span></label><div class="platform-picker" id="platformPicker"></div>
+            <div class="two-fields compact"><label><span>DATE</span><input id="postDate" type="date" required /></label><label><span>TIME</span><input id="postTime" type="time" value="09:00" required /></label></div>
+            <label><span>CAMPAIGN</span><select id="postCampaign"></select></label>
+            <label><span>WORKFLOW STATUS</span><select id="postStatus"><option value="draft">Draft</option><option value="approval">Awaiting approval</option><option value="scheduled">Scheduled</option><option value="ready">Ready to publish</option><option value="published">Published</option></select></label>
+            <label class="media-field"><span>MEDIA REFERENCE</span><input id="postMedia" type="file" accept="image/*,video/*" /><div id="mediaFieldText"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg><strong>Choose a file</strong><small>Filename saved; attach again when publishing</small></div></label>
+          </aside>
+        </div>
+        <p class="form-error" id="postFormError" role="alert"></p>
+        <div class="modal-footer"><button class="button danger-button" id="deletePostButton" type="button" hidden>Delete post</button><span></span><button class="button button-outline" type="button" data-close-modal>Cancel</button><button class="button button-primary" type="submit">Save post</button></div>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="campaignModal" hidden>
+    <section class="modal small-modal" role="dialog" aria-modal="true" aria-labelledby="campaignModalTitle"><div class="modal-header"><div><p>CONTENT GROUP</p><h2 id="campaignModalTitle">New campaign</h2></div><button class="close-button" type="button" data-close-campaign aria-label="Close">×</button></div><form id="campaignForm"><input id="campaignId" type="hidden" /><label><span>CAMPAIGN NAME</span><input id="campaignName" required placeholder="e.g. Back to School Repairs" /></label><label><span>DESCRIPTION</span><textarea id="campaignDescription" rows="3" placeholder="What is this campaign for?"></textarea></label><label><span>COLOUR</span><div class="colour-picker" id="colourPicker"></div></label><div class="modal-footer"><button class="button danger-button" id="deleteCampaignButton" type="button" hidden>Delete</button><span></span><button class="button button-outline" type="button" data-close-campaign>Cancel</button><button class="button button-primary" type="submit">Save campaign</button></div></form></section>
+  </div>
+
+  <div class="modal-backdrop" id="publishModal" hidden>
+    <section class="modal publish-modal" role="dialog" aria-modal="true" aria-labelledby="publishModalTitle"><div class="modal-header"><div><p>PUBLISHING SESSION</p><h2 id="publishModalTitle">Open posting pages</h2></div><button class="close-button" type="button" data-close-publish aria-label="Close">×</button></div><div class="publish-preview"><small>CAPTION TO COPY</small><p id="publishCaptionPreview"></p></div><div class="publish-actions"><button class="button button-primary" id="openAllButton" type="button">Copy caption & open all pages</button><button class="button button-outline" id="copyOnlyButton" type="button">Copy caption only</button></div><div class="publish-results" id="publishResults"></div><p class="publish-note"><strong>Final step:</strong> review the account and content on each official network, attach the media file if required, and press Publish there.</p><div class="modal-footer"><button class="button button-outline" type="button" data-close-publish>Close</button><button class="button complete-button" id="markPublishedButton" type="button">Mark as published</button></div></section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <script src="vendor/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

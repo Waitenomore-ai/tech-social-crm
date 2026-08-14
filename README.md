@@ -1,83 +1,49 @@
-# Tech Social
+# Tech Social CRM
 
-> **Where Tech Meets Social**
+**Where Tech Meets Social**
 
-Tech Social is Tech Lab's private, browser-based social publishing dashboard. Prepare one post, select destinations, and open the official posting pages for Instagram, TikTok, Facebook, X, LinkedIn and YouTube.
+A secure social-media content CRM for Tech Lab.
 
-![Tech Social brand mark](site/tech-social-mark.png)
+## Security and team access
 
-## Project structure
+- Supabase email/password authentication
+- Approved-email allowlist
+- PostgreSQL Row Level Security on every shared table
+- Shared cloud records across approved team members and devices
+- Live updates when another team member changes content
+- Password reset flow
+- No service-role key in the browser
+- Social-network passwords are never collected
 
-```text
-site/                   Deploy-ready website files
-.github/workflows/      Automatic GitHub Pages deployment
-wrangler.toml           Cloudflare Workers static-assets configuration
-package.json            Local and Cloudflare deployment commands
-```
+Start with **`SUPABASE_SETUP.md`**. Run **`supabase-setup.sql`** in the Supabase SQL Editor, then place the public Project URL and anon/publishable key in **`config.js`**.
 
-## Deploy with Cloudflare Workers Builds
+## CRM features
 
-This repository is configured for the default Cloudflare deploy command:
+- Dashboard with content, due, scheduled and published totals
+- Monthly publishing calendar
+- Social post records with captions, links, hashtags and internal notes
+- Workflow statuses: Draft, Awaiting approval, Scheduled, Ready and Published
+- Campaign management
+- Publishing queue ordered by date and time
+- Instagram, TikTok, Facebook, X, LinkedIn and YouTube destinations
+- Official sign-in links and shared account-ready reminders
+- One publishing action copies the caption and opens selected official composers
+- Cloud backup export and import
+- Responsive mobile layout
+- Installable PWA with a locally bundled Supabase browser client
 
-```bash
-npx wrangler deploy
-```
+## Important social-network limitation
 
-The Wrangler configuration publishes `./site` as static assets. No Worker entry-point or build command is required. The new directory name also ensures that any obsolete `public/_redirects` file left in an older repository is ignored.
+This no-developer-account version cannot publish automatically in the background. It opens each social network's official composer for final confirmation. Social passwords are never collected or stored.
 
-In Cloudflare Builds use:
-
-- **Build command:** Leave blank
-- **Deploy command:** `npx wrangler deploy`
-- **Root directory:** `/`
-
-Every push to the connected production branch will deploy automatically.
-
-## Deploy with Cloudflare Pages from Git
-
-If using the older Pages Git workflow instead:
-
-- **Framework preset:** None
-- **Build command:** Leave blank
-- **Build output directory:** `site`
-
-## Deploy with GitHub Pages
-
-1. Upload the repository contents to the `main` branch.
-2. Open **Settings → Pages**.
-3. Choose **GitHub Actions** under Build and deployment.
-4. Run the included “Deploy Tech Social to GitHub Pages” workflow.
+Media filenames can be kept as a reference, but browsers do not allow one website to insert the local file into another website. Select the same media again on the official publishing page.
 
 ## Run locally
 
 ```bash
-npm install
-npm run dev
+python3 -m http.server 4180 --bind 0.0.0.0
 ```
 
-Or serve the static directory directly:
+Then open `http://localhost:4180`.
 
-```bash
-python3 -m http.server 4173 --directory site
-```
-
-## Features
-
-- Tech Lab red, charcoal and circuit-inspired visual identity
-- Responsive dashboard and post composer
-- Locally saved draft, hashtags, link and destinations
-- Publishing-day calendar with a time picker and downloadable `.ics` reminder
-- Dashboard status for planned and due posts
-- Official social-network sign-in and publishing pages
-- One action opens all selected posting pages
-- Caption automatically copied for pasting
-- Installable Progressive Web App
-- No social passwords collected or stored
-
-## Important limitation
-
-Without approved API/OAuth developer access, social networks require the final post to be reviewed and confirmed on their own website. The publishing calendar saves a plan and can download a reminder; it cannot post in the background while the app is closed. Account “Ready” indicators are local reminders only.
-
-## Privacy
-
-Draft content, selected destinations and account-ready reminders are stored only in the current browser's local storage. Login cookies and saved passwords remain under the control of the browser and each social network.
+Until `config.js` contains valid Supabase public credentials, the app intentionally displays the one-time setup screen instead of an insecure local workspace.

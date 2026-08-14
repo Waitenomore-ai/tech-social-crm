@@ -1,0 +1,10 @@
+{
+  "name": "Tech Social CRM — Where Tech Meets Social",
+  "short_name": "Tech Social CRM",
+  "description": "Plan, approve and publish Tech Lab social media content.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f4f2",
+  "theme_color": "#111216",
+  "icons": [{ "src": "tech-social-mark.png", "sizes": "256x256", "type": "image/png", "purpose": "any maskable" }]
+}
