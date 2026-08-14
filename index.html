@@ -8,7 +8,7 @@
   <title>Tech Social CRM — Where Tech Meets Social</title>
   <link rel="icon" href="tech-social-mark.png" type="image/png" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <div class="auth-gate" id="authGate">
@@ -19,7 +19,7 @@
       <div class="auth-security"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg><span><strong>Protected team access</strong><small>Supabase authentication and row-level database security</small></span></div>
     </div>
     <section class="auth-panel" id="loginPanel">
-      <div class="auth-logo"><img src="tech-social-mark.png" alt="Tech Social" /><span><strong><em>TECH</em> SOCIAL</strong><small>CONTENT CRM</small></span></div>
+      <div class="auth-logo"><img src="tech-social-mark.png" alt="Tech Social" /><span><strong><em>TECH</em> SOCIAL</strong></span></div>
       <div class="auth-copy"><p>SECURE WORKSPACE</p><h2 id="authTitle">Welcome back</h2><span id="authSubtitle">Sign in with your approved team email.</span></div>
       <div class="auth-tabs" id="authTabs"><button class="active" type="button" data-auth-mode="signin">Sign in</button><button type="button" data-auth-mode="signup">Create account</button></div>
       <form id="authForm">
@@ -51,7 +51,7 @@
   <aside class="sidebar" id="sidebar">
     <a class="brand" href="#" data-view-link="dashboard">
       <img src="tech-social-mark.png" alt="Tech Lab circuit logo" />
-      <div><strong><em>TECH</em> SOCIAL</strong><small>CONTENT CRM</small></div>
+      <div><strong><em>TECH</em> SOCIAL</strong></div>
     </a>
 
     <div class="workspace-chip"><span>TL</span><div><strong>Tech Lab</strong><small>Social workspace</small></div><i></i></div>
@@ -61,6 +61,7 @@
       <button class="nav-item active" type="button" data-view-link="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></button>
       <button class="nav-item" type="button" data-view-link="calendar"><svg viewBox="0 0 24 24"><path d="M4 5h16v16H4Z"/><path d="M4 9h16M8 2v5M16 2v5"/></svg><span>Content calendar</span><b id="calendarNavCount">0</b></button>
       <button class="nav-item" type="button" data-view-link="posts"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 12h8M8 16h6M15 3v4h4"/></svg><span>All posts</span><b id="postsNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="media"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg><span>Media library</span><b id="mediaNavCount">0</b></button>
       <button class="nav-item" type="button" data-view-link="campaigns"><svg viewBox="0 0 24 24"><path d="M4 18V6l11-3v18L4 18Z"/><path d="m15 8 5 2v8l-5 3M8 8v7"/></svg><span>Campaigns</span></button>
     </nav>
 
@@ -139,6 +140,20 @@
       </section>
     </section>
 
+    <section class="view" id="mediaView" data-view="media" hidden>
+      <div class="view-heading"><div><p>SHARED ASSET FOLDER</p><h2>Media library</h2><span>Upload optimised photos and short videos once, then reuse them across posts.</span></div><button class="button button-primary" type="button" data-upload-media><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>Upload media</button></div>
+      <div class="media-stats">
+        <article><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg></span><div><small>FILES STORED</small><strong id="mediaCountStat">0</strong></div></article>
+        <article><span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4Z"/><path d="m10 9 5 3-5 3Z"/></svg></span><div><small>TOTAL STORAGE</small><strong id="mediaStorageStat">0 MB</strong></div></article>
+        <article><span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg></span><div><small>SPACE SAVED</small><strong id="mediaSavedStat">0 MB</strong></div></article>
+      </div>
+      <section class="panel media-panel">
+        <div class="filter-bar"><label class="list-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="mediaSearch" type="search" placeholder="Search media files…" /></label><select id="mediaTypeFilter"><option value="all">All media</option><option value="image">Images</option><option value="video">Videos</option></select></div>
+        <div class="media-grid" id="mediaGrid"></div>
+        <div class="empty-state" id="mediaEmpty" hidden><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg></span><h3>No media uploaded</h3><p>Upload an image or short video to begin your shared library.</p><button class="button button-primary" type="button" data-upload-media>Upload media</button></div>
+      </section>
+    </section>
+
     <section class="view" id="campaignsView" data-view="campaigns" hidden>
       <div class="view-heading"><div><p>CONTENT GROUPS</p><h2>Campaigns</h2><span>Organise related posts around promotions, services and announcements.</span></div><button class="button button-primary" id="newCampaignButton" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New campaign</button></div>
       <div class="campaign-grid" id="campaignGrid"></div>
@@ -151,9 +166,9 @@
     </section>
 
     <section class="view" id="accountsView" data-view="accounts" hidden>
-      <div class="view-heading"><div><p>OFFICIAL SIGN-IN</p><h2>Social accounts</h2><span>Open each network’s official website and let your browser remember the session.</span></div><div class="security-badge"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>No passwords stored</div></div>
+      <div class="view-heading"><div><p>OFFICIAL SIGN-IN</p><h2>Social accounts</h2><span>Sign in once on this browser, then reuse the network’s saved session when publishing.</span></div><div class="security-badge"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>No passwords stored</div></div>
       <div class="accounts-grid" id="accountsGrid"></div>
-      <div class="account-help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>How account connections work</strong><p>“Open sign-in” takes you to the real social-network website. Your browser manages the login cookie. “Mark ready” is a shared team reminder; it does not give the CRM access to your social account.</p></div></div>
+      <div class="account-help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>How account connections work</strong><p>“Sign in once” opens the real social-network website. Complete the login there and allow that network to remember this browser, then return and select “Mark ready”. Future publishing buttons open the account directly and reuse its browser cookie. Do not use private browsing or automatically clear cookies. Tech Social never sees or stores the password.</p></div></div>
     </section>
 
     <footer><span>© 2026 Tech Social CRM. A Tech Lab workspace.</span><span><i></i> Supabase secured & synchronised</span></footer>
@@ -168,7 +183,7 @@
           <div class="form-main">
             <label class="field-label" for="postCaption">CAPTION <span>REQUIRED</span></label>
             <div class="caption-box"><textarea id="postCaption" rows="8" required placeholder="What would Tech Lab like to share?"></textarea><div><span>Saved as a reusable content record</span><strong id="postCaptionCount">0 characters</strong></div></div>
-            <div class="two-fields"><label><span>LINK</span><input id="postLink" type="url" placeholder="https://techfixlab.co.uk/…" /></label><label><span>HASHTAGS</span><input id="postHashtags" type="text" placeholder="TechLab Worthing Repair" /></label></div>
+            <div class="two-fields"><div class="fixed-link-field"><span>WEBSITE LINK</span><div class="fixed-link-value"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="3"/></svg><strong>www.techfixlab.co.uk</strong><small>Added automatically</small></div><input id="postLink" type="hidden" value="https://www.techfixlab.co.uk" /></div><label><span>HASHTAGS</span><input id="postHashtags" type="text" placeholder="TechLab Worthing Repair" /></label></div>
             <label class="field-label" for="postNotes">INTERNAL NOTES</label><textarea class="notes-input" id="postNotes" rows="3" placeholder="Notes for your team — these are never copied into the post."></textarea>
           </div>
           <aside class="form-side">
@@ -176,7 +191,7 @@
             <div class="two-fields compact"><label><span>DATE</span><input id="postDate" type="date" required /></label><label><span>TIME</span><input id="postTime" type="time" value="09:00" required /></label></div>
             <label><span>CAMPAIGN</span><select id="postCampaign"></select></label>
             <label><span>WORKFLOW STATUS</span><select id="postStatus"><option value="draft">Draft</option><option value="approval">Awaiting approval</option><option value="scheduled">Scheduled</option><option value="ready">Ready to publish</option><option value="published">Published</option></select></label>
-            <label class="media-field"><span>MEDIA REFERENCE</span><input id="postMedia" type="file" accept="image/*,video/*" /><div id="mediaFieldText"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg><strong>Choose a file</strong><small>Filename saved; attach again when publishing</small></div></label>
+            <div class="media-library-field"><span>MEDIA FROM LIBRARY</span><select id="postMediaSelect"><option value="">No media selected</option></select><div class="selected-media-info" id="selectedMediaInfo"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg><div><strong>No media selected</strong><small>Choose an optimised library file</small></div></div><button class="inline-upload-button" id="openMediaUploadButton" type="button"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>Upload new media</button></div>
           </aside>
         </div>
         <p class="form-error" id="postFormError" role="alert"></p>
@@ -189,13 +204,24 @@
     <section class="modal small-modal" role="dialog" aria-modal="true" aria-labelledby="campaignModalTitle"><div class="modal-header"><div><p>CONTENT GROUP</p><h2 id="campaignModalTitle">New campaign</h2></div><button class="close-button" type="button" data-close-campaign aria-label="Close">×</button></div><form id="campaignForm"><input id="campaignId" type="hidden" /><label><span>CAMPAIGN NAME</span><input id="campaignName" required placeholder="e.g. Back to School Repairs" /></label><label><span>DESCRIPTION</span><textarea id="campaignDescription" rows="3" placeholder="What is this campaign for?"></textarea></label><label><span>COLOUR</span><div class="colour-picker" id="colourPicker"></div></label><div class="modal-footer"><button class="button danger-button" id="deleteCampaignButton" type="button" hidden>Delete</button><span></span><button class="button button-outline" type="button" data-close-campaign>Cancel</button><button class="button button-primary" type="submit">Save campaign</button></div></form></section>
   </div>
 
+  <div class="modal-backdrop" id="mediaUploadModal" hidden>
+    <section class="modal media-upload-modal" role="dialog" aria-modal="true" aria-labelledby="mediaUploadTitle">
+      <div class="modal-header"><div><p>OPTIMISED STORAGE</p><h2 id="mediaUploadTitle">Upload media</h2></div><button class="close-button" type="button" data-close-media-upload aria-label="Close">×</button></div>
+      <div class="media-drop-zone" id="mediaDropZone"><input id="mediaUploadInput" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" multiple /><span><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></span><div><strong>Choose files or drop them here</strong><small>Images: JPG, PNG or WebP · Videos: MP4, WebM or MOV</small></div></div>
+      <div class="optimisation-list"><div><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg><span><strong>Images compressed automatically</strong><small>Maximum 1600px, converted to efficient WebP at 78% quality.</small></span></div><div><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg><span><strong>Duplicate protection</strong><small>Matching optimised files reuse one stored object instead of uploading twice.</small></span></div><div><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><circle cx="12" cy="12" r="9"/></svg><span><strong>Video limit: 50 MB each</strong><small>Use short H.264 MP4 clips for the smallest practical video files.</small></span></div></div>
+      <div class="upload-queue" id="mediaUploadQueue"></div>
+      <p class="form-error" id="mediaUploadError" role="alert"></p>
+      <div class="modal-footer"><span></span><button class="button button-outline" type="button" data-close-media-upload>Close</button><button class="button button-primary" id="startMediaUploadButton" type="button" disabled>Optimise & upload</button></div>
+    </section>
+  </div>
+
   <div class="modal-backdrop" id="publishModal" hidden>
-    <section class="modal publish-modal" role="dialog" aria-modal="true" aria-labelledby="publishModalTitle"><div class="modal-header"><div><p>PUBLISHING SESSION</p><h2 id="publishModalTitle">Open posting pages</h2></div><button class="close-button" type="button" data-close-publish aria-label="Close">×</button></div><div class="publish-preview"><small>CAPTION TO COPY</small><p id="publishCaptionPreview"></p></div><div class="publish-actions"><button class="button button-primary" id="openAllButton" type="button">Copy caption & open all pages</button><button class="button button-outline" id="copyOnlyButton" type="button">Copy caption only</button></div><div class="publish-results" id="publishResults"></div><p class="publish-note"><strong>Final step:</strong> review the account and content on each official network, attach the media file if required, and press Publish there.</p><div class="modal-footer"><button class="button button-outline" type="button" data-close-publish>Close</button><button class="button complete-button" id="markPublishedButton" type="button">Mark as published</button></div></section>
+    <section class="modal publish-modal" role="dialog" aria-modal="true" aria-labelledby="publishModalTitle"><div class="modal-header"><div><p>PUBLISHING SESSION</p><h2 id="publishModalTitle">Open posting pages</h2></div><button class="close-button" type="button" data-close-publish aria-label="Close">×</button></div><div class="publish-preview"><small>CAPTION TO COPY</small><p id="publishCaptionPreview"></p></div><div class="publish-media-reference" id="publishMediaReference" hidden><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg></span><div><strong id="publishMediaName">Selected media</strong><small>Open or download this file, then attach it on each network.</small></div><button id="openPublishMediaButton" type="button">Open media</button></div><div class="publish-actions"><button class="button button-primary" id="openAllButton" type="button">Copy caption & open all pages</button><button class="button button-outline" id="copyOnlyButton" type="button">Copy caption only</button></div><div class="publish-results" id="publishResults"></div><p class="publish-note"><strong>Final step:</strong> review the account and content on each official network, attach the media file if required, and press Publish there.</p><div class="modal-footer"><button class="button button-outline" type="button" data-close-publish>Close</button><button class="button complete-button" id="markPublishedButton" type="button">Mark as published</button></div></section>
   </div>
 
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
   <script src="vendor/supabase.js"></script>
   <script src="config.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

@@ -10,6 +10,10 @@ A secure social-media content CRM for Tech Lab.
 - Approved-email allowlist
 - PostgreSQL Row Level Security on every shared table
 - Shared cloud records across approved team members and devices
+- Private Supabase Storage media library with approved-user policies
+- Client-side image resizing and WebP compression
+- SHA-256 duplicate detection so matching files are stored once
+- One media object reused by multiple posts
 - Live updates when another team member changes content
 - Password reset flow
 - No service-role key in the browser

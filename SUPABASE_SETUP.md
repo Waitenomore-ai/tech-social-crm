@@ -32,6 +32,10 @@ on conflict (email) do nothing;
 
 The SQL enables Row Level Security. Signing in is not enough to read CRM records—the signed-in email must also exist in `allowed_users`.
 
+### Add the private media library
+
+After the main SQL succeeds, create another SQL Editor query and run the complete contents of `supabase-media-migration.sql`. This creates the private Storage bucket, compressed-media metadata table, post relationship, Row Level Security policies and live updates. Run this migration before uploading the media-library app update.
+
 ## 3. Configure email/password authentication
 
 1. Open **Authentication → Providers → Email**.
