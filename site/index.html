@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#121316" />
+  <meta name="description" content="Tech Social — prepare one post and launch it across your social channels." />
+  <title>Tech Social — Where Tech Meets Social</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="tech-social-mark.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="mobile-bar">
+    <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="mobile-brand"><img src="tech-social-mark.png" alt="" /><strong>TECH <span>SOCIAL</span></strong></div>
+    <button class="mobile-create" data-view-target="composer" type="button" aria-label="Create post">+</button>
+  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#" data-view-target="dashboard" aria-label="Tech Social dashboard">
+      <img src="tech-social-mark.png" alt="Tech Lab circuit-brain mark" />
+      <span class="brand-words"><strong><em>TECH</em> SOCIAL</strong><small>WHERE TECH MEETS SOCIAL</small></span>
+    </a>
+
+    <div class="workspace-label">WORKSPACE</div>
+    <nav class="side-nav" aria-label="Main navigation">
+      <button class="nav-item active" type="button" data-view-target="dashboard">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Overview</span>
+      </button>
+      <button class="nav-item" type="button" data-view-target="composer">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>
+        <span>Create post</span><span class="nav-shortcut">⌘ N</span>
+      </button>
+      <button class="nav-item" type="button" data-accounts>
+        <svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="7" r="2.5"/><path d="M2.5 20v-2a5.5 5.5 0 0 1 11 0v2M14 13a4.5 4.5 0 0 1 7.5 3.3V18"/></svg>
+        <span>Social accounts</span><span class="nav-count" id="sidebarReadyCount">0</span>
+      </button>
+    </nav>
+
+    <div class="workspace-label second">TOOLS</div>
+    <nav class="side-nav" aria-label="Tools">
+      <button class="nav-item" type="button" id="draftNavButton">
+        <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6Z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>
+        <span>Current draft</span><span class="live-dot" aria-label="Autosave on"></span>
+      </button>
+      <a class="nav-item" href="https://www.techfixlab.co.uk" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+        <span>Tech Lab website</span><svg class="external" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8"/></svg>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="privacy-seal">
+        <span><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="3"/></svg></span>
+        <div><strong>Private by design</strong><small>No passwords stored</small></div>
+      </div>
+      <button id="clearDataButton" class="clear-button" type="button">Clear local data</button>
+    </div>
+  </aside>
+  <div class="sidebar-scrim" id="sidebarScrim"></div>
+
+  <main class="app-main">
+    <header class="page-header">
+      <div>
+        <p class="header-kicker" id="headerKicker">TECH SOCIAL / OVERVIEW</p>
+        <h1 id="headerTitle">Publishing dashboard</h1>
+      </div>
+      <div class="header-actions">
+        <button class="account-status" type="button" data-accounts>
+          <span class="status-orbit"><span></span></span>
+          <span><strong id="headerReadyText">No accounts ready</strong><small>Manage connections</small></span>
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        <button class="button button-primary" type="button" data-view-target="composer">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          New post
+        </button>
+      </div>
+    </header>
+
+    <section class="view dashboard-view active" id="dashboardView">
+      <div class="welcome-line">
+        <div>
+          <p id="dashboardDate">FRIDAY, 14 AUGUST</p>
+          <h2 id="greetingText">Good evening, Tech Lab.</h2>
+          <span>Everything you need to keep your social presence moving.</span>
+        </div>
+        <div class="local-badge"><span></span> LOCAL WORKSPACE</div>
+      </div>
+
+      <section class="hero-card">
+        <div class="hero-grid"></div>
+        <img class="hero-mark" src="tech-social-mark.png" alt="" />
+        <div class="hero-copy">
+          <p class="overline">YOUR SOCIAL COMMAND CENTRE</p>
+          <h2>One idea.<br /><em>Every audience.</em></h2>
+          <p>Write once, then launch the official posting page for every Tech Lab social channel.</p>
+          <div class="hero-actions">
+            <button class="button button-white" type="button" data-view-target="composer">
+              Create a post
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <button class="hero-link" type="button" data-accounts>Set up accounts <span>→</span></button>
+          </div>
+        </div>
+        <div class="hero-proof">
+          <span class="proof-number" id="heroSelectedCount">06</span>
+          <span><strong>channels selected</strong><small>Ready for your next post</small></span>
+        </div>
+      </section>
+
+      <section class="stat-grid" aria-label="Workspace summary">
+        <article class="stat-card">
+          <span class="stat-icon red"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="7" r="2.5"/><path d="M2.5 20v-2a5.5 5.5 0 0 1 11 0v2M14 13a4.5 4.5 0 0 1 7.5 3.3V18"/></svg></span>
+          <div><small>ACCOUNTS READY</small><strong id="connectedStat">0 <em>/ 6</em></strong><p id="connectedStatNote">Connect your first channel</p></div>
+          <button type="button" data-accounts aria-label="Manage accounts">→</button>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon dark"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4Z"/><path d="M4 9h16M8 2v5M16 2v5"/></svg></span>
+          <div><small>DESTINATIONS</small><strong id="selectedStat">6 <em>selected</em></strong><p>Choose once, change anytime</p></div>
+          <button type="button" data-view-target="composer" aria-label="Choose destinations">→</button>
+        </article>
+        <article class="stat-card">
+          <span class="stat-icon outline"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 12h8M8 16h6"/></svg></span>
+          <div><small>CURRENT DRAFT</small><strong id="draftStatus">Empty</strong><p id="draftStatNote">Start something worth sharing</p></div>
+          <button type="button" data-view-target="composer" aria-label="Open draft">→</button>
+        </article>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="dashboard-panel draft-panel">
+          <div class="section-heading">
+            <div><p class="overline dark-text">IN PROGRESS</p><h3>Your current draft</h3></div>
+            <div class="draft-badges">
+              <span class="autosave"><i></i> Autosaved locally</span>
+              <span class="schedule-pill" id="dashboardScheduleState"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5Z"/><path d="M5 9h14M9 2v5M15 2v5"/></svg> No date selected</span>
+            </div>
+          </div>
+          <div class="draft-sheet">
+            <span class="quote-mark">“</span>
+            <p id="draftPreview">Your next post will appear here as you write it.</p>
+            <div class="draft-meta"><span id="draftMeta">No content yet</span><button type="button" data-view-target="composer">Edit draft <b>→</b></button></div>
+          </div>
+        </section>
+
+        <section class="dashboard-panel channels-panel">
+          <div class="section-heading">
+            <div><p class="overline dark-text">YOUR NETWORK</p><h3>Social channels</h3></div>
+            <button class="text-action" type="button" data-accounts>Manage</button>
+          </div>
+          <div class="dashboard-channels" id="dashboardChannelList"></div>
+          <div class="channel-legend"><span><i class="ready"></i> Ready</span><span><i></i> Setup needed</span></div>
+        </section>
+      </div>
+
+      <section class="workflow-strip">
+        <div class="workflow-title"><img src="tech-social-mark.png" alt="" /><span><small>THE TECH SOCIAL FLOW</small><strong>From idea to audience</strong></span></div>
+        <div class="workflow-step"><b>01</b><span><strong>Create</strong><small>Caption, link & media</small></span></div>
+        <svg class="workflow-arrow" viewBox="0 0 44 12"><path d="M1 6h40M36 1l5 5-5 5"/></svg>
+        <div class="workflow-step"><b>02</b><span><strong>Select</strong><small>Choose your channels</small></span></div>
+        <svg class="workflow-arrow" viewBox="0 0 44 12"><path d="M1 6h40M36 1l5 5-5 5"/></svg>
+        <div class="workflow-step"><b>03</b><span><strong>Publish</strong><small>Review on each network</small></span></div>
+      </section>
+    </section>
+
+    <section class="view composer-view" id="composerView" hidden>
+      <div class="composer-intro">
+        <div><p class="overline dark-text">NEW PUBLICATION</p><h2>Build your post</h2><span>Your draft saves automatically in this browser.</span></div>
+        <div class="save-state" id="saveState"><span></span> Draft saved</div>
+      </div>
+
+      <div class="composer-layout">
+        <section class="compose-card">
+          <div class="card-step"><span>01</span><div><strong>Your content</strong><small>Prepare the message your audience will see</small></div></div>
+
+          <label class="field-label" for="caption">CAPTION</label>
+          <div class="text-field-wrap">
+            <textarea id="caption" maxlength="63206" rows="8" placeholder="What would Tech Lab like to share today?"></textarea>
+            <div class="textarea-footer"><span>Write naturally — you can make final edits on each network.</span><strong id="captionCount">0 characters</strong></div>
+          </div>
+
+          <div class="two-fields">
+            <div>
+              <label class="field-label" for="postUrl">LINK <span>OPTIONAL</span></label>
+              <div class="input-with-icon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1.1"/></svg><input id="postUrl" type="url" inputmode="url" placeholder="https://techfixlab.co.uk/..." /></div>
+              <p class="field-error" id="urlError" role="alert"></p>
+            </div>
+            <div>
+              <label class="field-label" for="hashtags">HASHTAGS <span>OPTIONAL</span></label>
+              <div class="input-with-icon"><span>#</span><input id="hashtags" type="text" placeholder="TechLab Repair Worthing" /></div>
+            </div>
+          </div>
+
+          <label class="field-label" for="mediaInput">PHOTO OR VIDEO <span>OPTIONAL</span></label>
+          <div class="media-zone" id="mediaZone">
+            <input id="mediaInput" type="file" accept="image/*,video/*" />
+            <div id="mediaEmpty" class="media-empty">
+              <span class="upload-icon"><svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg></span>
+              <div><strong>Drop media here</strong><span> or click to browse</span><small>JPG, PNG, GIF, MP4 or MOV</small></div>
+            </div>
+            <div id="mediaPreview" class="media-preview" hidden>
+              <div class="preview-thumb" id="previewThumb"></div><div class="preview-meta"><strong id="mediaName"></strong><span id="mediaSize"></span></div><button id="removeMedia" class="round-button" type="button" aria-label="Remove media">×</button>
+            </div>
+          </div>
+          <p class="media-note"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg> For your security, select the same file again when each network’s upload page opens.</p>
+        </section>
+
+        <aside class="destination-card">
+          <div class="card-step"><span>02</span><div><strong>Destinations</strong><small>Choose where this post should go</small></div></div>
+          <div class="destination-toolbar"><span>CHANNELS</span><button id="selectAllButton" type="button">Clear all</button></div>
+          <div class="network-list" id="networkList"></div>
+
+          <section class="schedule-block" aria-labelledby="scheduleTitle">
+            <div class="schedule-heading">
+              <span class="schedule-icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5Z"/><path d="M5 9h14M9 2v5M15 2v5"/></svg></span>
+              <div><strong id="scheduleTitle">Publishing day</strong><small>Choose when you want to post</small></div>
+            </div>
+            <div class="schedule-options" role="group" aria-label="Publishing time">
+              <button class="active" type="button" data-schedule-mode="now">Post now</button>
+              <button type="button" data-schedule-mode="later">Choose a day</button>
+            </div>
+            <div class="schedule-fields" id="scheduleFields" hidden>
+              <label for="scheduleDate"><span>DATE</span><input id="scheduleDate" type="date" /></label>
+              <label for="scheduleTime"><span>TIME</span><input id="scheduleTime" type="time" value="09:00" /></label>
+              <p class="schedule-error" id="scheduleError" role="alert"></p>
+              <button class="calendar-reminder" id="calendarReminderButton" type="button">
+                <svg viewBox="0 0 24 24"><path d="M5 4h14v16H5Z"/><path d="M5 9h14M9 2v5M15 2v5M12 12v5M9.5 14.5h5"/></svg>
+                Add reminder to my calendar
+              </button>
+              <p class="schedule-note">Tech Social cannot publish in the background without official APIs. The reminder brings you back to open and confirm the post.</p>
+            </div>
+          </section>
+
+          <div class="publish-block">
+            <div><span id="publishModeLabel">READY TO OPEN</span><strong id="selectedSummary">6 networks</strong></div>
+            <button id="launchButton" class="button button-primary launch-button" type="button">
+              <span>Open 6 posting pages</span><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <p id="publishHelp">Allow pop-ups. Your caption will be copied and each official posting page will open.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="main-footer"><span>© 2026 Tech Social. A Tech Lab workspace.</span><span><i></i> Local-only draft storage</span></footer>
+  </main>
+
+  <div class="modal-backdrop" id="accountsModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="accountsTitle">
+      <div class="modal-header">
+        <div><p class="overline dark-text">OFFICIAL SIGN-IN</p><h2 id="accountsTitle">Social accounts</h2></div>
+        <button id="closeAccountsButton" class="round-button" type="button" aria-label="Close">×</button>
+      </div>
+      <p class="modal-intro">Open each network’s real sign-in page. Your browser can remember the login; Tech Social never sees or saves your password. After signing in, mark that channel ready here.</p>
+      <div id="accountList" class="account-list"></div>
+      <div class="security-strip"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg><span><strong>No credentials are stored.</strong> “Ready” is only a reminder saved locally on this device.</span></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="resultsModal" hidden>
+    <section class="modal results-modal" role="dialog" aria-modal="true" aria-labelledby="resultsTitle">
+      <div class="modal-header">
+        <div><p class="overline dark-text">PUBLISHING DESK</p><h2 id="resultsTitle">Your pages are opening</h2></div>
+        <button id="closeResultsButton" class="round-button" type="button" aria-label="Close">×</button>
+      </div>
+      <p class="modal-intro" id="resultsIntro"></p>
+      <div class="results-actions"><button class="button button-soft" id="copyCaptionButton" type="button">Copy caption again</button><button class="button button-outline" id="copyLinkButton" type="button">Copy link</button></div>
+      <div id="resultList" class="result-list"></div>
+      <p class="modal-tip"><strong>Next:</strong> switch to each new tab, paste your caption, attach your media if needed, check the account, and press that network’s Publish button.</p>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+  <template id="networkTemplate">
+    <label class="network-row">
+      <input type="checkbox" />
+      <span class="custom-check"><svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8"/></svg></span>
+      <span class="network-badge"></span>
+      <span class="network-copy"><strong></strong><small></small></span>
+      <span class="ready-dot" title="Sign-in status"></span>
+    </label>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

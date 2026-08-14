@@ -1,0 +1,12 @@
+{
+  "name": "Tech Social — Where Tech Meets Social",
+  "short_name": "Tech Social",
+  "description": "Tech Lab's private social publishing workspace.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f4f2",
+  "theme_color": "#121316",
+  "icons": [
+    { "src": "tech-social-mark.png", "sizes": "256x256", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

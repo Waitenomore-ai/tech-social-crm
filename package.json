@@ -1,0 +1,16 @@
+{
+  "name": "tech-social",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tech Lab's private social publishing dashboard",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.123.0"
+  }
+}
