@@ -8,7 +8,7 @@ function redirectWith(url: string, key: string, value: string) {
 
 Deno.serve(async (request) => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
-  const adminKey = Deno.env.get("SUPABASE_ADMIN_KEY") ?? "";
+  const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const metaAppId = Deno.env.get("META_APP_ID") ?? "";
   const metaAppSecret = Deno.env.get("META_APP_SECRET") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";

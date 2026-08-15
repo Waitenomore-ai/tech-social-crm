@@ -45,7 +45,7 @@ Deno.serve(async (request) => {
   const verifyToken = Deno.env.get("META_VERIFY_TOKEN") ?? "";
   const appSecret = Deno.env.get("META_APP_SECRET") ?? "";
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
-  const adminKey = Deno.env.get("SUPABASE_ADMIN_KEY") ?? "";
+  const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 
   if (request.method === "GET") {
     const url = new URL(request.url);

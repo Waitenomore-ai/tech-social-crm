@@ -18,7 +18,7 @@ async function graphRequest(version: string, path: string, token: string, values
 Deno.serve(async (request) => {
   if (request.method !== "POST") return reply({ error: "Method not allowed" }, 405);
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
-  const adminKey = Deno.env.get("SUPABASE_ADMIN_KEY") ?? "";
+  const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";
   if (!supabaseUrl || !adminKey) return reply({ error: "Publishing backend is not configured" }, 503);
 

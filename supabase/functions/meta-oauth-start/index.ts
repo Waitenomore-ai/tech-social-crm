@@ -7,7 +7,7 @@ Deno.serve(async (request) => {
   if (request.method !== "POST") return reply({ error: "Method not allowed" }, 405);
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
-  const adminKey = Deno.env.get("SUPABASE_ADMIN_KEY") ?? "";
+  const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const metaAppId = Deno.env.get("META_APP_ID") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";
   const configuredReturnUrl = Deno.env.get("CRM_RETURN_URL") ?? "https://waitenomore-ai.github.io/tech-social-crm/";
