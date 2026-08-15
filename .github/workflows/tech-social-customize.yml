@@ -1,0 +1,83 @@
+name: Apply Tech Social UI customisations
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  customise:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply WhatsApp and navigation icon changes
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          app = Path('app.js')
+          index = Path('index.html')
+          app_text = app.read_text(encoding='utf-8')
+          index_text = index.read_text(encoding='utf-8')
+
+          if "id:'whatsapp'" not in app_text:
+              marker = "  { id:'youtube', name:'YouTube', badge:'YT', color:'#ff0033', login:'https://accounts.google.com/ServiceLogin?service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2F', sessionUrl:'https://www.youtube.com/upload', description:'Open YouTube Studio upload', composer:()=>'https://www.youtube.com/upload' }\n"
+              replacement = marker + "  ,{ id:'whatsapp', name:'WhatsApp', badge:'WA', color:'#25d366', login:'https://web.whatsapp.com/', sessionUrl:'https://web.whatsapp.com/', description:'Open WhatsApp Web', composer:()=>'https://web.whatsapp.com/' }\n"
+              if marker not in app_text:
+                  raise SystemExit('Could not find the PLATFORMS YouTube entry.')
+              app_text = app_text.replace(marker, replacement, 1)
+
+          old_options = '<option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="tiktok">TikTok</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option><option value="other">Other</option>'
+          new_options = '<option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="tiktok">TikTok</option><option value="whatsapp">WhatsApp</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option><option value="other">Other</option>'
+          index_text = index_text.replace(old_options, new_options, 1)
+
+          icons = {
+              'dashboard': '<svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/><path d="M9 21v-6h6v6"/></svg>',
+              'calendar': '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>',
+              'posts': '<svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6Z"/><path d="M14 3v5h5M9 12h7M9 16h5"/></svg>',
+              'templates': '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="13" height="15" rx="2"/><path d="M8 8h5M8 12h5M8 16h3"/><path d="M8 20h9a3 3 0 0 0 3-3V8"/></svg>',
+              'ideas': '<svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M8.5 15.5A6.5 6.5 0 1 1 15.5 15c-.8.7-1.5 1.5-1.5 3H10c0-1.5-.7-2.3-1.5-2.5Z"/><path d="M9.5 10.5a3 3 0 0 1 5 0"/></svg>',
+              'media': '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m4 17 5-5 3 3 2-2 6 6"/></svg>',
+              'campaigns': '<svg viewBox="0 0 24 24"><path d="M4 10v8l11 3V3L4 6v4Z"/><path d="m15 8 5 2v8l-5 3M8 8v7"/><path d="M4 10H2v4h2"/></svg>',
+              'queue': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/><path d="M8 3.5 6 2M16 3.5 18 2"/></svg>',
+              'accounts': '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="8" r="2"/><path d="M16 13a5 5 0 0 1 5 5"/></svg>',
+              'notifications': '<svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4M20 5l1.5 1.5M4 5 2.5 6.5"/></svg>',
+              'inbox': '<svg viewBox="0 0 24 24"><path d="M4 5h16v13H8l-4 3Z"/><path d="M8 9h8M8 13h5"/><path d="M17 5v3"/></svg>',
+              'requests': '<svg viewBox="0 0 24 24"><path d="M6 3h12v18H6Z"/><path d="M9 8h6M9 12h3"/><path d="m9 16 2 2 4-4"/></svg>',
+              'analytics': '<svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/><path d="m4 8 5-3 5 2 6-5"/></svg>',
+              'activity': '<svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v6h6"/><path d="M12 7v5l3 2"/></svg>',
+              'backups': '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/><path d="M12 15v5M9.5 17.5 12 20l2.5-2.5"/></svg>',
+              'settings': '<svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M10 12h10M4 12h2M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg>'
+          }
+
+          for view, svg in icons.items():
+              pattern = rf'(<button[^>]*data-view-link="{view}"[^>]*>)\s*<svg viewBox="0 0 24 24">.*?</svg>'
+              index_text, count = re.subn(pattern, rf'\1{svg}', index_text, count=1, flags=re.S)
+              if count != 1:
+                  raise SystemExit(f'Could not replace sidebar icon for {view}.')
+
+          index_text = re.sub(
+              r'(<div class="privacy-note"><span>)<svg viewBox="0 0 24 24">.*?</svg>(</span>)',
+              r'\1<svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5c0 4.7 3.1 8.4 7.5 10 4.4-1.6 7.5-5.3 7.5-10V6L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>\2',
+              index_text, count=1, flags=re.S
+          )
+
+          app.write_text(app_text, encoding='utf-8')
+          index.write_text(index_text, encoding='utf-8')
+          PY
+
+      - name: Commit and remove one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/tech-social-customize.yml
+          git add app.js index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Add WhatsApp connection and refresh navigation icons"
+          git push
