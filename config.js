@@ -101,14 +101,14 @@ window.TECH_SOCIAL_CONFIG = {
   document.head.appendChild(link);
 })();
 
-/* Load the deployed version 5.1 display patch. */
+/* Load the deployed version 5.2 display patch. */
 (() => {
   if (document.querySelector('script[data-tech-social-version]')) return;
   const script = document.createElement('script');
-  script.src = `version-5.1-patch.js?v=${Date.now()}`;
+  script.src = `version-5.2-patch.js?v=${Date.now()}`;
   script.defer = true;
   script.dataset.techSocialVersion = '1';
   document.head.appendChild(script);
 })();
 
-/* Force-refresh marker: 2026-08-15 Marketing sidebar icon cleanup. */
+/* Force-refresh marker: 2026-08-15 Version 5.2 display synchronisation. */
