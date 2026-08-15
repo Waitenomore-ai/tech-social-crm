@@ -5,6 +5,7 @@ const PLATFORMS = [
   { id:'x', name:'X', badge:'X', color:'#111111', login:'https://x.com/i/flow/login', sessionUrl:'https://x.com/home', description:'Caption and link can be prefilled', composer:p=>`https://twitter.com/intent/tweet?text=${encodeURIComponent([buildCaption(p),p.link].filter(Boolean).join('\n\n'))}` },
   { id:'linkedin', name:'LinkedIn', badge:'in', color:'#0a66c2', login:'https://www.linkedin.com/login', sessionUrl:'https://www.linkedin.com/feed/', description:'Share a link or create an update', composer:p=>p.link?`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(p.link)}`:'https://www.linkedin.com/feed/' },
   { id:'youtube', name:'YouTube', badge:'YT', color:'#ff0033', login:'https://accounts.google.com/ServiceLogin?service=youtube&continue=https%3A%2F%2Fwww.youtube.com%2F', sessionUrl:'https://www.youtube.com/upload', description:'Open YouTube Studio upload', composer:()=>'https://www.youtube.com/upload' }
+  ,{ id:'whatsapp', name:'WhatsApp', badge:'WA', color:'#25d366', login:'https://web.whatsapp.com/', sessionUrl:'https://web.whatsapp.com/', description:'Open WhatsApp Web', composer:()=>'https://web.whatsapp.com/' }
 ];
 const STATUSES={draft:'Draft',approval:'Awaiting approval',scheduled:'Scheduled',ready:'Ready to publish',published:'Published'};
 const COLOURS=['#ef111b','#356fd5','#18a56e','#d99a12','#8a54cf','#e56625'];
