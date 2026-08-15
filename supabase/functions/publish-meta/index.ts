@@ -28,8 +28,9 @@ Deno.serve(async (request) => {
   const userResult = await admin.auth.getUser(jwt);
   const user = userResult.data.user;
   if (userResult.error || !user?.email) return reply({ error: "Authentication required" }, 401);
-  const allowed = await admin.from("allowed_users").select("email").eq("email", user.email.toLowerCase()).maybeSingle();
+  const allowed = await admin.from("allowed_users").select("email,role").eq("email", user.email.toLowerCase()).maybeSingle();
   if (!allowed.data) return reply({ error: "User is not approved" }, 403);
+  if (!["admin", "approver"].includes(allowed.data.role)) return reply({ error: "Approver role is required to publish" }, 403);
 
   let input: any;
   try { input = await request.json(); } catch { return reply({ error: "Invalid JSON" }, 400); }

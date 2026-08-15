@@ -1,6 +1,6 @@
 {
-  "version": "2.3",
+  "version": "3.0",
   "released": "2026-08-14",
-  "title": "Safe Meta OAuth and automatic publishing",
-  "changes": 5
+  "title": "Team roles and permissions",
+  "changes": 9
 }

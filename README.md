@@ -1,4 +1,4 @@
-# Tech Social CRM 2.3
+# Tech Social CRM 3.0
 
 **Where Tech Meets Social**
 
@@ -17,6 +17,10 @@ A secure social-media content CRM for Tech Lab.
 - Live updates when another team member changes content
 - Password reset and in-app password changes
 - Editable user profiles and personalised greetings
+- Administrator, Editor, Approver and Viewer roles
+- Server-enforced Row Level Security permissions
+- Administrator team-member management
+- Approval and request-changes workflow
 - Version checker with release history and numbered changes
 - Shared information and content-approval requests
 - Manual social inbox with customer-message records and internal team notes

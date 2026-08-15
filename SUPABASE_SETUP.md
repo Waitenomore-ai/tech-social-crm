@@ -38,7 +38,9 @@ After the main SQL succeeds, create another SQL Editor query and run the complet
 
 Then run `supabase-v2-migration.sql`. This adds profile updates, team information and approval requests, shared social-inbox conversations, internal team notes and their real-time security policies.
 
-For version 2.1 Meta webhooks, run `supabase-meta-webhooks-migration.sql`, deploy the `meta-webhook` Edge Function, and follow `META_WEBHOOK_SETUP.md`.
+For Meta webhooks and publishing, run `supabase-meta-webhooks-migration.sql` and `supabase-meta-publishing-migration.sql`, then deploy the supplied Edge Functions.
+
+For version 3.0 roles, run `supabase-v3-roles-migration.sql` last. It promotes the oldest approved user to Administrator if no administrator exists.
 
 ## 3. Configure email/password authentication
 

@@ -22,8 +22,9 @@ Deno.serve(async (request) => {
   if (userResult.error || !userResult.data.user?.email) return reply({ error: "Invalid session" }, 401);
 
   const email = userResult.data.user.email.toLowerCase();
-  const allowed = await admin.from("allowed_users").select("email").eq("email", email).maybeSingle();
+  const allowed = await admin.from("allowed_users").select("email,role").eq("email", email).maybeSingle();
   if (allowed.error || !allowed.data) return reply({ error: "This user is not approved" }, 403);
+  if (allowed.data.role !== "admin") return reply({ error: "Administrator role is required to connect social accounts" }, 403);
 
   let requestedReturnUrl = configuredReturnUrl;
   try {
