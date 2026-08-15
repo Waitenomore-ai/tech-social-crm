@@ -1,6 +1,6 @@
 {
-  "version": "4.2",
+  "version": "4.3",
   "released": "2026-08-14",
-  "title": "Sidebar organisation and team accountability",
-  "changes": 3
+  "title": "In-app update installer",
+  "changes": 1
 }
