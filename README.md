@@ -1,4 +1,4 @@
-# Tech Social CRM 3.1
+# Tech Social CRM 3.2
 
 **Where Tech Meets Social**
 
@@ -21,6 +21,9 @@ A secure social-media content CRM for Tech Lab.
 - Server-enforced Row Level Security permissions
 - Administrator team-member management
 - Approval and request-changes workflow
+- Real-time notification bell and dedicated Notification Centre
+- Approval, request, inbox, due-soon and overdue alerts
+- Per-user synchronised read/unread status
 - Version checker with release history and numbered changes
 - Shared information and content-approval requests
 - Manual social inbox with customer-message records and internal team notes
