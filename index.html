@@ -54,7 +54,7 @@
       <div><strong><em>TECH</em> SOCIAL</strong></div>
     </a>
 
-    <div class="workspace-chip"><span>TL</span><div><strong>Tech Lab</strong><small>Social workspace</small></div><i></i></div>
+    <div class="workspace-chip"><span id="workspaceInitials">TL</span><div><strong id="workspaceName">Personal workspace</strong><small id="workspaceRole">Signed out</small></div><i></i></div>
 
     <section class="sidebar-group" data-sidebar-group="content">
       <button class="nav-label sidebar-group-toggle" type="button" data-sidebar-toggle="content" aria-expanded="true"><span>CONTENT</span><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></button>
@@ -84,7 +84,7 @@
       <button class="nav-label sidebar-group-toggle" type="button" data-sidebar-toggle="system" aria-expanded="true"><span>SYSTEM</span><svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></button>
       <nav class="side-nav" aria-label="System navigation">
         <button class="nav-item" type="button" data-view-link="analytics"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Analytics</span></button>
-        <button class="nav-item" type="button" data-view-link="activity"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Activity log</span></button>
+        <button class="nav-item" type="button" data-view-link="activity"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Login & change log</span></button>
         <button class="nav-item" type="button" data-view-link="backups"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4Z"/><path d="M8 5v5h8V5M8 16h8"/></svg><span>Backups</span></button>
         <button class="nav-item" type="button" data-view-link="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Settings</span><b class="version-nav-badge">v4.2</b></button>
       </nav>
@@ -200,7 +200,7 @@
     </section>
 
     <section class="view" id="activityView" data-view="activity" hidden>
-      <div class="view-heading"><div><p>ACCOUNTABILITY</p><h2>Activity and audit log</h2><span>Important content, user, media, connection and publishing changes.</span></div><button class="button button-outline" id="downloadAuditButton" type="button">Download CSV</button></div><section class="panel activity-panel"><div class="filter-bar"><label class="list-search"><input id="activitySearch" type="search" placeholder="Search activity…" /></label><select id="activityTypeFilter"><option value="all">All activity</option><option value="posts">Posts</option><option value="media_assets">Media</option><option value="allowed_users">Users</option><option value="publish_attempts">Publishing</option><option value="content_ideas">Ideas</option></select></div><div class="activity-list" id="activityList"></div></section>
+      <div class="view-heading"><div><p>ACCOUNTABILITY</p><h2>Login & change log</h2><span>See who signed in, when they signed in and the changes made to social media posts.</span></div><button class="button button-outline" id="downloadAuditButton" type="button">Download CSV</button></div><section class="panel activity-panel"><div class="filter-bar"><label class="list-search"><input id="activitySearch" type="search" placeholder="Search activity…" /></label><select id="activityTypeFilter"><option value="all">All activity</option><option value="login_events">Logins</option><option value="posts">Post changes</option><option value="media_assets">Media</option><option value="allowed_users">Users</option><option value="publish_attempts">Publishing</option><option value="content_ideas">Ideas</option></select></div><div class="activity-list" id="activityList"></div></section>
     </section>
 
     <section class="view" id="backupsView" data-view="backups" hidden>
@@ -305,6 +305,6 @@
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
   <script src="vendor/supabase.js"></script>
   <script src="config.js"></script>
-  <script src="app.js?v=19"></script>
+  <script src="app.js?v=20"></script>
 </body>
 </html>
