@@ -1,10 +1,34 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-const headers = { "content-type": "application/json" };
-const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers });
+const corsHeaders = (request: Request) => {
+  const origin = request.headers.get("origin") ?? "";
+  const allowedOrigins = new Set([
+    "https://waitenomore-ai.github.io",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
+  ]);
+
+  return {
+    "content-type": "application/json",
+    "access-control-allow-origin": allowedOrigins.has(origin) ? origin : "https://waitenomore-ai.github.io",
+    "access-control-allow-headers": "authorization, x-client-info, apikey, content-type",
+    "access-control-allow-methods": "POST, OPTIONS",
+    "vary": "Origin",
+  };
+};
+
+const reply = (request: Request, body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), { status, headers: corsHeaders(request) });
 
 Deno.serve(async (request) => {
-  if (request.method !== "POST") return reply({ error: "Method not allowed" }, 405);
+  // Browser clients make a CORS preflight before the authenticated POST.
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(request) });
+  }
+
+  if (request.method !== "POST") return reply(request, { error: "Method not allowed" }, 405);
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
@@ -12,22 +36,23 @@ Deno.serve(async (request) => {
   const metaConfigId = Deno.env.get("META_CONFIG_ID") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";
   const configuredReturnUrl = Deno.env.get("CRM_RETURN_URL") ?? "https://waitenomore-ai.github.io/tech-social-crm/";
+
   if (!supabaseUrl || !adminKey || !metaAppId || !metaConfigId) {
-    return reply({ error: "Meta OAuth is not configured. META_APP_ID, META_CONFIG_ID and the server key are required." }, 503);
+    return reply(request, { error: "Meta OAuth is not configured. META_APP_ID, META_CONFIG_ID and the server key are required." }, 503);
   }
 
   const authorization = request.headers.get("authorization") ?? "";
   const jwt = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
-  if (!jwt) return reply({ error: "Authentication required" }, 401);
+  if (!jwt) return reply(request, { error: "Authentication required" }, 401);
 
   const admin = createClient(supabaseUrl, adminKey, { auth: { persistSession: false } });
   const userResult = await admin.auth.getUser(jwt);
-  if (userResult.error || !userResult.data.user?.email) return reply({ error: "Invalid session" }, 401);
+  if (userResult.error || !userResult.data.user?.email) return reply(request, { error: "Invalid session" }, 401);
 
   const email = userResult.data.user.email.toLowerCase();
   const allowed = await admin.from("allowed_users").select("email,role").eq("email", email).maybeSingle();
-  if (allowed.error || !allowed.data) return reply({ error: "This user is not approved" }, 403);
-  if (allowed.data.role !== "admin") return reply({ error: "Administrator role is required to connect social accounts" }, 403);
+  if (allowed.error || !allowed.data) return reply(request, { error: "This user is not approved" }, 403);
+  if (allowed.data.role !== "admin") return reply(request, { error: "Administrator role is required to connect social accounts" }, 403);
 
   let requestedReturnUrl = configuredReturnUrl;
   try {
@@ -48,7 +73,7 @@ Deno.serve(async (request) => {
     return_url: requestedReturnUrl,
     expires_at: expiresAt,
   });
-  if (stateInsert.error) return reply({ error: stateInsert.error.message }, 500);
+  if (stateInsert.error) return reply(request, { error: stateInsert.error.message }, 500);
 
   const redirectUri = `${supabaseUrl}/functions/v1/meta-oauth-callback`;
 
@@ -64,7 +89,7 @@ Deno.serve(async (request) => {
     override_default_response_type: "true",
   });
 
-  return reply({
+  return reply(request, {
     authorizationUrl: `https://www.facebook.com/${graphVersion}/dialog/oauth?${params}`,
     expiresAt,
   });
