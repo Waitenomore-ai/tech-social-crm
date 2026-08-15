@@ -1,6 +1,6 @@
 {
-  "version": "4.3",
-  "released": "2026-08-14",
-  "title": "In-app update installer",
-  "changes": 1
+  "version": "5.0",
+  "released": "2026-08-15",
+  "title": "Sidebar visual redesign and navigation cleanup",
+  "changes": 6
 }
