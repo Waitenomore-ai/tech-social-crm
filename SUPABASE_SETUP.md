@@ -34,7 +34,9 @@ The SQL enables Row Level Security. Signing in is not enough to read CRM records
 
 ### Add the private media library
 
-After the main SQL succeeds, create another SQL Editor query and run the complete contents of `supabase-media-migration.sql`. This creates the private Storage bucket, compressed-media metadata table, post relationship, Row Level Security policies and live updates. Run this migration before uploading the media-library app update.
+After the main SQL succeeds, create another SQL Editor query and run the complete contents of `supabase-media-migration.sql`. This creates the private Storage bucket, compressed-media metadata table, post relationship, Row Level Security policies and live updates.
+
+Then run `supabase-v2-migration.sql`. This adds profile updates, team information and approval requests, shared social-inbox conversations, internal team notes and their real-time security policies. Run both migrations before uploading the version 2.0 app files.
 
 ## 3. Configure email/password authentication
 

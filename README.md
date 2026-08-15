@@ -1,4 +1,4 @@
-# Tech Social CRM
+# Tech Social CRM 2.0
 
 **Where Tech Meets Social**
 
@@ -15,7 +15,11 @@ A secure social-media content CRM for Tech Lab.
 - SHA-256 duplicate detection so matching files are stored once
 - One media object reused by multiple posts
 - Live updates when another team member changes content
-- Password reset flow
+- Password reset and in-app password changes
+- Editable user profiles and personalised greetings
+- Version checker with release history and numbered changes
+- Shared information and content-approval requests
+- Manual social inbox with customer-message records and internal team notes
 - No service-role key in the browser
 - Social-network passwords are never collected
 
@@ -39,6 +43,8 @@ Start with **`SUPABASE_SETUP.md`**. Run **`supabase-setup.sql`** in the Supabase
 ## Important social-network limitation
 
 This no-developer-account version cannot publish automatically in the background. It opens each social network's official composer for final confirmation. Social passwords are never collected or stored.
+
+The version 2.0 social inbox stores manual customer-message records and internal team notes. Automatic private-message imports require approved platform APIs, OAuth apps and webhooks; the database is structured so connectors can be added later.
 
 Media filenames can be kept as a reference, but browsers do not allow one website to insert the local file into another website. Select the same media again on the official publishing page.
 

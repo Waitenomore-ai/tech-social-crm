@@ -8,7 +8,7 @@
   <title>Tech Social CRM — Where Tech Meets Social</title>
   <link rel="icon" href="tech-social-mark.png" type="image/png" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <div class="auth-gate" id="authGate">
@@ -65,10 +65,13 @@
       <button class="nav-item" type="button" data-view-link="campaigns"><svg viewBox="0 0 24 24"><path d="M4 18V6l11-3v18L4 18Z"/><path d="m15 8 5 2v8l-5 3M8 8v7"/></svg><span>Campaigns</span></button>
     </nav>
 
-    <p class="nav-label second">PUBLISHING</p>
+    <p class="nav-label second">TEAM & PUBLISHING</p>
     <nav class="side-nav">
+      <button class="nav-item" type="button" data-view-link="inbox"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 4Z"/><path d="M8 9h8M8 13h5"/></svg><span>Social inbox</span><b class="red-count" id="inboxNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="requests"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6Z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Team requests</span><b id="requestsNavCount">0</b></button>
       <button class="nav-item" type="button" data-view-link="queue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Publishing queue</span><b class="red-count" id="queueNavCount">0</b></button>
       <button class="nav-item" type="button" data-view-link="accounts"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="7" r="2.5"/><path d="M2.5 20v-2a5.5 5.5 0 0 1 11 0v2M14 13a4.5 4.5 0 0 1 7.5 3.3V18"/></svg><span>Social accounts</span><b id="accountsNavCount">0</b></button>
+      <button class="nav-item" type="button" data-view-link="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Settings</span><b class="version-nav-badge">v2.0</b></button>
     </nav>
 
     <div class="sidebar-bottom">
@@ -171,7 +174,31 @@
       <div class="account-help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>How account connections work</strong><p>“Sign in once” opens the real social-network website. Complete the login there and allow that network to remember this browser, then return and select “Mark ready”. Future publishing buttons open the account directly and reuse its browser cookie. Do not use private browsing or automatically clear cookies. Tech Social never sees or stores the password.</p></div></div>
     </section>
 
-    <footer><span>© 2026 Tech Social CRM. A Tech Lab workspace.</span><span><i></i> Supabase secured & synchronised</span></footer>
+    <section class="view" id="inboxView" data-view="inbox" hidden>
+      <div class="view-heading"><div><p>SHARED CONVERSATIONS</p><h2>Social inbox</h2><span>Record customer messages and keep team discussion together until APIs are connected.</span></div><button class="button button-primary" id="newThreadButton" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New conversation</button></div>
+      <div class="manual-inbox-notice"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><div><strong>Manual shared inbox</strong><span>Messages are entered by your team. Automatic Facebook, Instagram and other imports require official API/webhook approval.</span></div></div>
+      <section class="inbox-shell panel">
+        <aside class="thread-sidebar"><label class="thread-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="threadSearch" type="search" placeholder="Search conversations…" /></label><div class="thread-list" id="threadList"></div><div class="thread-empty" id="threadEmpty" hidden>No conversations yet.</div></aside>
+        <div class="conversation-panel" id="conversationPanel"><div class="conversation-placeholder" id="conversationPlaceholder"><span><svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 4Z"/><path d="M8 9h8M8 13h5"/></svg></span><h3>Select a conversation</h3><p>Choose a thread or create a new manual social message.</p></div><div id="activeConversation" hidden><header class="conversation-header"><span class="network-badge" id="conversationPlatformBadge">IG</span><div><strong id="conversationContact">Contact</strong><small id="conversationSubject">Conversation</small></div><select id="conversationStatus"><option value="open">Open</option><option value="waiting">Waiting</option><option value="closed">Closed</option></select></header><div class="message-list" id="messageList"></div><form class="message-composer" id="messageForm"><select id="messageType"><option value="internal">Internal team note</option><option value="inbound">Record incoming message</option><option value="outbound">Record reply sent</option></select><textarea id="messageBody" rows="2" required placeholder="Write a team note or record a social message…"></textarea><button class="button button-primary" type="submit">Add message</button></form></div></div>
+      </section>
+    </section>
+
+    <section class="view" id="requestsView" data-view="requests" hidden>
+      <div class="view-heading"><div><p>TEAM COLLABORATION</p><h2>Information requests</h2><span>Request information, media, research or content approval from another member.</span></div><button class="button button-primary" id="newRequestButton" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>New request</button></div>
+      <div class="request-stats"><article><small>OPEN</small><strong id="openRequestsStat">0</strong></article><article><small>IN PROGRESS</small><strong id="progressRequestsStat">0</strong></article><article><small>COMPLETED</small><strong id="completedRequestsStat">0</strong></article></div>
+      <section class="panel requests-panel"><div class="request-toolbar"><select id="requestStatusFilter"><option value="all">All statuses</option><option value="open">Open</option><option value="in_progress">In progress</option><option value="completed">Completed</option></select><select id="requestTypeFilter"><option value="all">All request types</option><option value="information">Information</option><option value="content_approval">Content approval</option></select></div><div class="request-list" id="requestList"></div><div class="empty-state" id="requestsEmpty" hidden><span><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6Z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><h3>No requests found</h3><p>Create a request when you need information or approval from the team.</p></div></section>
+    </section>
+
+    <section class="view" id="settingsView" data-view="settings" hidden>
+      <div class="view-heading"><div><p>ACCOUNT & APPLICATION</p><h2>Settings</h2><span>Manage your profile, password and Tech Social version information.</span></div><span class="settings-version-chip">Version 2.0</span></div>
+      <section class="settings-shell panel"><nav class="settings-tabs" aria-label="Settings sections"><button class="active" type="button" data-settings-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button><button type="button" data-settings-tab="security"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="3"/></svg>Password</button><button type="button" data-settings-tab="versions"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Versions</button></nav>
+        <div class="settings-content"><section class="settings-pane active" data-settings-pane="profile"><div class="settings-heading"><span id="profileAvatar">TL</span><div><h3>User profile</h3><p>This name appears in greetings, requests, team notes and the user menu.</p></div></div><form id="profileForm" class="settings-form"><label><span>DISPLAY NAME</span><input id="profileDisplayName" required maxlength="100" /></label><label><span>LOGIN EMAIL</span><input id="profileEmail" type="email" disabled /></label><button class="button button-primary" type="submit">Save profile</button><p id="profileMessage" class="settings-message"></p></form></section>
+        <section class="settings-pane" data-settings-pane="security" hidden><div class="settings-heading"><span><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="4" y="10" width="16" height="11" rx="3"/></svg></span><div><h3>Change password</h3><p>Choose a strong password containing at least eight characters.</p></div></div><form id="passwordForm" class="settings-form"><label><span>NEW PASSWORD</span><input id="newPassword" type="password" minlength="8" required autocomplete="new-password" /></label><label><span>CONFIRM PASSWORD</span><input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" /></label><button class="button button-primary" type="submit">Update password</button><p id="passwordMessage" class="settings-message"></p></form></section>
+        <section class="settings-pane" data-settings-pane="versions" hidden><div class="version-hero"><div><p>CURRENT VERSION</p><h3>Tech Social <em>2.0</em></h3><span id="versionStatus">You are running the latest installed version.</span></div><button class="button button-outline" id="checkVersionButton" type="button">Check for updates</button></div><div class="version-history" id="versionHistory"></div></section></div>
+      </section>
+    </section>
+
+    <footer><span>© 2026 Tech Social CRM. A Tech Lab workspace.</span><span><i></i> Version 2.0 · Supabase secured</span></footer>
   </main>
 
   <div class="modal-backdrop" id="postModal" hidden>
@@ -215,6 +242,14 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="requestModal" hidden>
+    <section class="modal small-modal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle"><div class="modal-header"><div><p>TEAM REQUEST</p><h2 id="requestModalTitle">New request</h2></div><button class="close-button" type="button" data-close-request aria-label="Close">×</button></div><form id="requestForm"><input id="requestId" type="hidden" /><div class="two-fields"><label><span>REQUEST TYPE</span><select id="requestType"><option value="information">Information</option><option value="content_approval">Content approval</option></select></label><label><span>PRIORITY</span><select id="requestPriority"><option value="low">Low</option><option value="normal" selected>Normal</option><option value="high">High</option><option value="urgent">Urgent</option></select></label></div><label><span>TITLE</span><input id="requestTitle" required maxlength="180" placeholder="What do you need?" /></label><label><span>DETAILS</span><textarea id="requestDetails" rows="5" placeholder="Include the information, media or approval required."></textarea></label><label><span>ASSIGN TO EMAIL <small>OPTIONAL</small></span><input id="requestAssignee" type="email" placeholder="team@company.co.uk" /></label><label><span>RELATED POST <small>OPTIONAL</small></span><select id="requestRelatedPost"><option value="">No related post</option></select></label><div class="modal-footer"><button class="button danger-button" id="deleteRequestButton" type="button" hidden>Delete</button><span></span><button class="button button-outline" type="button" data-close-request>Cancel</button><button class="button button-primary" type="submit">Save request</button></div></form></section>
+  </div>
+
+  <div class="modal-backdrop" id="threadModal" hidden>
+    <section class="modal small-modal" role="dialog" aria-modal="true" aria-labelledby="threadModalTitle"><div class="modal-header"><div><p>MANUAL SOCIAL MESSAGE</p><h2 id="threadModalTitle">New conversation</h2></div><button class="close-button" type="button" data-close-thread aria-label="Close">×</button></div><form id="threadForm"><label><span>SOCIAL NETWORK</span><select id="threadPlatform"><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="tiktok">TikTok</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option><option value="other">Other</option></select></label><label><span>CONTACT NAME</span><input id="threadContactName" required maxlength="160" placeholder="Customer name" /></label><label><span>USERNAME / HANDLE</span><input id="threadContactHandle" maxlength="160" placeholder="@username" /></label><label><span>SUBJECT</span><input id="threadSubject" maxlength="180" placeholder="Repair enquiry" /></label><label><span>FIRST INCOMING MESSAGE</span><textarea id="threadFirstMessage" rows="5" required placeholder="Paste or summarise the customer’s social message."></textarea></label><div class="modal-footer"><span></span><button class="button button-outline" type="button" data-close-thread>Cancel</button><button class="button button-primary" type="submit">Create conversation</button></div></form></section>
+  </div>
+
   <div class="modal-backdrop" id="publishModal" hidden>
     <section class="modal publish-modal" role="dialog" aria-modal="true" aria-labelledby="publishModalTitle"><div class="modal-header"><div><p>PUBLISHING SESSION</p><h2 id="publishModalTitle">Open posting pages</h2></div><button class="close-button" type="button" data-close-publish aria-label="Close">×</button></div><div class="publish-preview"><small>CAPTION TO COPY</small><p id="publishCaptionPreview"></p></div><div class="publish-media-reference" id="publishMediaReference" hidden><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m4 17 5-5 3.5 3.5 2-2L20 19"/></svg></span><div><strong id="publishMediaName">Selected media</strong><small>Open or download this file, then attach it on each network.</small></div><button id="openPublishMediaButton" type="button">Open media</button></div><div class="publish-actions"><button class="button button-primary" id="openAllButton" type="button">Copy caption & open all pages</button><button class="button button-outline" id="copyOnlyButton" type="button">Copy caption only</button></div><div class="publish-results" id="publishResults"></div><p class="publish-note"><strong>Final step:</strong> review the account and content on each official network, attach the media file if required, and press Publish there.</p><div class="modal-footer"><button class="button button-outline" type="button" data-close-publish>Close</button><button class="button complete-button" id="markPublishedButton" type="button">Mark as published</button></div></section>
   </div>
@@ -222,6 +257,6 @@
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
   <script src="vendor/supabase.js"></script>
   <script src="config.js"></script>
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
