@@ -1,4 +1,4 @@
-# Tech Social CRM 3.2
+# Tech Social CRM 4.0
 
 **Where Tech Meets Social**
 
@@ -24,6 +24,14 @@ A secure social-media content CRM for Tech Lab.
 - Real-time notification bell and dedicated Notification Centre
 - Approval, request, inbox, due-soon and overdue alerts
 - Per-user synchronised read/unread status
+- Approval comments, decision reasons and full history
+- Recurring weekly/monthly draft generation
+- Drag-and-drop monthly and weekly calendar
+- Media folders, tags, archive and cleanup indicators
+- Content ideas board with convert-to-post workflow
+- Activity log and downloadable analytics
+- Company defaults and branding settings
+- Daily 30-day metadata backup snapshots
 - Version checker with release history and numbered changes
 - Shared information and content-approval requests
 - Manual social inbox with customer-message records and internal team notes
@@ -34,7 +42,7 @@ A secure social-media content CRM for Tech Lab.
 - No service-role key in the browser
 - Social-network passwords are never collected
 
-Start with **`SUPABASE_SETUP.md`**. Run **`supabase-setup.sql`** in the Supabase SQL Editor, then place the public Project URL and anon/publishable key in **`config.js`**.
+Start with **`SUPABASE_SETUP.md`**. Existing version 3.0 installations can add every version 4.0 feature by running **`supabase-v4-combined-migration.sql`** in the Supabase SQL Editor. The public Project URL and anon/publishable key remain in **`config.js`**.
 
 ## CRM features
 
