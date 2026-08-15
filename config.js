@@ -100,3 +100,5 @@ window.TECH_SOCIAL_CONFIG = {
   link.dataset.techSocialSidebar = '1';
   document.head.appendChild(link);
 })();
+
+/* Force-refresh marker: 2026-08-15 sidebar redesign deployment. */
