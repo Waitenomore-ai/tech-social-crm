@@ -78,3 +78,81 @@ window.TECH_SOCIAL_CONFIG = {
     });
   };
 })();
+
+/*
+ * Final fail-safe for the Meta Connect button.
+ *
+ * This runs in the capture phase, before app.js's normal click handler. It
+ * deliberately calls the deployed Edge Function itself, so even if an old
+ * Supabase FunctionsClient or stale app.js is still present in the browser,
+ * the Connect button cannot silently fall back to the old Facebook-only flow.
+ */
+(() => {
+  if (window.__TECH_SOCIAL_META_OAUTH_DIRECT__) return;
+  window.__TECH_SOCIAL_META_OAUTH_DIRECT__ = true;
+
+  const startDirectMetaOAuth = async (event) => {
+    const button = event.target?.closest?.('#connectMetaButton');
+    if (!button) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if (button.dataset.oauthBusy === '1') return;
+    button.dataset.oauthBusy = '1';
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Opening Meta…';
+
+    try {
+      const authClient = window.supabase.createClient(
+        window.TECH_SOCIAL_CONFIG.supabaseUrl,
+        window.TECH_SOCIAL_CONFIG.supabaseAnonKey,
+        { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
+      );
+
+      const { data: sessionData, error: sessionError } = await authClient.auth.getSession();
+      if (sessionError) throw sessionError;
+      const session = sessionData?.session;
+      if (!session?.access_token) {
+        throw new Error('Your Tech Social login session could not be found. Please sign in again.');
+      }
+
+      const returnUrl = `${window.location.origin}${window.location.pathname}`;
+      const response = await fetch(
+        `${window.TECH_SOCIAL_CONFIG.supabaseUrl.replace(/\/$/, '')}/functions/v1/meta-oauth-start`,
+        {
+          method: 'POST',
+          headers: {
+            apikey: window.TECH_SOCIAL_CONFIG.supabaseAnonKey,
+            Authorization: `Bearer ${session.access_token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ returnUrl })
+        }
+      );
+
+      const text = await response.text();
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+
+      if (!response.ok || !data?.authorizationUrl) {
+        throw new Error(data?.error || data?.message || `Meta OAuth function returned HTTP ${response.status}`);
+      }
+
+      window.location.assign(data.authorizationUrl);
+    } catch (error) {
+      button.disabled = false;
+      button.dataset.oauthBusy = '0';
+      button.textContent = originalText;
+      const message = error?.message || 'Could not start Meta connection.';
+      if (typeof window.toast === 'function') {
+        window.toast(message, true);
+      } else {
+        window.alert(message);
+      }
+    }
+  };
+
+  document.addEventListener('click', startDirectMetaOAuth, true);
+})();
