@@ -1,6 +1,6 @@
 {
-  "version": "5.0",
+  "version": "5.1",
   "released": "2026-08-15",
-  "title": "Sidebar visual redesign and navigation cleanup",
-  "changes": 6
+  "title": "Final sidebar icon cleanup",
+  "changes": 1
 }
