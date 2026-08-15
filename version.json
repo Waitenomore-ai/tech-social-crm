@@ -1,6 +1,6 @@
 {
-  "version": "2.1",
+  "version": "2.2",
   "released": "2026-08-14",
-  "title": "Meta webhook connector foundation",
-  "changes": 4
+  "title": "Post management controls",
+  "changes": 1
 }
