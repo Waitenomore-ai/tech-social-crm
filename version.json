@@ -1,6 +1,6 @@
 {
-  "version": "5.1",
+  "version": "5.2",
   "released": "2026-08-15",
-  "title": "Final sidebar icon cleanup",
+  "title": "Version display synchronisation",
   "changes": 1
 }
