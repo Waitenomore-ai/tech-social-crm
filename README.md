@@ -1,4 +1,4 @@
-# Tech Social CRM 3.0
+# Tech Social CRM 3.1
 
 **Where Tech Meets Social**
 
@@ -37,6 +37,8 @@ Start with **`SUPABASE_SETUP.md`**. Run **`supabase-setup.sql`** in the Supabase
 
 - Dashboard with content, due, scheduled and published totals
 - Monthly publishing calendar
+- Reusable post templates with captions, hashtags, channels and campaigns
+- Create templates directly from the post editor
 - Social post records with captions, links, hashtags and internal notes
 - Workflow statuses: Draft, Awaiting approval, Scheduled, Ready and Published
 - Campaign management

@@ -40,7 +40,9 @@ Then run `supabase-v2-migration.sql`. This adds profile updates, team informatio
 
 For Meta webhooks and publishing, run `supabase-meta-webhooks-migration.sql` and `supabase-meta-publishing-migration.sql`, then deploy the supplied Edge Functions.
 
-For version 3.0 roles, run `supabase-v3-roles-migration.sql` last. It promotes the oldest approved user to Administrator if no administrator exists.
+For version 3.0 roles, run `supabase-v3-roles-migration.sql`. It promotes the oldest approved user to Administrator if no administrator exists.
+
+For version 3.1 templates, run `supabase-v3.1-templates-migration.sql` after the roles migration.
 
 ## 3. Configure email/password authentication
 
