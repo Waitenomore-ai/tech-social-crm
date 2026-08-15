@@ -101,4 +101,14 @@ window.TECH_SOCIAL_CONFIG = {
   document.head.appendChild(link);
 })();
 
+/* Load the deployed version 5.0 display patch. */
+(() => {
+  if (document.querySelector('script[data-tech-social-version]')) return;
+  const script = document.createElement('script');
+  script.src = `version-5.0-patch.js?v=${Date.now()}`;
+  script.defer = true;
+  script.dataset.techSocialVersion = '1';
+  document.head.appendChild(script);
+})();
+
 /* Force-refresh marker: 2026-08-15 sidebar redesign deployment. */
