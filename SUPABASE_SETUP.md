@@ -36,7 +36,9 @@ The SQL enables Row Level Security. Signing in is not enough to read CRM records
 
 After the main SQL succeeds, create another SQL Editor query and run the complete contents of `supabase-media-migration.sql`. This creates the private Storage bucket, compressed-media metadata table, post relationship, Row Level Security policies and live updates.
 
-Then run `supabase-v2-migration.sql`. This adds profile updates, team information and approval requests, shared social-inbox conversations, internal team notes and their real-time security policies. Run both migrations before uploading the version 2.0 app files.
+Then run `supabase-v2-migration.sql`. This adds profile updates, team information and approval requests, shared social-inbox conversations, internal team notes and their real-time security policies.
+
+For version 2.1 Meta webhooks, run `supabase-meta-webhooks-migration.sql`, deploy the `meta-webhook` Edge Function, and follow `META_WEBHOOK_SETUP.md`.
 
 ## 3. Configure email/password authentication
 

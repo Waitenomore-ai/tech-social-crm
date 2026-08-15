@@ -1,6 +1,6 @@
 {
-  "version": "2.0",
+  "version": "2.1",
   "released": "2026-08-14",
-  "title": "Team collaboration and application management",
-  "changes": 10
+  "title": "Meta webhook connector foundation",
+  "changes": 4
 }

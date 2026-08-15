@@ -1,4 +1,4 @@
-# Tech Social CRM 2.0
+# Tech Social CRM 2.1
 
 **Where Tech Meets Social**
 
@@ -44,7 +44,7 @@ Start with **`SUPABASE_SETUP.md`**. Run **`supabase-setup.sql`** in the Supabase
 
 This no-developer-account version cannot publish automatically in the background. It opens each social network's official composer for final confirmation. Social passwords are never collected or stored.
 
-The version 2.0 social inbox stores manual customer-message records and internal team notes. Automatic private-message imports require approved platform APIs, OAuth apps and webhooks; the database is structured so connectors can be added later.
+The social inbox stores manual customer-message records and internal team notes. Version 2.1 adds the first automatic connector foundation for verified Facebook Messenger and Instagram Professional message webhooks. Other platforms still require separate approved APIs and webhook functions.
 
 Media filenames can be kept as a reference, but browsers do not allow one website to insert the local file into another website. Select the same media again on the official publishing page.
 
