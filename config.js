@@ -90,3 +90,13 @@ window.TECH_SOCIAL_CONFIG = {
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
 })();
+
+/* Load the sidebar visual layer after the base stylesheet. */
+(() => {
+  if (document.querySelector('link[data-tech-social-sidebar]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = `sidebar-redesign.css?v=${Date.now()}`;
+  link.dataset.techSocialSidebar = '1';
+  document.head.appendChild(link);
+})();
