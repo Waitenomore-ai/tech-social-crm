@@ -1,4 +1,4 @@
-# Tech Social CRM 2.1
+# Tech Social CRM 2.3
 
 **Where Tech Meets Social**
 
@@ -20,6 +20,10 @@ A secure social-media content CRM for Tech Lab.
 - Version checker with release history and numbered changes
 - Shared information and content-approval requests
 - Manual social inbox with customer-message records and internal team notes
+- Official Meta OAuth connection—no stored social passwords
+- Encrypted Meta tokens in Supabase Vault
+- Direct Facebook Page text/image publishing
+- Direct Instagram Professional image publishing
 - No service-role key in the browser
 - Social-network passwords are never collected
 

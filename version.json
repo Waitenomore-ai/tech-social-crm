@@ -1,6 +1,6 @@
 {
-  "version": "2.2",
+  "version": "2.3",
   "released": "2026-08-14",
-  "title": "Post management controls",
-  "changes": 1
+  "title": "Safe Meta OAuth and automatic publishing",
+  "changes": 5
 }
