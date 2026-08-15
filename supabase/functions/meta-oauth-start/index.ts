@@ -9,9 +9,12 @@ Deno.serve(async (request) => {
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const metaAppId = Deno.env.get("META_APP_ID") ?? "";
+  const metaConfigId = Deno.env.get("META_CONFIG_ID") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";
   const configuredReturnUrl = Deno.env.get("CRM_RETURN_URL") ?? "https://waitenomore-ai.github.io/tech-social-crm/";
-  if (!supabaseUrl || !adminKey || !metaAppId) return reply({ error: "Meta OAuth is not configured" }, 503);
+  if (!supabaseUrl || !adminKey || !metaAppId || !metaConfigId) {
+    return reply({ error: "Meta OAuth is not configured. META_APP_ID, META_CONFIG_ID and the server key are required." }, 503);
+  }
 
   const authorization = request.headers.get("authorization") ?? "";
   const jwt = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
@@ -48,21 +51,17 @@ Deno.serve(async (request) => {
   if (stateInsert.error) return reply({ error: stateInsert.error.message }, 500);
 
   const redirectUri = `${supabaseUrl}/functions/v1/meta-oauth-callback`;
-  const scopes = [
-    "pages_show_list",
-    "pages_read_engagement",
-    "pages_manage_posts",
-    "pages_manage_metadata",
-    "business_management",
-    "instagram_basic",
-    "instagram_content_publish",
-  ];
+
+  // Tech Social uses Meta's Facebook Login for Business flow. Meta's current
+  // business-login flow uses a configuration ID to define the requested
+  // business assets and permissions; do not send a classic scope-only login.
   const params = new URLSearchParams({
     client_id: metaAppId,
     redirect_uri: redirectUri,
     state,
     response_type: "code",
-    scope: scopes.join(","),
+    config_id: metaConfigId,
+    override_default_response_type: "true",
   });
 
   return reply({
