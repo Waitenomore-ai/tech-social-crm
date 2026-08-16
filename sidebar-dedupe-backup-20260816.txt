@@ -1,0 +1,1 @@
+Backup marker for sidebar dedupe fix. Restore point is GitHub commit immediately before sidebar duplicate cleanup enhancement.
