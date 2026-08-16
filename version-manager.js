@@ -83,7 +83,7 @@
     window.renderSettings = function (...args) {
       const result = originalRenderSettings.apply(this, args);
       Promise.resolve(result).finally(() => {
-        const versionPane = document.querySelector('[data-settings-pane="version"]');
+        const versionPane = document.querySelector('[data-settings-pane="versions"]');
         if (versionPane && !versionPane.hidden) refresh(false);
       });
       return result;
