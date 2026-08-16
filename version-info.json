@@ -1,55 +1,30 @@
 {
   "product": "Tech Social CRM",
   "current": {
-    "version": "7.0",
+    "version": "9.0",
     "date": "16 August 2026",
-    "summary": "Social Enquiries / Leads workflow release with full lead management and follow-up controls.",
+    "summary": "Integrated Content Calendar release with campaign filtering and realtime calendar updates.",
     "changes": [
-      "Added Social Enquiries / Leads management workflow",
-      "Added New → Contacted → Interested → Customer → Lost status pipeline",
-      "Added lead source, contact details, enquiry and campaign tracking",
-      "Added lead search and status/segment filtering",
-      "Added lead management editor",
-      "Added staff assignment and follow-up date tracking",
-      "Added lead notes and editable enquiry details",
-      "Added Convert to Customer workflow",
-      "Added shared lead history and status-change audit trail",
-      "Added repair-lead CSV export and existing temporary Tech Lab CRM handoff",
-      "Added safe V5 lead-workflow database migration",
-      "Meta/Facebook/Instagram publishing remains intentionally unchanged"
+      "Added integrated Month, Week and Day content calendar views",
+      "Added platform filtering",
+      "Added content status filtering",
+      "Added campaign filtering linked to campaign records",
+      "Added scheduled date and time visibility",
+      "Added drag-and-drop post rescheduling",
+      "Added direct calendar editing/new-post workflow",
+      "Added realtime post and campaign refresh",
+      "Linked calendar activity to campaign attribution",
+      "Kept Meta publishing/OAuth unchanged"
     ]
   },
   "history": [
-    {
-      "version": "7.0",
-      "date": "16 August 2026",
-      "summary": "Social Enquiries / Leads workflow release.",
-      "changes": ["Lead pipeline","Lead management","Source tracking","Search and filters","Staff assignment","Follow-up dates","Lead notes","Convert to Customer","Shared history","Repair-lead export","Lead workflow migration"]
-    },
-    {
-      "version": "6.2",
-      "date": "16 August 2026",
-      "summary": "Discord moved into Social Accounts as a first-class connection.",
-      "changes": ["Discord Social Accounts card","Connect Discord button","Test connection button","Disconnect control","Local webhook storage","Meta publishing unchanged"]
-    },
-    {
-      "version": "6.1",
-      "date": "16 August 2026",
-      "summary": "Discord webhook notification integration.",
-      "changes": ["Discord webhook connection settings","Local webhook storage","Test notification","Disconnect control","Reusable CRM notification helper","Meta publishing unchanged"]
-    },
-    {
-      "version": "6.0",
-      "date": "16 August 2026",
-      "summary": "Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.",
-      "changes": ["Integrated Social Leads and Enquiries","Integrated customer segmentation","Integrated Google Review Management","Integrated temporary repair-lead CSV and email handoff","Integrated Campaign Attribution","Integrated Monthly Marketing Reporting","Integrated Follow-up Campaigns","Central Version 6.0 manifest refresh","Protected pre-integration backup checkpoint","Meta/Facebook/Instagram publishing intentionally deferred until Monday"]
-    },
-    {
-      "version": "5.0",
-      "date": "16 August 2026",
-      "summary": "Version 5 marketing foundation and supporting CRM workflow updates.",
-      "changes": ["Content Calendar and publishing planning","Content / Media Library","Content Approval workflow","Content Ideas","Google Review Management and review-request queue","Social Enquiries / Leads","Temporary repair-lead CSV handoff","Temporary repair email handoff","Customer Segments","Campaign Attribution","Monthly Marketing Reports","Meta publishing intentionally deferred","Central automatic version refresh"]
-    },
+    {"version":"9.0","date":"16 August 2026","summary":"Integrated Content Calendar release.","changes":["Month/Week/Day views","Platform filter","Status filter","Campaign filter","Scheduled content","Drag-and-drop rescheduling","Calendar editing","Realtime refresh","Campaign integration","Meta unchanged"]},
+    {"version":"8.0","date":"16 August 2026","summary":"Campaign Management and Attribution release.","changes":["Campaign creation","Campaign dates and status","Campaign ownership","Post linking","Lead linking","Follow-up linking","Customer attribution","Revenue attribution","Campaign history","Campaign reporting"]},
+    {"version":"7.0","date":"16 August 2026","summary":"Social Enquiries / Leads workflow release.","changes":["Lead pipeline","Lead management","Source tracking","Search and filters","Staff assignment","Follow-up dates","Lead notes","Convert to Customer","Shared history","Repair-lead export","Lead workflow migration"]},
+    {"version":"6.2","date":"16 August 2026","summary":"Discord moved into Social Accounts as a first-class connection.","changes":["Discord Social Accounts card","Connect Discord button","Test connection button","Disconnect control","Local webhook storage","Meta publishing unchanged"]},
+    {"version":"6.1","date":"16 August 2026","summary":"Discord webhook notification integration.","changes":["Discord webhook connection settings","Local webhook storage","Test notification","Disconnect control","Reusable CRM notification helper","Meta publishing unchanged"]},
+    {"version":"6.0","date":"16 August 2026","summary":"Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.","changes":["Integrated Social Leads and Enquiries","Integrated customer segmentation","Integrated Google Review Management","Integrated temporary repair-lead CSV and email handoff","Integrated Campaign Attribution","Integrated Monthly Marketing Reporting","Integrated Follow-up Campaigns","Central Version 6.0 manifest refresh","Protected pre-integration backup checkpoint","Meta/Facebook/Instagram publishing intentionally deferred until Monday"]},
+    {"version":"5.0","date":"16 August 2026","summary":"Version 5 marketing foundation and supporting CRM workflow updates.","changes":["Content Calendar and publishing planning","Content / Media Library","Content Approval workflow","Content Ideas","Google Review Management and review-request queue","Social Enquiries / Leads","Temporary repair-lead CSV handoff","Temporary repair email handoff","Customer Segments","Campaign Attribution","Monthly Marketing Reports","Meta publishing intentionally deferred","Central automatic version refresh"]},
     {"version":"4.3","date":"14 August 2026","summary":"In-app update installer and stable CRM release.","changes":["Added Check for updates and Update now controls","Maintained the shared content, team and system workspace"]},
     {"version":"4.2","date":"14 August 2026","summary":"Sidebar organisation and team accountability.","changes":["Reorganised navigation into collapsible groups","Personalised the workspace card","Added login history and change records"]},
     {"version":"4.1","date":"14 August 2026","summary":"Streamlined dashboard layout.","changes":["Removed the large dashboard hero card"]},
