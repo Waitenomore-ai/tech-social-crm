@@ -33,3 +33,49 @@
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
+
+/* Restore the welcome message on the CRM starting/dashboard page */
+#dashboardView .welcome-row {
+  display: flex !important;
+  position: relative !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  min-height: 150px !important;
+  margin: 0 0 18px !important;
+  padding: 30px 34px !important;
+  color: #fff !important;
+  background: linear-gradient(105deg, #df0000 0%, #ed343b 52%, #fa777c 100%) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 30px rgba(227, 6, 19, .12) !important;
+  overflow: hidden !important;
+}
+
+#dashboardView .welcome-row > div {
+  min-width: 0 !important;
+}
+
+#dashboardView .welcome-row > div > p {
+  margin: 0 0 10px !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.4px !important;
+}
+
+#dashboardView .welcome-row h2 {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(30px, 3.2vw, 45px) !important;
+  line-height: 1.08 !important;
+  font-weight: 850 !important;
+  letter-spacing: -1.2px !important;
+}
+
+#dashboardView .welcome-row > div > span {
+  display: none !important;
+}
+
+#dashboardView .welcome-row .workspace-status {
+  display: none !important;
+}
