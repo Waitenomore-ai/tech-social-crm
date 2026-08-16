@@ -7,81 +7,67 @@
   if (!CONFIG || !window.supabase?.createClient) return;
   const client = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseAnonKey, {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   let campaignFilter='all';
-  let campaigns=[];
+  let campaignMap=new Map();
+  let postCampaignMap=new Map();
   let channel=null;
   const esc=v=>String(v??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-  async function loadCampaigns(){
+  async function loadData(){
     try {
-      const {data,error}=await client.from('campaigns').select('id,name,status').order('name');
-      if(error) return;
-      campaigns=data||[];
+      const [{data:campaigns,error:campaignError},{data:posts,error:postError}]=await Promise.all([
+        client.from('campaigns').select('id,name,status').order('name'),
+        client.from('posts').select('id,campaign_id')
+      ]);
+      if(!campaignError)campaignMap=new Map((campaigns||[]).map(c=>[String(c.id),c]));
+      if(!postError)postCampaignMap=new Map((posts||[]).map(p=>[String(p.id),p.campaign_id?String(p.campaign_id):'']));
       const select=document.querySelector('#v9CampaignFilter');
-      if(!select)return;
-      const current=campaignFilter;
-      select.innerHTML='<option value="all">All campaigns</option>'+campaigns.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
-      select.value=campaigns.some(c=>String(c.id)===String(current))?current:'all';
+      if(select){
+        const current=campaignFilter;
+        select.innerHTML='<option value="all">All campaigns</option>'+Array.from(campaignMap.values()).map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+        select.value=campaignMap.has(String(current))?current:'all';
+      }
     } catch(_) {}
   }
 
   function addCampaignFilter(){
     const toolbar=document.querySelector('.calendar-toolbar');
-    if(!toolbar)return;
-    if(toolbar.querySelector('#v9CampaignFilter'))return;
+    if(!toolbar || toolbar.querySelector('#v9CampaignFilter'))return;
     const controls=toolbar.querySelector('.v5-calendar-controls')||toolbar;
     const select=document.createElement('select');
     select.id='v9CampaignFilter';
     select.title='Filter calendar by campaign';
     select.innerHTML='<option value="all">All campaigns</option>';
     controls.appendChild(select);
-    select.addEventListener('change',()=>{campaignFilter=select.value;filterCalendar()});
-    loadCampaigns();
+    select.addEventListener('change',()=>{campaignFilter=select.value;applyFilter()});
   }
 
-  function filterCalendar(){
+  function applyFilter(){
     document.querySelectorAll('[data-v5-post]').forEach(node=>{
-      if(campaignFilter==='all'){node.style.display='';return;}
-      const postId=node.dataset.v5Post;
-      const postCampaign=document.querySelector(`[data-calendar-campaign="${CSS.escape(postId)}"]`)?.dataset.campaignId;
-      node.style.display=String(postCampaign||'')===String(campaignFilter)?'':'none';
+      const id=String(node.dataset.v5Post||'');
+      const matches=campaignFilter==='all'||String(postCampaignMap.get(id)||'')===String(campaignFilter);
+      node.style.display=matches?'':'none';
     });
-    // Existing calendar owns the data query/rendering. Re-render after filter change so
-    // hidden empty days remain structurally correct.
-    window.techSocialV5Calendar?.refresh?.();
   }
 
   async function refresh(){
-    await loadCampaigns();
-    window.techSocialV5Calendar?.refresh?.();
-    filterCalendar();
+    await loadData();
+    addCampaignFilter();
+    applyFilter();
   }
 
   function subscribe(){
     if(channel)return;
-    channel=client.channel('v9-calendar-posts');
+    channel=client.channel('v9-calendar-realtime');
     channel.on('postgres_changes',{event:'*',schema:'public',table:'posts'},()=>refresh());
     channel.on('postgres_changes',{event:'*',schema:'public',table:'campaigns'},()=>refresh());
     channel.subscribe();
   }
 
-  function addCampaignMetadata(){
-    document.querySelectorAll('[data-v5-post]').forEach(node=>{
-      const id=node.dataset.v5Post;
-      if(node.dataset.calendarCampaignReady)return;
-      const original=node.getAttribute('data-campaign-id');
-      if(original){
-        node.dataset.calendarCampaign= id;
-        node.dataset.calendarCampaignReady='1';
-      }
-    });
-  }
-
   function boot(){
     addCampaignFilter();
-    addCampaignMetadata();
+    refresh();
     subscribe();
-    loadCampaigns();
-    const observer=new MutationObserver(()=>{addCampaignFilter();addCampaignMetadata();});
+    const observer=new MutationObserver(()=>{addCampaignFilter();applyFilter();});
     observer.observe(document.body,{childList:true,subtree:true});
     window.techSocialV9Calendar={refresh};
   }
