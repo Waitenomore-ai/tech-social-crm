@@ -1,0 +1,4 @@
+Rollback checkpoint for the broken V10.1 dashboard/sidebar optimization.
+
+Known-good base: commit 42766398e7c2217a8660ed4b79aefebab20d928c (V10.0).
+The V10.1 dashboard optimization files and loader changes are being removed because the deployed app is stuck on the Opening Tech Social CRM loader.
