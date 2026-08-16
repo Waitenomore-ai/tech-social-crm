@@ -67,6 +67,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v5-media.js','techSocialV5Media');
+    loadScript('v5-approval.js','techSocialV5Approval');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
