@@ -68,6 +68,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v5-media.js','techSocialV5Media');
     loadScript('v5-approval.js','techSocialV5Approval');
+    loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
