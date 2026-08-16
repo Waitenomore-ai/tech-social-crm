@@ -58,6 +58,7 @@ window.TECH_SOCIAL_CONFIG = {
   const load=()=>{
     loadScript('marketing.js','techSocialMarketing');
     if(!document.querySelector('link[data-tech-social-sidebar]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`sidebar-redesign.css?v=${Date.now()}`;link.dataset.techSocialSidebar='1';document.head.appendChild(link);}
+    if(!document.querySelector('link[data-v10-dashboard-cleanup]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`v10.4-dashboard-cleanup.css?v=${Date.now()}`;link.dataset.v10DashboardCleanup='1';document.head.appendChild(link);}
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v9-calendar-integration.js','techSocialV9Calendar');
