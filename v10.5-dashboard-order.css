@@ -1,6 +1,8 @@
-/* V10.5 — place Recent Activity above Upcoming Content. */
+/* V10.6 — dashboard order correction.
+   Keep the four summary cards above the content panels.
+   Restore Recent Activity below Upcoming Content. */
 #dashboardView{display:flex;flex-direction:column;}
 #dashboardView .welcome-row{order:1;}
 #dashboardView .stats-grid{order:2;}
-#dashboardView .recent-panel{order:3;margin-top:15px;}
-#dashboardView .dashboard-grid{order:4;}
+#dashboardView .dashboard-grid{order:3;}
+#dashboardView .recent-panel{order:4;margin-top:15px;}
