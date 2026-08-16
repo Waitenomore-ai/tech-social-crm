@@ -1,7 +1,8 @@
 {
   "product":"Tech Social CRM",
-  "current":{"version":"10.8","date":"16 August 2026","summary":"Dashboard cleanup: removed Upcoming Content / Publishing schedule panel.","changes":["Removed Upcoming Content dashboard panel","Removed Publishing schedule dashboard panel"]},
+  "current":{"version":"11.0","date":"16 August 2026","summary":"Multi-layout dashboard release with Platform Hub as the default view.","changes":["Platform Hub default dashboard","Overview First layout","Focus on Performance layout","Activity First layout","Executive Summary layout","Dashboard layout dropdown","Per-browser layout preference","Shared CRM data across every layout","Responsive dashboard layouts","Quick actions across layouts"]},
   "history":[
+    {"version":"11.0","date":"16 August 2026","summary":"Multi-layout dashboard release with Platform Hub as the default view.","changes":["Platform Hub default dashboard","Overview First layout","Focus on Performance layout","Activity First layout","Executive Summary layout","Dashboard layout dropdown","Per-browser layout preference","Shared CRM data across every layout","Responsive dashboard layouts","Quick actions across layouts"]},
     {"version":"10.8","date":"16 August 2026","summary":"Dashboard cleanup: removed Upcoming Content / Publishing schedule panel.","changes":["Removed Upcoming Content dashboard panel","Removed Publishing schedule dashboard panel"]},
     {"version":"10.7","date":"16 August 2026","summary":"Dashboard intro moved above content cards.","changes":["SUNDAY 16 AUGUST heading","Good afternoon greeting","Social content introduction above cards"]},
     {"version":"10.6","date":"16 August 2026","summary":"Dashboard order correction: summary cards remain above the content panels and Recent Activity is restored below Upcoming Content.","changes":["Four dashboard summary cards kept above content panels","Recent Activity / Latest posts restored below Upcoming Content / Publishing schedule"]},
