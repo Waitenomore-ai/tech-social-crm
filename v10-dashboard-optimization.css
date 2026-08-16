@@ -1,0 +1,18 @@
+/* V10.1 compact dashboard layout */
+.dashboard-network-strip{display:flex;align-items:stretch;gap:10px;padding:10px 28px;border-bottom:1px solid var(--line,#e8e8eb);background:var(--surface,#fff);overflow-x:auto}
+.dashboard-network-strip .mini-accounts{display:flex;align-items:stretch;gap:10px;width:100%;min-width:max-content}
+.dashboard-network-strip .mini-account{flex:1 1 0;min-width:145px;display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--line,#e8e8eb);border-radius:10px;background:#fff}
+.dashboard-network-strip .mini-account > span:first-child,.dashboard-network-strip .mini-account .mini-account-icon{flex:0 0 auto}
+.dashboard-network-strip .mini-account strong{font-size:12px;line-height:1.15}
+.dashboard-network-strip .mini-account small{font-size:10px;line-height:1.2}
+.dashboard-network-strip .mini-account .ready,.dashboard-network-strip .mini-account .status-dot{margin-left:auto}
+.dashboard-content-row{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.dashboard-compact-panel{min-height:0!important}
+.dashboard-compact-panel .panel-heading{padding:14px 16px 10px}
+.dashboard-compact-panel .panel-heading p{font-size:10px;letter-spacing:.09em;margin:0 0 2px}
+.dashboard-compact-panel .panel-heading h3{font-size:16px;margin:0}
+.dashboard-compact-panel .upcoming-list{max-height:270px;overflow:auto}
+.dashboard-compact-panel .table-wrap{max-height:270px;overflow:auto}
+.dashboard-compact-panel .table-wrap table{font-size:12px}
+.dashboard-network-strip[hidden]{display:none!important}
+@media (max-width:900px){.dashboard-content-row{grid-template-columns:1fr!important}.dashboard-network-strip{padding:8px 14px}.dashboard-network-strip .mini-account{min-width:135px}}
