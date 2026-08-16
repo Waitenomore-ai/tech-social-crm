@@ -64,7 +64,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-media.js','techSocialV5Media');
     loadScript('v10-media-integration.js','techSocialV10Media');
     loadScript('v5-approval.js','techSocialV5Approval');
-    loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
+    /* Sidebar navigation is defined directly in index.html. Do not mutate it at runtime. */
     loadScript('v5-integration.js','techSocialV5Integration');
     loadScript('lead-workflow.js','techSocialLeadWorkflow');
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
