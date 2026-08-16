@@ -1,0 +1,5 @@
+Backup checkpoint before Social Enquiries / Leads workflow enhancement.
+
+Current main commit: d20e2b38e88de91e3b1d3774963029123f63d246
+
+This marker records the exact pre-change GitHub state so the lead workflow can be rolled back independently.
