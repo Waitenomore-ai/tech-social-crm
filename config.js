@@ -70,6 +70,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
     loadScript('v5-integration.js','techSocialV5Integration');
+    loadScript('discord-webhook.js','techSocialDiscordWebhook');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
