@@ -36,7 +36,9 @@
   }
 
   function setCurrentVersion(version) {
-    document.querySelectorAll('.settings-version-chip').forEach(el => el.textContent = `Version ${version}`);
+    const label = `Version ${version}`;
+    document.querySelectorAll('.settings-version-chip').forEach(el => el.textContent = label);
+    document.querySelectorAll('.version-nav-badge').forEach(el => el.textContent = `v${version}`);
     document.querySelectorAll('.version-hero h3').forEach(el => el.innerHTML = `Tech Social <em>${esc(version)}</em>`);
     document.querySelectorAll('footer span:last-child').forEach(el => el.innerHTML = `<i></i> Version ${esc(version)} · Supabase secured`);
     document.title = `Tech Social CRM — v${version}`;
