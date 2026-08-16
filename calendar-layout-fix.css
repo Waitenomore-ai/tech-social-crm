@@ -51,65 +51,196 @@
   overflow: hidden !important;
 }
 
-#dashboardView .welcome-row > div {
-  min-width: 0 !important;
-}
+#dashboardView .welcome-row > div { min-width: 0 !important; }
+#dashboardView .welcome-row > div > p { margin: 0 0 10px !important; color: #fff !important; font-size: 11px !important; font-weight: 800 !important; letter-spacing: 1.4px !important; }
+#dashboardView .welcome-row h2 { margin: 0 !important; color: #fff !important; font-size: clamp(30px, 3.2vw, 45px) !important; line-height: 1.08 !important; font-weight: 850 !important; letter-spacing: -1.2px !important; }
+#dashboardView .welcome-row > div > span,
+#dashboardView .welcome-row .workspace-status { display: none !important; }
 
-#dashboardView .welcome-row > div > p {
-  margin: 0 0 10px !important;
-  color: #fff !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  letter-spacing: 1.4px !important;
-}
+/* Compact post-template filters: prevent intrinsic SVG dimensions from stretching controls */
+#templatesView .filter-bar { display: flex !important; align-items: center !important; gap: 8px !important; height: 42px !important; min-height: 42px !important; width: 100% !important; }
+#templatesView .filter-bar .list-search { height: 42px !important; min-height: 42px !important; flex: 1 1 auto !important; min-width: 0 !important; align-items: center !important; }
+#templatesView .filter-bar .list-search svg { width: 18px !important; height: 18px !important; min-width: 18px !important; flex: 0 0 18px !important; }
+#templatesView .filter-bar select { height: 42px !important; min-height: 42px !important; width: 140px !important; min-width: 140px !important; flex: 0 0 140px !important; box-sizing: border-box !important; }
 
-#dashboardView .welcome-row h2 {
-  margin: 0 !important;
-  color: #fff !important;
-  font-size: clamp(30px, 3.2vw, 45px) !important;
-  line-height: 1.08 !important;
-  font-weight: 850 !important;
-  letter-spacing: -1.2px !important;
-}
+/* ===== CRM PROFESSIONAL POLISH ===== */
 
-#dashboardView .welcome-row > div > span {
-  display: none !important;
-}
-
-#dashboardView .welcome-row .workspace-status {
-  display: none !important;
-}
-
-/* Compact post-template filters: prevent the search SVG's intrinsic size from stretching the boxes */
-#templatesView .filter-bar {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  width: 100% !important;
-}
-
-#templatesView .filter-bar .list-search {
-  height: 42px !important;
-  min-height: 42px !important;
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  align-items: center !important;
-}
-
-#templatesView .filter-bar .list-search svg {
+/* Keep interface icons visually consistent instead of allowing SVG intrinsic sizes to leak into layout. */
+.nav-item svg,
+.sidebar-group-toggle svg,
+.global-search svg,
+.notification-bell svg,
+.user-chip > svg,
+.button svg,
+.text-button svg,
+.close-button svg,
+.mobile-menu svg,
+.settings-tabs svg,
+.list-search svg,
+.filter-bar svg,
+.panel-heading svg,
+.view-heading svg,
+.modal-header svg,
+.form-side svg,
+.form-main svg,
+.account-card svg,
+.campaign-card svg,
+.template-card svg,
+.media-card svg,
+.queue-actions svg,
+.post-row-actions svg,
+.notification-item svg,
+.request-card svg,
+.activity-row svg,
+.backup-row svg {
   width: 18px !important;
   height: 18px !important;
-  min-width: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
   flex: 0 0 18px !important;
 }
 
-#templatesView .filter-bar select {
-  height: 42px !important;
+.nav-item svg { width: 19px !important; height: 19px !important; flex-basis: 19px !important; }
+.sidebar-group-toggle svg { width: 14px !important; height: 14px !important; flex-basis: 14px !important; }
+.notification-bell svg { width: 20px !important; height: 20px !important; flex-basis: 20px !important; }
+.mobile-menu svg { width: 19px !important; height: 19px !important; flex-basis: 19px !important; }
+.button svg { width: 16px !important; height: 16px !important; flex-basis: 16px !important; }
+.close-button svg { width: 15px !important; height: 15px !important; flex-basis: 15px !important; }
+
+/* Prevent images/icons inside cards from becoming layout-sized artwork. */
+.empty-state > span svg { width: 25px !important; height: 25px !important; flex-basis: 25px !important; }
+.network-badge svg { width: 16px !important; height: 16px !important; flex-basis: 16px !important; }
+.privacy-note > span svg { width: 16px !important; height: 16px !important; flex-basis: 16px !important; }
+
+/* Consistent control height, typography and spacing across pages. */
+.filter-bar select,
+.filter-bar > button,
+.list-search,
+.settings-form input,
+.settings-form select,
+.form-side input,
+.form-side select,
+.form-main input,
+.small-modal input,
+.small-modal textarea {
   min-height: 42px !important;
-  width: 140px !important;
-  min-width: 140px !important;
-  flex: 0 0 140px !important;
   box-sizing: border-box !important;
+}
+
+.filter-bar select,
+.filter-bar > button {
+  padding: 0 12px !important;
+  line-height: 42px !important;
+}
+
+.list-search { padding: 0 12px !important; }
+.list-search input { min-width: 0 !important; line-height: 1.2 !important; }
+
+/* Make reusable template cards compact and balanced rather than tall empty tiles. */
+#templatesView .template-grid {
+  align-items: start !important;
+  grid-auto-rows: minmax(0, auto) !important;
+}
+#templatesView .template-card {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 16px !important;
+  overflow: hidden !important;
+}
+#templatesView .template-card > * { min-width: 0 !important; }
+#templatesView .template-card svg { width: 18px !important; height: 18px !important; }
+
+/* Professional card treatment: restrained borders, subtle lift, consistent corners. */
+.panel,
+.library-panel,
+.template-panel,
+.media-panel,
+.notification-centre-panel,
+.requests-panel,
+.activity-panel,
+.backups-panel,
+.campaign-card,
+.account-card,
+.template-card,
+.media-card,
+.queue-card,
+.notification-item,
+.request-card,
+.activity-row,
+.backup-row {
+  box-shadow: 0 2px 10px rgba(16,24,40,.025) !important;
+}
+
+.campaign-card:hover,
+.account-card:hover,
+.template-card:hover,
+.media-card:hover,
+.queue-card:hover,
+.notification-item:hover,
+.request-card:hover {
+  border-color: #d5dbe5 !important;
+  box-shadow: 0 8px 22px rgba(16,24,40,.055) !important;
+  transform: translateY(-1px);
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+/* Keep headings clean and prevent accidental collisions on smaller widths. */
+.view-heading > div,
+.panel-heading > div,
+.page-identity,
+.hero-copy { min-width: 0 !important; }
+.view-heading h2,
+.page-identity h1 { line-height: 1.12 !important; }
+
+/* Desktop dashboard hero: one clean line with a height driven by the content. */
+#dashboardView .dashboard-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 27px 31px !important;
+}
+#dashboardView .hero-copy h2 {
+  white-space: nowrap !important;
+  font-size: clamp(24px, 2.55vw, 42px) !important;
+  line-height: 1.08 !important;
+}
+
+/* Better focus states for keyboard/mouse accessibility. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(227,6,19,.35) !important;
+  outline-offset: 2px !important;
+}
+
+/* Stop long labels from colliding with badges/icons. */
+.nav-item > span,
+.workspace-chip strong,
+.workspace-chip small,
+.user-chip strong,
+.user-chip small,
+.account-card-top strong,
+.account-card-top small,
+.notification-copy strong,
+.notification-copy p,
+.request-copy strong,
+.request-copy p,
+.activity-row,
+.backup-row {
+  min-width: 0 !important;
+}
+
+/* Responsive safety: controls stay usable without creating oversized rows. */
+@media (max-width: 1000px) {
+  #dashboardView .hero-copy h2 { white-space: normal !important; }
+  .view-heading { align-items: flex-start !important; }
+  .top-actions { min-width: 0 !important; }
+}
+
+@media (max-width: 570px) {
+  #templatesView .filter-bar { height: auto !important; min-height: 0 !important; }
+  #templatesView .filter-bar select { width: auto !important; min-width: 0 !important; flex: 1 1 0 !important; }
+  #templatesView .template-card { padding: 14px !important; }
+  .button { min-height: 42px !important; }
 }
