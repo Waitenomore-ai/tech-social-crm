@@ -1,24 +1,97 @@
-/* Tech Social CRM v5.0 — Media Library workspace enhancement. */
+/* Tech Social CRM — Media Library visual redesign. Only affects the Media Library view. */
 (() => {
+  'use strict';
   if (window.__TECH_SOCIAL_V5_MEDIA__) return;
   window.__TECH_SOCIAL_V5_MEDIA__ = true;
-  const addStyles = () => {
-    if (document.querySelector('link[data-tech-social-v5-media]')) return;
-    const link = document.createElement('link'); link.rel='stylesheet'; link.href=`v5-media.css?v=${Date.now()}`; link.dataset.techSocialV5Media='1'; document.head.appendChild(link);
-  };
+
   const boot = () => {
-    addStyles();
-    const view=document.querySelector('#mediaView')||document.querySelector('[data-view="media"]');
-    if(!view||view.dataset.v5MediaReady==='1')return; view.dataset.v5MediaReady='1';
-    const heading=view.querySelector('.view-heading'),grid=document.querySelector('#mediaGrid'),search=document.querySelector('#mediaSearch'),type=document.querySelector('#mediaTypeFilter'),folder=document.querySelector('#mediaFolderFilter'),uploadButton=document.querySelector('#openMediaUploadButton'),input=document.querySelector('#mediaUploadInput');
-    if(!heading||!grid)return;
-    const toolbar=document.createElement('section'); toolbar.className='v5-media-toolbar panel'; toolbar.innerHTML=`<div class="v5-media-toolbar-main"><div><strong>Media workspace</strong><span>Keep photos, videos, graphics and logos ready for your next post.</span></div><div class="v5-media-actions"><button type="button" class="button button-outline" data-v5-media-filter="all">All media</button><button type="button" class="button button-outline" data-v5-media-filter="image">Photos & graphics</button><button type="button" class="button button-outline" data-v5-media-filter="video">Videos</button><button type="button" class="button button-primary" data-v5-media-upload>Upload media</button></div></div><div class="v5-media-drop" tabindex="0"><span>Drop files here</span><small>Images, video and graphics can be added to the existing media library.</small></div>`; heading.insertAdjacentElement('afterend',toolbar);
-    const refresh=()=>{const q=(search?.value||'').trim().toLowerCase(),selectedType=type?.value||'all';[...grid.children].forEach(card=>{const text=(card.textContent||'').toLowerCase(),cardType=(card.dataset.type||card.getAttribute('data-media-type')||'').toLowerCase(),matchesText=!q||text.includes(q),matchesType=selectedType==='all'||!cardType||cardType===selectedType||(selectedType==='image'&&['photo','graphic','image','logo'].includes(cardType));card.hidden=!(matchesText&&matchesType);});};
-    toolbar.querySelectorAll('[data-v5-media-filter]').forEach(button=>button.addEventListener('click',()=>{const value=button.dataset.v5MediaFilter;if(type)type.value=value==='all'?'all':value;refresh();}));
-    toolbar.querySelector('[data-v5-media-upload]')?.addEventListener('click',()=>uploadButton?.click()); search?.addEventListener('input',refresh); type?.addEventListener('change',refresh); folder?.addEventListener('change',refresh);
-    const drop=toolbar.querySelector('.v5-media-drop'),openFiles=files=>{if(!input||!files?.length)return;try{const dt=new DataTransfer();[...files].forEach(file=>dt.items.add(file));input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}));}catch{} uploadButton?.click();};
-    ['dragenter','dragover'].forEach(n=>drop?.addEventListener(n,e=>{e.preventDefault();drop.classList.add('is-dragging');})); ['dragleave','drop'].forEach(n=>drop?.addEventListener(n,e=>{e.preventDefault();drop.classList.remove('is-dragging');})); drop?.addEventListener('drop',e=>openFiles(e.dataTransfer.files)); drop?.addEventListener('click',()=>uploadButton?.click()); drop?.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();uploadButton?.click();}});
-    new MutationObserver(refresh).observe(grid,{childList:true,subtree:true}); refresh();
+    const view = document.querySelector('#mediaView') || document.querySelector('[data-view="media"]');
+    if (!view || view.dataset.referenceMediaReady === '1') return;
+
+    const heading = view.querySelector('.view-heading');
+    const stats = view.querySelector('.media-stats');
+    const panel = view.querySelector('.media-panel');
+    const filterBar = view.querySelector('.media-panel .filter-bar');
+    const grid = view.querySelector('#mediaGrid');
+    const empty = view.querySelector('#mediaEmpty');
+    const search = view.querySelector('#mediaSearch');
+    const type = view.querySelector('#mediaTypeFilter');
+    const folder = view.querySelector('#mediaFolderFilter');
+    const newFolder = view.querySelector('#newMediaFolderButton');
+    const upload = heading?.querySelector('[data-upload-media]');
+    if (!heading || !stats || !panel || !filterBar || !grid) return;
+
+    view.dataset.referenceMediaReady = '1';
+
+    const kicker = heading.querySelector('p');
+    const title = heading.querySelector('h2');
+    const subtitle = heading.querySelector('span');
+    if (kicker) kicker.textContent = 'MEDIA LIBRARY';
+    if (title) title.textContent = 'Media Library';
+    if (subtitle) subtitle.textContent = 'Manage and organise all your media files for social posts, campaigns and content.';
+
+    const shell = document.createElement('div');
+    shell.className = 'reference-media-layout';
+
+    const toolbar = document.createElement('section');
+    toolbar.className = 'reference-media-toolbar panel';
+    toolbar.appendChild(filterBar);
+    if (upload) {
+      toolbar.appendChild(upload);
+      upload.classList.add('reference-media-upload');
+    }
+    if (newFolder) newFolder.hidden = true;
+
+    const overview = document.createElement('section');
+    overview.className = 'reference-media-overview';
+    overview.innerHTML = `
+      <div class="reference-section-title">Media Overview</div>
+      <div class="reference-stat-grid">
+        <article class="reference-stat reference-stat-files"><span class="reference-stat-icon">▧</span><div><strong data-ref-stat="files">0</strong><small>Total files</small></div></article>
+        <article class="reference-stat reference-stat-images"><span class="reference-stat-icon">▣</span><div><strong data-ref-stat="images">0</strong><small>Images</small></div></article>
+        <article class="reference-stat reference-stat-videos"><span class="reference-stat-icon">▶</span><div><strong data-ref-stat="videos">0</strong><small>Videos</small></div></article>
+        <article class="reference-stat reference-stat-audio"><span class="reference-stat-icon">♪</span><div><strong data-ref-stat="audio">0</strong><small>Audio</small></div></article>
+        <article class="reference-stat reference-stat-other"><span class="reference-stat-icon">■</span><div><strong data-ref-stat="other">0</strong><small>Other files</small></div></article>
+      </div>`;
+
+    const recent = document.createElement('section');
+    recent.className = 'reference-recent panel';
+    recent.innerHTML = '<div class="reference-recent-heading"><div><strong>Recent Media</strong></div><button type="button" class="reference-view-all">View all media</button></div>';
+    recent.appendChild(grid);
+    if (empty) recent.appendChild(empty);
+
+    shell.append(toolbar, overview, recent);
+    heading.insertAdjacentElement('afterend', shell);
+
+    stats.hidden = true;
+    panel.hidden = true;
+
+    const sync = () => {
+      const cards = [...grid.querySelectorAll('.media-card')];
+      const visible = cards.filter(card => !card.hidden);
+      const files = visible.length;
+      const images = visible.filter(card => /IMAGE|JPG|PNG|WEBP/i.test(card.querySelector('.media-preview')?.textContent || '')).length;
+      const videos = visible.filter(card => /VIDEO|MP4|WEBM|MOV/i.test(card.querySelector('.media-preview')?.textContent || '')).length;
+      overview.querySelector('[data-ref-stat="files"]').textContent = files;
+      overview.querySelector('[data-ref-stat="images"]').textContent = images;
+      overview.querySelector('[data-ref-stat="videos"]').textContent = videos;
+      overview.querySelector('[data-ref-stat="audio"]').textContent = 0;
+      overview.querySelector('[data-ref-stat="other"]').textContent = Math.max(0, files - images - videos);
+    };
+
+    search?.addEventListener('input', sync);
+    type?.addEventListener('change', sync);
+    folder?.addEventListener('change', sync);
+    new MutationObserver(sync).observe(grid, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+    sync();
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+
+  const start = () => {
+    boot();
+    const observer = new MutationObserver(boot);
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
+  else start();
 })();
