@@ -29,6 +29,7 @@
     if (kicker) kicker.textContent = 'MEDIA LIBRARY';
     if (title) title.textContent = 'Media Library';
     if (subtitle) subtitle.textContent = 'Manage and organise all your media files for social posts, campaigns and content.';
+    if (search) search.placeholder = 'Search media…';
 
     const shell = document.createElement('div');
     shell.className = 'reference-media-layout';
@@ -66,7 +67,12 @@
     stats.hidden = true;
     panel.hidden = true;
 
+    const syncControls = () => {
+      if (folder?.options?.length) folder.options[0].textContent = 'All categories';
+    };
+
     const sync = () => {
+      syncControls();
       const cards = [...grid.querySelectorAll('.media-card')];
       const visible = cards.filter(card => !card.hidden);
       const files = visible.length;
@@ -82,7 +88,17 @@
     search?.addEventListener('input', sync);
     type?.addEventListener('change', sync);
     folder?.addEventListener('change', sync);
+    overview.querySelector('[data-ref-stat="files"]')?.addEventListener('click', () => {});
+    recent.querySelector('.reference-view-all')?.addEventListener('click', () => {
+      if (search) search.value = '';
+      if (type) type.value = 'all';
+      if (folder) folder.value = 'all';
+      search?.dispatchEvent(new Event('input', { bubbles: true }));
+      sync();
+    });
+
     new MutationObserver(sync).observe(grid, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
+    new MutationObserver(syncControls).observe(filterBar, { childList: true, subtree: true });
     sync();
   };
 
