@@ -1,7 +1,8 @@
 {
   "product":"Tech Social CRM",
-  "current":{"version":"10.4","date":"16 August 2026","summary":"Dashboard cleanup: removed the duplicate network readiness panel.","changes":["Removed YOUR NETWORK / Account readiness dashboard panel"]},
+  "current":{"version":"10.5","date":"16 August 2026","summary":"Dashboard ordering update: Recent Activity moved above Upcoming Content.","changes":["Recent Activity / Latest posts moved above Upcoming Content / Publishing schedule"]},
   "history":[
+    {"version":"10.5","date":"16 August 2026","summary":"Dashboard ordering update: Recent Activity moved above Upcoming Content.","changes":["Recent Activity / Latest posts moved above Upcoming Content / Publishing schedule"]},
     {"version":"10.4","date":"16 August 2026","summary":"Dashboard cleanup: removed the duplicate network readiness panel.","changes":["Removed YOUR NETWORK / Account readiness dashboard panel"]},
     {"version":"10.3","date":"16 August 2026","summary":"Dashboard network status layout update.","changes":["Moved network status toward dashboard top","Compact network readiness layout","Removed dashboard Manage action"]},
     {"version":"10.2","date":"16 August 2026","summary":"Dashboard and sidebar cleanup release.","changes":["Sidebar source cleanup","Dashboard layout improvements"]},
