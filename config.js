@@ -1,12 +1,11 @@
 // Supabase Project Settings → API
 // NEVER put the service_role key in this file.
-
 window.TECH_SOCIAL_CONFIG = {
   supabaseUrl: 'https://yyxliadpoxpwbxojmqdk.supabase.co',
   supabaseAnonKey: 'sb_publishable_XMNGnEV-X5x7eRRuwRRLuQ_QHj09O5C'
 };
 
-/* Meta connection is intentionally unchanged for Version 5.0. */
+/* Meta connection is intentionally unchanged. */
 (() => {
   const originalCreateClient = window.supabase?.createClient;
   if (!originalCreateClient || window.__TECH_SOCIAL_CREATE_CLIENT_PATCHED__) return;
@@ -21,8 +20,7 @@ window.TECH_SOCIAL_CONFIG = {
         if (functionName !== 'meta-oauth-start') return originalFunctions.invoke(functionName, options);
         try {
           const { data: { session } = {} } = await target.auth.getSession();
-          const headers = new Headers(options.headers || {});
-          headers.set('apikey', supabaseAnonKey); headers.set('Content-Type', 'application/json');
+          const headers = new Headers(options.headers || {}); headers.set('apikey', supabaseAnonKey); headers.set('Content-Type', 'application/json');
           if (session?.access_token) headers.set('Authorization', `Bearer ${session.access_token}`);
           const response = await fetch(`${supabaseUrl.replace(/\/$/, '')}/functions/v1/${functionName}`, {method:options.method||'POST',headers,body:JSON.stringify(options.body||{})});
           const text = await response.text(); let data=null; try { data=text?JSON.parse(text):null; } catch { data=text; }
@@ -34,7 +32,7 @@ window.TECH_SOCIAL_CONFIG = {
   };
 })();
 
-/* Direct Meta OAuth fail-safe — retained for Monday's Meta work. */
+/* Direct Meta OAuth fail-safe — intentionally retained for Meta work. */
 (() => {
   if (window.__TECH_SOCIAL_META_OAUTH_DIRECT__) return;
   window.__TECH_SOCIAL_META_OAUTH_DIRECT__ = true;
@@ -55,12 +53,8 @@ window.TECH_SOCIAL_CONFIG = {
   },true);
 })();
 
-/* Existing Version 5 UI helpers. */
 (() => {
-  const loadScript = (src, marker) => {
-    if(document.querySelector(`script[data-${marker}]`)) return;
-    const script=document.createElement('script'); script.src=`${src}?v=${Date.now()}`; script.defer=true; script.dataset[marker]='1'; document.head.appendChild(script);
-  };
+  const loadScript = (src, marker) => { if(document.querySelector(`script[data-${marker}]`)) return; const script=document.createElement('script'); script.src=`${src}?v=${Date.now()}`; script.defer=true; script.dataset[marker]='1'; document.head.appendChild(script); };
   const load=()=>{
     loadScript('marketing.js','techSocialMarketing');
     if(!document.querySelector('link[data-tech-social-sidebar]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`sidebar-redesign.css?v=${Date.now()}`;link.dataset.techSocialSidebar='1';document.head.appendChild(link);}
@@ -68,6 +62,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v9-calendar-integration.js','techSocialV9Calendar');
     loadScript('v5-media.js','techSocialV5Media');
+    loadScript('v10-media-integration.js','techSocialV10Media');
     loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
     loadScript('v5-integration.js','techSocialV5Integration');
