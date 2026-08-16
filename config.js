@@ -75,6 +75,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
     loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('v11-dashboard-layouts.js','techSocialV11DashboardLayouts');
+    loadScript('v11.1-navigation-repair.js','techSocialV11NavigationRepair');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
