@@ -203,4 +203,42 @@ window.TECH_SOCIAL_CONFIG = {
   };
 })();
 
-/* Force-refresh marker: 2026-08-16 login/workspace startup guard. */
+/*
+ * Supabase startup race guard.
+ *
+ * initializeAuth currently has two legitimate ways to open an existing
+ * session: getSession() and the SIGNED_IN auth event. On a persisted session
+ * both can fire together, starting verifyAndOpenWorkspace twice. That can
+ * produce two simultaneous batches of PostgREST requests and leave the UI on
+ * the workspace loading screen. During the initial listener-registration
+ * window, let getSession() be the single owner of an already-existing session.
+ * Fresh sign-ins that happen after startup continue to emit SIGNED_IN normally.
+ */
+(() => {
+  if (window.__TECH_SOCIAL_AUTH_STARTUP_RACE_GUARD__) return;
+  window.__TECH_SOCIAL_AUTH_STARTUP_RACE_GUARD__ = true;
+
+  const originalCreateClient = window.supabase?.createClient;
+  if (!originalCreateClient) return;
+
+  window.supabase.createClient = function (...args) {
+    const client = originalCreateClient.apply(this, args);
+    const auth = client?.auth;
+    if (!auth || typeof auth.onAuthStateChange !== 'function') return client;
+
+    const originalOnAuthStateChange = auth.onAuthStateChange.bind(auth);
+    auth.onAuthStateChange = callback => {
+      const listenerStartedAt = performance.now();
+      return originalOnAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session?.user && performance.now() - listenerStartedAt < 1500) {
+          return;
+        }
+        return callback(event, session);
+      });
+    };
+
+    return client;
+  };
+})();
+
+/* Force-refresh marker: 2026-08-16 startup race fix. */
