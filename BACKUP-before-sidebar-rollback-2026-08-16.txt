@@ -1,0 +1,2 @@
+Rollback checkpoint before reverting the sidebar duplicate-cleanup change that caused CRM startup failure.
+Base commit: ad716a981a4e2ee38185852e4df274db2afa2493
