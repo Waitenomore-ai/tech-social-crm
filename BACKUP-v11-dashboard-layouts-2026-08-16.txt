@@ -1,0 +1,5 @@
+Backup checkpoint before V11.0 multi-layout dashboard integration.
+
+Base release: V10.8 dashboard cleanup.
+This checkpoint is for rollback of the dashboard layout selector and five dashboard presentation modes only.
+Authentication, Supabase configuration, sidebar source markup, and existing CRM data workflows are intentionally outside this change.
