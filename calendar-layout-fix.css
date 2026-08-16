@@ -79,3 +79,37 @@
 #dashboardView .welcome-row .workspace-status {
   display: none !important;
 }
+
+/* Compact post-template filters: prevent the search SVG's intrinsic size from stretching the boxes */
+#templatesView .filter-bar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  width: 100% !important;
+}
+
+#templatesView .filter-bar .list-search {
+  height: 42px !important;
+  min-height: 42px !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  align-items: center !important;
+}
+
+#templatesView .filter-bar .list-search svg {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  flex: 0 0 18px !important;
+}
+
+#templatesView .filter-bar select {
+  height: 42px !important;
+  min-height: 42px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  flex: 0 0 140px !important;
+  box-sizing: border-box !important;
+}
