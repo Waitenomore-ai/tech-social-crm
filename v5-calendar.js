@@ -26,12 +26,35 @@
     if(document.getElementById('v5CalendarStyles')) return;
     const style=document.createElement('style'); style.id='v5CalendarStyles';
     style.textContent=`
-      .v5-calendar-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
-      .v5-calendar-controls select{height:30px;border:1px solid var(--line);border-radius:7px;background:#fff;padding:0 9px;font:600 9px inherit;color:var(--black)}
-      .v5-calendar-controls .active{background:var(--black);color:#fff;border-color:var(--black)}
+      #calendarView .calendar-shell{overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.04)}
+      #calendarView .calendar-toolbar{display:flex!important;align-items:center!important;gap:12px!important;flex-wrap:wrap!important;padding:24px 26px!important;background:#fff!important;border-bottom:1px solid var(--line)!important;min-height:96px!important;box-sizing:border-box!important}
+      #calendarView .calendar-toolbar .calendar-arrow{width:42px!important;height:42px!important;min-width:42px!important;border:1px solid #d9dee7!important;border-radius:8px!important;background:#fff!important;color:#142038!important;font-size:18px!important;font-weight:700!important;cursor:pointer!important}
+      #calendarView .calendar-toolbar #calendarMonthTitle{margin:0 6px!important;min-width:140px!important;font-size:18px!important;font-weight:800!important;color:#142038!important;white-space:nowrap!important}
+      #calendarView .calendar-toolbar .today-button{height:42px!important;padding:0 16px!important;border:1px solid #d9dee7!important;border-radius:8px!important;background:#fff!important;color:#142038!important;font-size:13px!important;font-weight:700!important;cursor:pointer!important}
+      #calendarView .calendar-view-toggle{display:flex!important;align-items:center!important;gap:0!important;margin-left:2px!important}
+      #calendarView .calendar-view-toggle button{height:42px!important;padding:0 18px!important;border:1px solid #d9dee7!important;background:#fff!important;color:#142038!important;font-size:13px!important;font-weight:700!important;cursor:pointer!important}
+      #calendarView .calendar-view-toggle button:first-child{border-radius:8px 0 0 8px!important}
+      #calendarView .calendar-view-toggle button:last-child{border-radius:0 8px 8px 0!important;margin-left:-1px!important}
+      #calendarView .calendar-view-toggle button.active{background:var(--red,#ed0b18)!important;color:#fff!important;border-color:var(--red,#ed0b18)!important;position:relative!important;z-index:1!important}
+      #calendarView .calendar-legend{display:none!important}
+      #calendarView .v5-calendar-summary{display:flex;align-items:center;gap:22px;margin-left:auto;font-size:12px;font-weight:800;white-space:nowrap;color:#142038}
+      #calendarView .v5-calendar-summary span{display:inline-flex;align-items:center;gap:5px}
+      #calendarView .v5-calendar-summary b{font-size:15px}
+      #calendarView .v5-calendar-summary .draft b{color:#ef111c}.v5-calendar-summary .scheduled b{color:#e59600}.v5-calendar-summary .ready b{color:#18a56e}.v5-calendar-summary .published b{color:#8b55d9}
+      #calendarView .v5-calendar-controls{display:grid!important;grid-template-columns:160px 160px;gap:10px!important;margin-left:14px!important;min-width:330px!important}
+      #calendarView .v5-calendar-controls .v5-filter-note{grid-column:1 / -1!important;font-size:10px!important;color:#7a8799!important;text-align:right!important;margin:0!important}
+      #calendarView .v5-calendar-controls select{height:42px!important;width:100%!important;border:1px solid #d9dee7!important;border-radius:9px!important;background:#fff!important;padding:0 12px!important;font:600 12px inherit!important;color:#142038!important;outline:none!important}
+      #calendarView .v5-calendar-controls select:focus{border-color:var(--red,#ed0b18)!important;box-shadow:0 0 0 3px rgba(237,11,24,.08)!important}
+      #calendarView .calendar-weekdays{background:#fafbfd!important;border-bottom:1px solid var(--line)!important}
+      #calendarView .calendar-weekdays span{padding:14px 10px!important;font-size:10px!important;font-weight:800!important;color:#748197!important;letter-spacing:.08em!important;text-align:center!important}
+      #calendarView .calendar-grid{background:#fff!important}
+      #calendarView .calendar-day{min-height:105px!important;padding:10px!important;background:#fff!important;border-right:1px solid #e7ebf1!important;border-bottom:1px solid #e7ebf1!important}
+      #calendarView .calendar-day.today{background:#fff8f8!important}
+      #calendarView .calendar-day .day-number{font-size:12px!important;font-weight:800!important;color:#142038!important}
+      #calendarView .calendar-day.other-month .day-number{color:#c5ccd7!important}
       .v5-calendar-post{display:grid;gap:3px;padding:6px 7px;border-radius:6px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);cursor:pointer;font-size:8px;line-height:1.25;text-align:left}
       .v5-calendar-post:hover{box-shadow:0 3px 10px rgba(0,0,0,.08)}
-      .v5-calendar-post.scheduled{border-left-color:#356fd5}.v5-calendar-post.ready{border-left-color:#18a56e}.v5-calendar-post.published{border-left-color:#8a8a8a}.v5-calendar-post.approval{border-left-color:#d99a12}
+      .v5-calendar-post.scheduled{border-left-color:#356fd5}.v5-calendar-post.ready{border-left-color:#18a56e}.v5-calendar-post.published{border-left-color:#8a55d9}.v5-calendar-post.approval{border-left-color:#d99a12}
       .v5-calendar-post small{font-size:7px;color:var(--muted);font-weight:600}
       .v5-calendar-day-view{display:grid;gap:12px;padding:18px;background:#fff;min-height:360px}
       .v5-day-empty{padding:60px 20px;text-align:center;color:var(--muted);font-size:11px}
@@ -40,8 +63,8 @@
       .v5-day-post-title{font-size:10px;font-weight:750;color:var(--black)}
       .v5-day-post-meta{margin-top:4px;font-size:8px;color:var(--muted)}
       .v5-day-post .v5-status{font-size:7px;font-weight:800;text-transform:uppercase;padding:4px 6px;border-radius:99px;background:var(--soft);color:var(--black)}
-      .v5-filter-note{font-size:8px;color:var(--muted);margin-right:auto}
-      @media(max-width:800px){.v5-calendar-controls{width:100%;margin-left:0}.v5-day-post{grid-template-columns:1fr}.v5-day-post .v5-status{justify-self:start}}
+      @media(max-width:1200px){#calendarView .v5-calendar-summary{order:5;width:100%;margin-left:0}#calendarView .v5-calendar-controls{margin-left:auto}}
+      @media(max-width:800px){#calendarView .calendar-toolbar{padding:16px!important}#calendarView .v5-calendar-controls{width:100%;min-width:0;grid-template-columns:1fr 1fr;margin:0!important}.v5-day-post{grid-template-columns:1fr}.v5-day-post .v5-status{justify-self:start}}
     `;
     document.head.appendChild(style);
   }
@@ -49,13 +72,33 @@
   function controls(){
     const toolbar=document.querySelector('.calendar-toolbar'); if(!toolbar || toolbar.dataset.v5Ready) return;
     toolbar.dataset.v5Ready='1';
-    const existingToggle=toolbar.querySelector('.calendar-view-toggle');
-    if(existingToggle) existingToggle.innerHTML='<button type="button" data-v5-mode="month" class="active">Month</button><button type="button" data-v5-mode="week">Week</button><button type="button" data-v5-mode="day">Day</button>';
-    const box=document.createElement('div'); box.className='v5-calendar-controls';
-    box.innerHTML=`<span class="v5-filter-note">Version 5.0 planner</span><select id="v5PlatformFilter"><option value="all">All platforms</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option><option value="whatsapp">WhatsApp</option></select><select id="v5StatusFilter"><option value="all">All statuses</option><option value="draft">Draft</option><option value="approval">Awaiting approval</option><option value="scheduled">Scheduled</option><option value="ready">Ready to publish</option><option value="published">Published</option></select></div>`;
-    toolbar.appendChild(box);
-    box.querySelector('#v5PlatformFilter').addEventListener('change',e=>{platform=e.target.value;render(true)});
-    box.querySelector('#v5StatusFilter').addEventListener('change',e=>{status=e.target.value;render(true)});
+    toolbar.innerHTML=`
+      <button class="calendar-arrow" id="previousMonthButton" type="button" aria-label="Previous">←</button>
+      <h3 id="calendarMonthTitle">August 2026</h3>
+      <button class="calendar-arrow" id="nextMonthButton" type="button" aria-label="Next">→</button>
+      <button class="today-button" id="todayButton" type="button">Today</button>
+      <div class="calendar-view-toggle" aria-label="Calendar view">
+        <button type="button" data-v5-mode="month" class="active">Month</button>
+        <button type="button" data-v5-mode="week">Week</button>
+        <button type="button" data-v5-mode="day">Day</button>
+      </div>
+      <div class="v5-calendar-summary" aria-label="Post status summary">
+        <span class="draft">Draft <b id="v5DraftCount">0</b></span>
+        <span class="scheduled">Scheduled <b id="v5ScheduledCount">0</b></span>
+        <span class="ready">Ready <b id="v5ReadyCount">0</b></span>
+        <span class="published">Published <b id="v5PublishedCount">0</b></span>
+      </div>
+      <div class="v5-calendar-controls">
+        <span class="v5-filter-note">Version 5.0 planner</span>
+        <select id="v5CampaignFilter"><option value="all">All campaigns</option></select>
+        <select id="v5PlatformFilter"><option value="all">All platforms</option><option value="facebook">Facebook</option><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="x">X</option><option value="linkedin">LinkedIn</option><option value="youtube">YouTube</option><option value="whatsapp">WhatsApp</option></select>
+        <select id="v5StatusFilter"><option value="all">All statuses</option><option value="draft">Draft</option><option value="approval">Awaiting approval</option><option value="scheduled">Scheduled</option><option value="ready">Ready to publish</option><option value="published">Published</option></select>
+      </div>`;
+    const campaignSelect=toolbar.querySelector('#v5CampaignFilter');
+    const campaigns=[...new Map(posts.filter(p=>p.campaign_id).map(p=>[p.campaign_id,p.campaign_id])).entries()];
+    campaigns.forEach(([id,name])=>{const option=document.createElement('option');option.value=id;option.textContent=name;campaignSelect.appendChild(option)});
+    toolbar.querySelector('#v5PlatformFilter').addEventListener('change',e=>{platform=e.target.value;render(true)});
+    toolbar.querySelector('#v5StatusFilter').addEventListener('change',e=>{status=e.target.value;render(true)});
     toolbar.querySelectorAll('[data-v5-mode]').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.v5Mode;toolbar.querySelectorAll('[data-v5-mode]').forEach(b=>b.classList.toggle('active',b===btn));render(true)}));
   }
 
@@ -82,9 +125,16 @@
   }
   function renderDay(){const key=localDate(cursor),list=filtered().filter(p=>p.scheduled_at&&localDate(p.scheduled_at)===key).sort((a,b)=>new Date(a.scheduled_at)-new Date(b.scheduled_at));return `<div class="v5-calendar-day-view">${list.length?list.map(p=>{const time=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit'}).format(new Date(p.scheduled_at));return `<div class="v5-day-post" data-v5-post="${esc(p.id)}"><div class="v5-day-post-time">${time}</div><div><div class="v5-day-post-title">${esc(title(p))}</div><div class="v5-day-post-meta">${esc(platforms(p).map(label).join(', ')||'No platform')} · ${esc(statusLabel(p.status))}</div></div><span class="v5-status">${esc(statusLabel(p.status))}</span></div>`}).join(''):'<div class="v5-day-empty">No content scheduled for this day.</div>'}</div>`}
 
+  function updateSummary(){
+    const count=id=>posts.filter(p=>p.status===id).length;
+    const values={v5DraftCount:count('draft'),v5ScheduledCount:count('scheduled'),v5ReadyCount:count('ready'),v5PublishedCount:count('published')};
+    Object.entries(values).forEach(([id,value])=>{const node=document.getElementById(id);if(node)node.textContent=value});
+  }
+
   function render(force=false){
     const view=document.querySelector('#calendarView'); if(!view || view.hidden) return;
     controls();
+    updateSummary();
     const grid=document.querySelector('#calendarGrid'); if(!grid) return;
     const sig=JSON.stringify([mode,cursor.getFullYear(),cursor.getMonth(),cursor.getDate(),platform,status,posts.map(p=>`${p.id}:${p.scheduled_at}:${p.status}`).join('|')]);
     if(!force&&sig===lastSignature) return; lastSignature=sig;
