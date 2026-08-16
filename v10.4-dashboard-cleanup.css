@@ -52,6 +52,54 @@
   display: none;
 }
 
+/* Calendar: keep ALL filter dropdowns together on one horizontal row. */
+#calendarView .v5-calendar-controls {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-left: 14px !important;
+  min-width: 0 !important;
+  width: auto !important;
+  grid-template-columns: none !important;
+}
+
+#calendarView .v5-calendar-controls .v5-filter-note {
+  position: absolute !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#calendarView .v5-calendar-controls select {
+  flex: 0 0 160px !important;
+  width: 160px !important;
+  min-width: 160px !important;
+}
+
+@media(max-width:1200px) {
+  #dashboardView .welcome-row {
+    min-height: 150px;
+  }
+
+  #calendarView .v5-calendar-controls {
+    order: 6 !important;
+    width: 100% !important;
+    margin: 12px 0 0 !important;
+    justify-content: flex-end !important;
+  }
+
+  #calendarView .v5-calendar-controls select {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+}
+
 @media(max-width:800px) {
   #dashboardView .welcome-row {
     min-height: 190px;
@@ -60,6 +108,16 @@
 
   #dashboardView .welcome-row h2 {
     font-size: 34px;
+  }
+
+  #calendarView .v5-calendar-controls {
+    flex-wrap: wrap !important;
+    justify-content: stretch !important;
+  }
+
+  #calendarView .v5-calendar-controls select {
+    flex: 1 1 calc(50% - 5px) !important;
+    min-width: 0 !important;
   }
 }
 
@@ -71,5 +129,9 @@
 
   #dashboardView .welcome-row h2 {
     font-size: 31px;
+  }
+
+  #calendarView .v5-calendar-controls select {
+    flex-basis: 100% !important;
   }
 }
