@@ -55,11 +55,9 @@ window.TECH_SOCIAL_CONFIG = {
 
 (() => {
   const loadScript = (src, marker) => { if(document.querySelector(`script[data-${marker}]`)) return; const script=document.createElement('script'); script.src=`${src}?v=${Date.now()}`; script.defer=true; script.dataset[marker]='1'; document.head.appendChild(script); };
-  const loadStyle = (href, marker) => { if(document.querySelector(`link[data-${marker}]`)) return; const link=document.createElement('link'); link.rel='stylesheet'; link.href=`${href}?v=${Date.now()}`; link.dataset[marker]='1'; document.head.appendChild(link); };
   const load=()=>{
     loadScript('marketing.js','techSocialMarketing');
-    loadStyle('sidebar-redesign.css','techSocialSidebar');
-    loadStyle('v10-dashboard-optimization.css','techSocialV10DashboardStyle');
+    if(!document.querySelector('link[data-tech-social-sidebar]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`sidebar-redesign.css?v=${Date.now()}`;link.dataset.techSocialSidebar='1';document.head.appendChild(link);}
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v9-calendar-integration.js','techSocialV9Calendar');
@@ -67,7 +65,6 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v10-media-integration.js','techSocialV10Media');
     loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
-    loadScript('v10-dashboard-optimization.js','techSocialV10DashboardOptimization');
     loadScript('v5-integration.js','techSocialV5Integration');
     loadScript('lead-workflow.js','techSocialLeadWorkflow');
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
