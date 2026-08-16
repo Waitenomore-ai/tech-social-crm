@@ -1,0 +1,5 @@
+Backup checkpoint before V10.6 dashboard order correction.
+
+Requested correction: restore Recent Activity to its original position below Upcoming Content, while keeping the four dashboard statistics cards above the dashboard content panels.
+
+No authentication, sidebar, data, or application logic changes.
