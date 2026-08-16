@@ -1,0 +1,4 @@
+Backup checkpoint before V10 Content / Media Library integration.
+
+Base release: V9.0 Content Calendar.
+This marker records the pre-media integration point for rollback.
