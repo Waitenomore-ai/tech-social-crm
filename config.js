@@ -125,4 +125,82 @@ window.TECH_SOCIAL_CONFIG = {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
 })();
 
-/* Force-refresh marker: 2026-08-16 login recovery guard. */
+/*
+ * Workspace startup safety guard.
+ *
+ * The CRM performs a number of PostgREST queries and RPC calls immediately
+ * after authentication. A single stalled request previously left the UI on
+ * "Opening Tech Social CRM" forever. Put a hard upper bound on database/RPC
+ * requests so optional migration problems become warnings and core problems
+ * become visible errors instead of an infinite loading screen.
+ */
+(() => {
+  if (window.__TECH_SOCIAL_DB_TIMEOUT_GUARD__) return;
+  window.__TECH_SOCIAL_DB_TIMEOUT_GUARD__ = true;
+
+  const originalCreateClient = window.supabase?.createClient;
+  if (!originalCreateClient) return;
+
+  const DB_TIMEOUT_MS = 8000;
+
+  const timeoutError = label => new Error(`${label} timed out after ${DB_TIMEOUT_MS / 1000}s. Check the Supabase database/migration state.`);
+
+  const withTimeout = (promiseLike, label) => new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        reject(timeoutError(label));
+      }
+    }, DB_TIMEOUT_MS);
+    Promise.resolve(promiseLike).then(value => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      resolve(value);
+    }, error => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      reject(error);
+    });
+  });
+
+  const wrapBuilder = (builder, label) => {
+    if (!builder || typeof builder !== 'object') return builder;
+    return new Proxy(builder, {
+      get(target, property, receiver) {
+        if (property === 'then') {
+          return (resolve, reject) => {
+            const then = Reflect.get(target, 'then', target);
+            return withTimeout(then.call(target, value => value), label).then(resolve, reject);
+          };
+        }
+        const value = Reflect.get(target, property, receiver);
+        if (typeof value !== 'function') return value;
+        return (...args) => {
+          const result = value.apply(target, args);
+          if (result && typeof result === 'object' && typeof result.then === 'function') return wrapBuilder(result, label);
+          return result;
+        };
+      }
+    });
+  };
+
+  window.supabase.createClient = function (...args) {
+    const client = originalCreateClient.apply(this, args);
+    return new Proxy(client, {
+      get(target, property, receiver) {
+        if (property === 'from') {
+          return table => wrapBuilder(target.from(table), `Database table ${table}`);
+        }
+        if (property === 'rpc') {
+          return (name, params) => withTimeout(target.rpc(name, params), `RPC ${name}`);
+        }
+        return Reflect.get(target, property, receiver);
+      }
+    });
+  };
+})();
+
+/* Force-refresh marker: 2026-08-16 login/workspace startup guard. */
