@@ -1,50 +1,14 @@
-/* Media Library reference layout — scoped to #mediaView only. */
-#mediaView .view-heading{margin-bottom:14px}
-#mediaView .view-heading h2{font-size:22px;letter-spacing:-.6px}
-#mediaView .view-heading>div>span{font-size:8px;line-height:1.5}
-#mediaView .reference-media-layout{display:grid;gap:18px}
-#mediaView .reference-media-toolbar{display:flex;align-items:center;gap:10px;min-height:68px;margin:0;padding:14px 20px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 8px 24px rgba(18,19,22,.06)}
-#mediaView .reference-media-toolbar .filter-bar{display:grid;grid-template-columns:minmax(220px,1fr) 160px 160px;align-items:center;gap:12px;flex:1;margin:0;padding:0;background:transparent;border:0}
-#mediaView .reference-media-toolbar .list-search{height:36px;min-width:0;background:#fff;border:1px solid var(--line);border-radius:6px}
-#mediaView .reference-media-toolbar .list-search svg{width:14px;color:#7f8791}
-#mediaView .reference-media-toolbar .list-search input{font-size:9px}
-#mediaView .reference-media-toolbar select{height:36px;min-width:0;padding:0 28px 0 10px;color:var(--black);background:#fff;border:1px solid var(--line);border-radius:6px;font-size:9px}
-#mediaView .reference-media-toolbar .reference-media-upload{flex:none;min-width:96px;height:36px;padding:0 15px;font-size:8.5px;border-radius:7px}
-#mediaView .reference-media-toolbar .reference-media-upload svg{width:14px}
-#mediaView .reference-media-overview{display:grid;gap:8px}
-#mediaView .reference-section-title{color:var(--black);font-size:10px;font-weight:800}
-#mediaView .reference-stat-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-#mediaView .reference-stat{min-height:66px;display:flex;align-items:center;gap:10px;padding:11px 13px;background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 4px 14px rgba(18,19,22,.035)}
-#mediaView .reference-stat-icon{width:34px;height:34px;display:grid;place-items:center;flex:none;border-radius:9px;font-size:16px;font-weight:800}
-#mediaView .reference-stat-files .reference-stat-icon{color:#ef4b4f;background:#fff0f1}
-#mediaView .reference-stat-images .reference-stat-icon{color:#7b52cf;background:#f1eafd}
-#mediaView .reference-stat-videos .reference-stat-icon{color:#2d8fe6;background:#e9f5ff}
-#mediaView .reference-stat-audio .reference-stat-icon{color:#18a56e;background:#e9f8f1}
-#mediaView .reference-stat-other .reference-stat-icon{color:#e4a12c;background:#fff4df}
-#mediaView .reference-stat strong,#mediaView .reference-stat small{display:block}
-#mediaView .reference-stat strong{color:var(--black);font-size:17px;line-height:1}
-#mediaView .reference-stat small{margin-top:4px;color:var(--muted);font-size:7px}
-#mediaView .reference-recent{margin:0;padding:14px 13px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;box-shadow:0 5px 18px rgba(18,19,22,.04)}
-#mediaView .reference-recent-heading{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;padding:0 2px}
-#mediaView .reference-recent-heading strong{font-size:10px;color:var(--black)}
-#mediaView .reference-view-all{padding:0;color:var(--red);background:transparent;border:0;font-size:7px;font-weight:800;cursor:pointer}
-#mediaView .reference-recent .media-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:0}
-#mediaView .reference-recent .media-card{position:relative;min-width:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:7px;box-shadow:0 2px 8px rgba(18,19,22,.035)}
-#mediaView .reference-recent .media-preview{position:relative;width:100%;height:88px;display:grid;place-items:center;overflow:hidden;background:#f1f1ef;border:0;border-radius:0}
-#mediaView .reference-recent .media-preview img{width:100%;height:100%;display:block;object-fit:cover}
-#mediaView .reference-recent .media-preview>span{color:var(--faint)}
-#mediaView .reference-recent .media-preview i{position:absolute;right:5px;top:5px;margin:0;padding:2px 4px;color:var(--red-dark);background:#fff;border-radius:3px;font-size:5.5px;font-style:normal;font-weight:900;line-height:1}
-#mediaView .reference-recent .media-card-copy,#mediaView .reference-recent .media-card-body{min-width:0;padding:7px 7px 6px}
-#mediaView .reference-recent .media-card-copy strong,#mediaView .reference-recent .media-card-body>strong{display:block;overflow:hidden;color:var(--black);font-size:7px;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}
-#mediaView .reference-recent .media-card-copy small,#mediaView .reference-recent .media-card-body>small{display:block;margin-top:4px;overflow:hidden;color:var(--faint);font-size:5.8px;line-height:1.25;text-overflow:ellipsis;white-space:nowrap}
-#mediaView .reference-recent .media-tags{display:none}
-#mediaView .reference-recent .media-card-actions{position:absolute;right:4px;bottom:4px;display:flex;gap:2px;opacity:0;transition:opacity .12s ease}
-#mediaView .reference-recent .media-card:hover .media-card-actions{opacity:1}
-#mediaView .reference-recent .media-card-actions button{min-width:20px;width:auto;height:18px;padding:0 4px;color:var(--black);background:#fff;border:1px solid var(--line);border-radius:4px;font-size:5.5px;box-shadow:0 2px 7px rgba(0,0,0,.08)}
-#mediaView .reference-recent .media-card-actions .delete-media{color:var(--red-dark)}
-#mediaView .reference-recent .empty-state{padding:30px 15px;margin:0}
-#mediaView #v10MediaControls{display:none!important}
-#mediaView .v5-media-toolbar{display:none!important}
-#mediaView .media-stats,#mediaView>.media-panel{display:none!important}
-@media(max-width:1050px){#mediaView .reference-media-toolbar .filter-bar{grid-template-columns:minmax(180px,1fr) 140px 140px}#mediaView .reference-recent .media-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:760px){#mediaView .reference-media-toolbar{align-items:stretch;flex-direction:column;padding:12px}.reference-media-toolbar .filter-bar{width:100%!important;grid-template-columns:1fr!important}.reference-media-toolbar .reference-media-upload{width:100%}#mediaView .reference-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#mediaView .reference-recent .media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Tech Social CRM v5.0 — Media Library workspace enhancement. */
+#mediaView .v5-media-toolbar{margin:0 0 18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(18,19,22,.05)}
+#mediaView .v5-media-toolbar-main{display:flex;align-items:center;justify-content:space-between;gap:18px}
+#mediaView .v5-media-toolbar-main>div:first-child{display:grid;gap:4px}
+#mediaView .v5-media-toolbar-main strong{font-size:13px;color:var(--black)}
+#mediaView .v5-media-toolbar-main span{font-size:8px;color:var(--muted)}
+#mediaView .v5-media-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#mediaView .v5-media-actions .button{min-height:32px;padding:0 12px;font-size:8px}
+#mediaView .v5-media-drop{margin-top:14px;padding:16px;border:1px dashed var(--line);border-radius:10px;background:#fafafa;cursor:pointer}
+#mediaView .v5-media-drop span,#mediaView .v5-media-drop small{display:block}
+#mediaView .v5-media-drop span{font-size:9px;font-weight:800;color:var(--black)}
+#mediaView .v5-media-drop small{margin-top:4px;font-size:7px;color:var(--muted)}
+#mediaView .v5-media-drop.is-dragging{border-color:var(--red);background:#fff5f5}
+@media(max-width:760px){#mediaView .v5-media-toolbar-main{align-items:stretch;flex-direction:column}#mediaView .v5-media-actions{width:100%}#mediaView .v5-media-actions .button{flex:1}}
