@@ -1,0 +1,2 @@
+/* V10.4 — remove dashboard-only network readiness panel. */
+#dashboardView .accounts-panel { display: none !important; }
