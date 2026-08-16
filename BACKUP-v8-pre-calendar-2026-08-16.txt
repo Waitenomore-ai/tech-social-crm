@@ -1,0 +1,5 @@
+Backup checkpoint before the Content Calendar integration update.
+
+This checkpoint preserves the current main branch state before V9 Content Calendar work.
+
+Calendar baseline: existing v5-calendar.js already provides month/week/day views, platform/status filters and drag rescheduling. V9 upgrades that implementation rather than adding a disconnected calendar.
