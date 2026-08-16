@@ -1,0 +1,1 @@
+Backup checkpoint before V10.7 dashboard intro positioning. This change is presentation-only and does not modify authentication, navigation, data logic, or existing dashboard cards.
