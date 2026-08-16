@@ -1,0 +1,1 @@
+Backup checkpoint before removing the YOUR NETWORK / Account readiness panel from the dashboard. Only dashboard presentation is being changed; authentication, navigation and data access remain untouched.
