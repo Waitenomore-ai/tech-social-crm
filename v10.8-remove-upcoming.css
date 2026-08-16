@@ -1,0 +1,2 @@
+/* V10.8 — remove Upcoming Content / Publishing schedule from dashboard. */
+#dashboardView .dashboard-grid{display:none !important;}
