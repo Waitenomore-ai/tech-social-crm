@@ -1,0 +1,1 @@
+Backup checkpoint before removing the obsolete standalone Marketing link from the Team sidebar. No authentication or runtime navigation code is changed.
