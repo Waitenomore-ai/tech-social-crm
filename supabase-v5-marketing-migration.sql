@@ -42,6 +42,7 @@ create table if not exists public.social_leads (
   status text not null default 'new',
   campaign_id text references public.campaigns(id) on delete set null,
   crm_customer_id text,
+  attributed_revenue numeric(12,2) not null default 0,
   notes text not null default '',
   created_by uuid references auth.users(id) on delete set null,
   created_at timestamptz not null default now(),
@@ -52,6 +53,7 @@ alter table public.social_leads add column if not exists handle text not null de
 alter table public.social_leads add column if not exists segment_id uuid references public.customer_segments(id) on delete set null;
 alter table public.social_leads add column if not exists source_reference text;
 alter table public.social_leads add column if not exists crm_customer_id text;
+alter table public.social_leads add column if not exists attributed_revenue numeric(12,2) not null default 0;
 alter table public.social_leads add column if not exists notes text not null default '';
 alter table public.social_leads add column if not exists created_by uuid references auth.users(id) on delete set null;
 alter table public.social_leads add column if not exists created_at timestamptz not null default now();
@@ -109,8 +111,6 @@ create table if not exists public.followup_campaigns (
 );
 create index if not exists followup_campaigns_active_idx on public.followup_campaigns(active,next_run_at);
 
--- Individual follow-up actions. campaign_id is retained for compatibility with
--- the original v5 draft; followup_campaign_id is the clearer replacement.
 create table if not exists public.lead_followups (
   id uuid primary key default gen_random_uuid(),
   lead_id uuid not null references public.social_leads(id) on delete cascade,
@@ -182,10 +182,6 @@ declare t text;
 begin
   foreach t in array array['social_leads','customer_segments','review_requests','followup_campaigns','lead_followups','marketing_monthly_reports'] loop
     execute format('alter table public.%I enable row level security',t);
-    execute format('drop policy if exists "Marketing team can view" on public.%I',t);
-    execute format('drop policy if exists "Marketing editors can insert" on public.%I',t);
-    execute format('drop policy if exists "Marketing editors can update" on public.%I',t);
-    execute format('drop policy if exists "Marketing editors can delete" on public.%I',t);
     execute format('drop policy if exists "Marketing team read" on public.%I',t);
     execute format('drop policy if exists "Marketing team insert" on public.%I',t);
     execute format('drop policy if exists "Marketing team update" on public.%I',t);
