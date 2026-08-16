@@ -1,0 +1,4 @@
+Backup checkpoint before V10.1 sidebar and dashboard optimization.
+
+Base release: V10.0 Content / Media Library.
+Scope: sidebar duplicate cleanup and dashboard layout optimization.
