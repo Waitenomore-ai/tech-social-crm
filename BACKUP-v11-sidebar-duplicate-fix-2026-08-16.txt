@@ -1,0 +1,1 @@
+Backup checkpoint before removing the runtime v5 approval sidebar injector. This preserves the current config state before the duplicate-navigation fix. Authentication is not changed.
