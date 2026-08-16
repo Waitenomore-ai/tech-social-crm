@@ -1,0 +1,73 @@
+name: Fix calendar filter row
+
+on:
+  push:
+    paths:
+      - '.calendar-filters-fix-trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Force calendar filters into one horizontal row
+        run: |
+          cat > calendar-layout-fix.css <<'EOF'
+          /* Calendar filters: four dropdowns in ONE horizontal row */
+          #calendarView .v5-calendar-controls {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            align-items: center !important;
+            gap: 14px !important;
+            width: 100% !important;
+            margin: 8px 0 0 !important;
+            padding-top: 24px !important;
+            position: relative !important;
+          }
+
+          #calendarView .v5-calendar-controls .v5-filter-note {
+            position: absolute !important;
+            top: 0 !important;
+            right: 0 !important;
+            margin: 0 !important;
+            font-size: 10px !important;
+            line-height: 16px !important;
+            color: #7a8799 !important;
+            text-align: right !important;
+          }
+
+          #calendarView .v5-calendar-controls select {
+            display: block !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            height: 42px !important;
+          }
+
+          @media (max-width: 800px) {
+            #calendarView .v5-calendar-controls {
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+          }
+          EOF
+
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          link = '<link rel="stylesheet" href="calendar-layout-fix.css?v=2" />'
+          if 'calendar-layout-fix.css' not in s:
+              marker = '<link rel="stylesheet" href="styles.css?v=17" />'
+              s = s.replace(marker, marker + '\n  ' + link, 1)
+          p.write_text(s)
+          PY
+
+          rm -f .calendar-filters-fix-trigger
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html calendar-layout-fix.css .calendar-filters-fix-trigger
+          git commit -m "Fix calendar dropdowns to one horizontal row"
+          git push
