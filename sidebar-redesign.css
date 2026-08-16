@@ -23,3 +23,6 @@
 .nav-item,.nav-item span{font-size:11px!important;color:#111827!important}
 .nav-label.sidebar-group-toggle span{font-size:8px!important;color:#111827!important}
 .workspace-chip strong,.workspace-chip small{color:#111827!important}
+
+/* Hide the obsolete standalone Marketing entry. The dedicated Marketing section remains visible. */
+.sidebar .marketing-nav-item{display:none!important}
