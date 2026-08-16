@@ -12,7 +12,7 @@
     if (document.getElementById('dynamicVersionStyles')) return;
     const style = document.createElement('style');
     style.id = 'dynamicVersionStyles';
-    style.textContent = `.dynamic-version-history{display:grid;gap:10px;margin-top:20px}.dynamic-version-major{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}.dynamic-version-major summary{display:flex;align-items:center;gap:10px;padding:13px 15px;cursor:pointer;list-style:none;font-size:10px;font-weight:800;color:var(--black)}.dynamic-version-major summary::-webkit-details-marker{display:none}.dynamic-version-major summary:before{content:'+';width:20px;height:20px;display:grid;place-items:center;border:1px solid var(--line);border-radius:5px;color:var(--muted);font-size:12px}.dynamic-version-major[open] summary:before{content:'−'}.dynamic-version-major summary .major-meta{margin-left:auto;color:var(--muted);font-size:8px;font-weight:600}.dynamic-version-major.current-major summary{background:var(--soft)}.dynamic-version-list{display:grid;gap:8px;padding:0 10px 10px}.dynamic-version-entry{padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:#fff}.dynamic-version-entry.current-release{border-color:rgba(239,17,27,.25);box-shadow:inset 3px 0 0 var(--red)}.dynamic-version-entry-head{display:flex;align-items:center;gap:8px}.dynamic-version-number{font-size:10px;font-weight:850;color:var(--black)}.dynamic-version-date{margin-left:auto;color:var(--faint);font-size:7.5px}.dynamic-version-badge{padding:3px 6px;border-radius:99px;color:#fff;background:var(--red);font-size:7px;font-weight:800}.dynamic-version-summary{margin:6px 0;color:var(--muted);font-size:8.5px;line-height:1.5}.dynamic-version-changes{margin:6px 0 0;padding-left:17px;color:var(--ink);font-size:8px;line-height:1.65}.dynamic-version-footer{margin-top:10px;color:var(--faint);font-size:7.5px}`;
+    style.textContent = `.dynamic-version-history{display:grid;gap:10px;margin-top:20px}.dynamic-version-major{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}.dynamic-version-major summary{display:flex;align-items:center;gap:10px;padding:13px 15px;cursor:pointer;list-style:none;font-size:10px;font-weight:800;color:var(--black)}.dynamic-version-major summary::-webkit-details-marker{display:none}.dynamic-version-major summary:before{content:'+';width:20px;height:20px;display:grid;place-items:center;border:1px solid var(--line);border-radius:5px;color:var(--muted);font-size:12px}.dynamic-version-major[open] summary:before{content:'−'}.dynamic-version-major summary .major-meta{margin-left:auto;color:var(--muted);font-size:8px;font-weight:600}.dynamic-version-major.current-major summary{background:var(--soft)}.dynamic-version-list{display:grid;gap:8px;padding:0 10px 10px}.dynamic-version-entry{padding:12px 13px;border:1px solid var(--line);border-radius:8px;background:#fff}.dynamic-version-entry.current-release{border-color:rgba(239,17,27,.25);box-shadow:inset 3px 0 0 var(--red)}.dynamic-version-entry-head{display:flex;align-items:center;gap:8px}.dynamic-version-number{font-size:10px;font-weight:850;color:var(--black)}.dynamic-version-date{margin-left:auto;color:var(--faint);font-size:7.5px}.dynamic-version-badge{padding:3px 6px;border-radius:99px;color:#fff;background:var(--red);font-size:7px;font-weight:800}.dynamic-version-summary{margin:6px 0;color:var(--muted);font-size:8.5px;line-height:1.5}.dynamic-version-changes{margin:6px 0 0;padding-left:17px;color:var(--ink);font-size:8px;line-height:1.65}`;
     document.head.appendChild(style);
   }
 
@@ -56,11 +56,11 @@
     const checkButton = document.querySelector('#checkVersionButton');
     if (checkButton) {
       checkButton.textContent = 'Refresh version information';
-      checkButton.onclick = refresh;
+      checkButton.onclick = () => refresh(true);
     }
   }
 
-  async function refresh() {
+  async function refresh(showToast = true) {
     const button = document.querySelector('#checkVersionButton');
     if (button) button.disabled = true;
     try {
@@ -68,24 +68,52 @@
       if (!response.ok) throw new Error(`Version manifest returned ${response.status}`);
       const fresh = await response.json();
       render(fresh);
-      if (typeof window.toast === 'function') window.toast(`Version information refreshed — v${fresh.current?.version || '?'}`);
+      if (showToast && typeof window.toast === 'function') window.toast(`Version information refreshed — v${fresh.current?.version || '?'}`);
       return fresh;
     } catch (error) {
-      if (typeof window.toast === 'function') window.toast(error.message || 'Could not refresh version information.', true);
+      if (showToast && typeof window.toast === 'function') window.toast(error.message || 'Could not refresh version information.', true);
       return null;
     } finally { if (button) button.disabled = false; }
   }
 
+  function hookSettingsRenderer() {
+    if (window.__TECH_SOCIAL_VERSION_SETTINGS_HOOK__) return true;
+    if (typeof window.renderSettings !== 'function') return false;
+    const originalRenderSettings = window.renderSettings;
+    window.renderSettings = function (...args) {
+      const result = originalRenderSettings.apply(this, args);
+      Promise.resolve(result).finally(() => {
+        const versionPane = document.querySelector('[data-settings-pane="version"]');
+        if (versionPane && !versionPane.hidden) refresh(false);
+      });
+      return result;
+    };
+    window.__TECH_SOCIAL_VERSION_SETTINGS_HOOK__ = true;
+    return true;
+  }
+
+  function installSettingsHook() {
+    if (hookSettingsRenderer()) return;
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts += 1;
+      if (hookSettingsRenderer() || attempts >= 120) clearInterval(timer);
+    }, 250);
+  }
+
   async function init() {
     styles();
-    await refresh();
+    await refresh(false);
+    installSettingsHook();
     let lastVersion = null;
     setInterval(async () => {
-      const response = await fetch(manifestUrl(), {cache:'no-store'});
-      if (!response.ok) return;
-      const manifest = await response.json();
-      const version = manifest.current?.version;
-      if (version && version !== lastVersion) { lastVersion = version; render(manifest); }
+      try {
+        const response = await fetch(manifestUrl(), {cache:'no-store'});
+        if (!response.ok) return;
+        const manifest = await response.json();
+        const version = manifest.current?.version;
+        if (version && version !== lastVersion) { lastVersion = version; render(manifest); }
+      } catch (_) {}
     }, 30000);
   }
 
