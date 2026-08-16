@@ -1,0 +1,5 @@
+Backup checkpoint for the V5 integration release.
+
+Main branch before integration: 2dd13f208bf4191558525ec69df2657789da7121
+
+This marker exists so the pre-integration state is clearly recoverable from Git history.
