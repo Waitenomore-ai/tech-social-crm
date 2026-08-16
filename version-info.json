@@ -1,15 +1,21 @@
 {
   "product": "Tech Social CRM",
   "current": {
-    "version": "4.3",
-    "date": "14 August 2026",
-    "summary": "In-app update installer and stable CRM release.",
+    "version": "5.0",
+    "date": "16 August 2026",
+    "summary": "Version 5 marketing foundation: upgraded content calendar and planning workflow.",
     "changes": [
-      "Added Check for updates and Update now controls with cache clearing, service-worker refresh and colour-coded readiness status",
-      "Maintained the shared content, team and system workspace introduced through version 4"
+      "Started the Version 5 marketing roadmap on the stable 4.3 baseline",
+      "Added Month, Week and Day calendar views",
+      "Added platform filtering for Facebook, Instagram, TikTok, X, LinkedIn, YouTube and WhatsApp",
+      "Added status filtering for Draft, Awaiting approval, Scheduled, Ready and Published",
+      "Added calendar post time, platform and status information",
+      "Kept Meta OAuth and Facebook/Instagram publishing unchanged for Monday's work",
+      "Created a protected v4.3 rollback branch before Version 5 development"
     ]
   },
   "history": [
+    {"version":"5.0","date":"16 August 2026","summary":"Version 5 marketing foundation: upgraded content calendar and planning workflow.","changes":["Started the Version 5 marketing roadmap on the stable 4.3 baseline","Added Month, Week and Day calendar views","Added platform filtering for Facebook, Instagram, TikTok, X, LinkedIn, YouTube and WhatsApp","Added status filtering for Draft, Awaiting approval, Scheduled, Ready and Published","Added calendar post time, platform and status information","Kept Meta OAuth and Facebook/Instagram publishing unchanged for Monday's work","Created a protected v4.3 rollback branch before Version 5 development"]},
     {"version":"4.3","date":"14 August 2026","summary":"In-app update installer and stable CRM release.","changes":["Added Check for updates and Update now controls with cache clearing, service-worker refresh and colour-coded readiness status","Maintained the shared content, team and system workspace introduced through version 4"]},
     {"version":"4.2","date":"14 August 2026","summary":"Sidebar organisation and team accountability.","changes":["Reorganised navigation into collapsible Content, Team and System groups with remembered browser state","Personalised the workspace card with the signed-in member name and role","Added combined login history and human-readable social post change records"]},
     {"version":"4.1","date":"14 August 2026","summary":"Streamlined dashboard layout.","changes":["Removed the large dashboard hero card so summary cards and working panels appear immediately"]},
