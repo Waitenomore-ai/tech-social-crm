@@ -1,0 +1,5 @@
+Backup checkpoint before safe sidebar source cleanup.
+
+Base release: V10.0 known-good CRM.
+Scope: remove runtime sidebar-dedupe loader and rely on canonical sidebar markup in index.html.
+Authentication and .view containers are intentionally untouched.
