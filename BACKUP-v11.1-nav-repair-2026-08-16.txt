@@ -1,0 +1,1 @@
+Backup checkpoint before restoring the approval module loader and removing only its injected duplicate sidebar navigation. Authentication and core app.js navigation remain unchanged.
