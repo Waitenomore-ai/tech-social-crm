@@ -73,6 +73,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-integration.js','techSocialV5Integration');
     loadScript('lead-workflow.js','techSocialLeadWorkflow');
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
+    loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('v11-dashboard-layouts.js','techSocialV11DashboardLayouts');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
