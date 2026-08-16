@@ -1,2 +1,75 @@
-/* V10.4 — remove dashboard-only network readiness panel. */
+/* Dashboard banner restoration — keep the current Tech Social logo and all other page layouts unchanged. */
 #dashboardView .accounts-panel { display: none !important; }
+
+/* Restore the welcome message as the red dashboard hero. */
+#dashboardView .welcome-row {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding: 28px 32px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(105deg, #df0000 0%, #ed343b 52%, #fa777c 100%);
+  border-radius: 17px;
+  box-shadow: 0 14px 30px rgba(227, 6, 19, .12);
+}
+
+#dashboardView .welcome-row > div {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#dashboardView .welcome-row > div > p {
+  order: 2;
+  margin: 13px 0 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: .5px;
+}
+
+#dashboardView .welcome-row h2 {
+  order: 1;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(32px, 3.2vw, 45px);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -1.3px;
+}
+
+#dashboardView .welcome-row h2::after {
+  content: " Here’s what’s happening today.";
+}
+
+#dashboardView .welcome-row > div > span,
+#dashboardView .workspace-status {
+  display: none;
+}
+
+@media(max-width:800px) {
+  #dashboardView .welcome-row {
+    min-height: 190px;
+    padding: 25px 23px;
+  }
+
+  #dashboardView .welcome-row h2 {
+    font-size: 34px;
+  }
+}
+
+@media(max-width:570px) {
+  #dashboardView .welcome-row {
+    min-height: 210px;
+    padding: 25px 20px;
+  }
+
+  #dashboardView .welcome-row h2 {
+    font-size: 31px;
+  }
+}
