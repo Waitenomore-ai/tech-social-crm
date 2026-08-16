@@ -1,0 +1,38 @@
+/* Calendar dropdown row fix */
+#calendarView .v5-calendar-controls{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  gap:14px!important;
+  width:100%!important;
+  min-width:0!important;
+  flex:0 0 100%!important;
+  order:20!important;
+  margin:8px 0 0!important;
+  position:relative!important;
+  padding-top:24px!important;
+}
+#calendarView .v5-calendar-controls .v5-filter-note{
+  position:absolute!important;
+  top:0!important;
+  right:0!important;
+  margin:0!important;
+  font-size:10px!important;
+  line-height:16px!important;
+  color:#7a8799!important;
+  text-align:right!important;
+}
+#calendarView .v5-calendar-controls select{
+  flex:1 1 0!important;
+  width:auto!important;
+  min-width:0!important;
+  height:42px!important;
+}
+@media(max-width:800px){
+  #calendarView .v5-calendar-controls{
+    flex-wrap:wrap!important;
+    padding-top:24px!important;
+  }
+  #calendarView .v5-calendar-controls select{flex:1 1 calc(50% - 7px)!important;}
+}
