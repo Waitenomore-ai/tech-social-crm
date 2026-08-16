@@ -1,18 +1,24 @@
 {
   "product": "Tech Social CRM",
   "current": {
-    "version": "6.1",
+    "version": "6.2",
     "date": "16 August 2026",
-    "summary": "Discord webhook notification integration added without changing Meta publishing.",
+    "summary": "Moved Discord into the Social Accounts area as a first-class connection button.",
     "changes": [
-      "Added Discord webhook connection in Settings → Integrations",
-      "Added secure local webhook storage so the Discord URL is never committed to GitHub",
-      "Added Discord test notification and disconnect controls",
-      "Added reusable CRM Discord notification helper for future lead, review, approval and campaign alerts",
+      "Moved Discord connection from Settings into Social Accounts",
+      "Added a Discord connection card alongside the existing social account cards",
+      "Added Connect Discord, Test connection and Disconnect controls",
+      "Kept the Discord webhook stored locally in the browser",
       "Meta/Facebook/Instagram publishing remains intentionally unchanged"
     ]
   },
   "history": [
+    {
+      "version": "6.2",
+      "date": "16 August 2026",
+      "summary": "Discord moved into Social Accounts as a first-class connection.",
+      "changes": ["Discord Social Accounts card","Connect Discord button","Test connection button","Disconnect control","Local webhook storage","Meta publishing unchanged"]
+    },
     {
       "version": "6.1",
       "date": "16 August 2026",
