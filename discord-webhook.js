@@ -22,7 +22,7 @@
     catch(e){toast(e.message||'Discord test failed.',true);}
   }
 
-  async function connect(){
+  function connect(){
     const value=window.prompt('Paste your Discord channel webhook URL:',get());
     if(value===null)return;
     if(!valid(value)){toast('That is not a valid Discord webhook URL.',true);return;}
@@ -39,7 +39,7 @@
 
   function render(){
     const grid=document.querySelector('#accountsGrid');
-    if(!grid)return;
+    if(!grid)return false;
     const old=grid.querySelector('#discordAccountCard');
     if(old)old.remove();
     const connected=valid(get());
@@ -48,14 +48,23 @@
     card.className='account-card';
     card.innerHTML=`<div class="account-card-head" style="display:flex;align-items:center;gap:12px"><span class="social-icon discord-icon" aria-label="Discord">D</span><div><strong>Discord</strong><small>Webhook notifications</small></div></div><div style="margin-top:16px"><span class="account-status discord-status ${connected?'ready':''}">${connected?'CONNECTED':'NOT CONNECTED'}</span></div><div class="account-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px"><button class="button button-primary" id="discordConnectButton" type="button">${connected?'Test connection':'Connect Discord'}</button>${connected?'<button class="button button-outline" id="discordDisconnectButton" type="button">Disconnect</button>':''}</div>`;
     grid.appendChild(card);
-    card.querySelector('#discordConnectButton').onclick=()=>connected?test():connect();
+    card.querySelector('#discordConnectButton').onclick=()=>valid(get())?test():connect();
     card.querySelector('#discordDisconnectButton')?.addEventListener('click',disconnect);
+    return true;
   }
 
   function init(){
-    render();
     window.techSocialDiscord={send,test,connect,disconnect,connected:()=>valid(get()),refresh:render};
-    new MutationObserver(()=>{if(document.querySelector('#accountsGrid'))render();}).observe(document.body,{childList:true,subtree:true});
+    if(render())return;
+    // The CRM builds Settings dynamically. Watch only until the Connections grid exists,
+    // then disconnect immediately so Discord cannot create a mutation/render loop.
+    const observer=new MutationObserver(()=>{
+      if(render()) observer.disconnect();
+    });
+    observer.observe(document.body,{childList:true,subtree:true});
+    setTimeout(()=>observer.disconnect(),10000);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
 })();
