@@ -1,0 +1,4 @@
+Backup checkpoint before V10.5 dashboard ordering change.
+
+Requested change: move Recent Activity / Latest posts above Upcoming Content / Publishing schedule.
+No authentication, sidebar, or application logic changes.
