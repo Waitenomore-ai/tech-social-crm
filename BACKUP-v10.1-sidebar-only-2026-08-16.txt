@@ -1,0 +1,5 @@
+Backup checkpoint before rebuilding the sidebar optimization one change at a time.
+
+Base release: V10.0.
+Scope of next change: sidebar duplicate-menu cleanup only.
+Dashboard layout changes are intentionally NOT included in this checkpoint.
