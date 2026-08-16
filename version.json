@@ -1,6 +1,6 @@
 {
-  "version": "4.3",
-  "released": "2026-08-14",
-  "title": "In-app update installer",
+  "version": "4.4",
+  "released": "2026-08-16",
+  "title": "Sidebar duplicate protection",
   "changes": 1
 }
