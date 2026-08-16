@@ -24,5 +24,25 @@
 .nav-label.sidebar-group-toggle span{font-size:8px!important;color:#111827!important}
 .workspace-chip strong,.workspace-chip small{color:#111827!important}
 
-/* Hide the obsolete standalone Marketing entry. The dedicated Marketing section remains visible. */
-.sidebar .marketing-nav-item{display:none!important}
+/* V10.3 — compact network readiness strip directly below the topbar. */
+#dashboardView{display:flex;flex-direction:column}
+#dashboardView>.dashboard-grid{display:contents}
+#dashboardView>.accounts-panel{order:-1}
+#dashboardView>.accounts-panel{width:100%;box-sizing:border-box;margin:0 0 12px;padding:8px 14px;min-height:58px;display:flex;align-items:center;gap:18px;border-radius:10px}
+#dashboardView>.accounts-panel .panel-heading{margin:0;min-width:150px;display:flex;align-items:center;gap:10px}
+#dashboardView>.accounts-panel .panel-heading>div{display:flex;align-items:baseline;gap:7px;white-space:nowrap}
+#dashboardView>.accounts-panel .panel-heading p{margin:0;font-size:8px!important;letter-spacing:1.2px}
+#dashboardView>.accounts-panel .panel-heading h3{margin:0;font-size:12px!important;line-height:1.1}
+#dashboardView>.accounts-panel .panel-heading .text-button{display:none}
+#dashboardView>.accounts-panel .mini-accounts{flex:1;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+#dashboardView>.accounts-panel .mini-account{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 7px;border:1px solid #e5e7eb;border-radius:7px;background:#fff;white-space:nowrap}
+#dashboardView>.accounts-panel .mini-account strong{font-size:9px!important;overflow:hidden;text-overflow:ellipsis}
+#dashboardView>.accounts-panel .network-badge{width:22px!important;height:22px!important;min-width:22px!important;font-size:7px!important}
+#dashboardView>.accounts-panel .account-legend{display:flex;gap:8px;white-space:nowrap;font-size:7px}
+#dashboardView>.accounts-panel .account-legend span{display:flex;align-items:center;gap:3px}
+#dashboardView>.welcome-row{order:0}
+#dashboardView>.stats-grid{order:1}
+#dashboardView>.recent-panel{order:3}
+#dashboardView>.accounts-panel{order:-1}
+@media(max-width:900px){#dashboardView>.accounts-panel{gap:8px;padding:7px 9px}.accounts-panel .panel-heading{min-width:125px!important}.accounts-panel .mini-account{padding:3px 4px}.accounts-panel .mini-account strong{font-size:8px!important}.accounts-panel .account-legend{display:none!important}}
+@media(max-width:650px){#dashboardView>.accounts-panel{display:block}.accounts-panel .panel-heading{margin-bottom:6px}.accounts-panel .mini-accounts{overflow-x:auto;justify-content:flex-start}.accounts-panel .mini-account{flex:0 0 auto}.accounts-panel .account-legend{display:none!important}}
