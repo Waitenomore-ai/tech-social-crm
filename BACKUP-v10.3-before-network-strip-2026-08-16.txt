@@ -1,0 +1,1 @@
+Backup checkpoint before moving the dashboard network/account-readiness panel to a compact strip directly below the topbar. CSS-only dashboard layout change; authentication and navigation source remain untouched.
