@@ -27,27 +27,19 @@ window.TECH_SOCIAL_CONFIG = {
     return new Proxy(client, {
       get(target, property, receiver) {
         if (property !== 'functions') return Reflect.get(target, property, receiver);
-
-        return {
-          invoke: async (functionName, options = {}) => {
-            if (functionName !== 'meta-oauth-start') {
-              return originalFunctions.invoke(functionName, options);
-            }
-
-            try {
-              const { data: { session } = {} } = await target.auth.getSession();
-              const headers = new Headers(options.headers || {});
-              headers.set('apikey', supabaseAnonKey);
-              headers.set('Content-Type', 'application/json');
-              if (session?.access_token) headers.set('Authorization', `Bearer ${session.access_token}`);
-              const response = await fetch(`${supabaseUrl.replace(/\/$/, '')}/functions/v1/${functionName}`,{method:options.method||'POST',headers,body:JSON.stringify(options.body||{})});
-              const text = await response.text();
-              let data = null; try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-              if (!response.ok) return {data:null,error:{message:data?.error||data?.message||`Meta OAuth function returned HTTP ${response.status}`,status:response.status,context:response},response};
-              return {data,error:null,response};
-            } catch (error) { return {data:null,error,response:undefined}; }
-          }
-        };
+        return { invoke: async (functionName, options = {}) => {
+          if (functionName !== 'meta-oauth-start') return originalFunctions.invoke(functionName, options);
+          try {
+            const { data: { session } = {} } = await target.auth.getSession();
+            const headers = new Headers(options.headers || {});
+            headers.set('apikey', supabaseAnonKey); headers.set('Content-Type', 'application/json');
+            if (session?.access_token) headers.set('Authorization', `Bearer ${session.access_token}`);
+            const response = await fetch(`${supabaseUrl.replace(/\/$/, '')}/functions/v1/${functionName}`,{method:options.method||'POST',headers,body:JSON.stringify(options.body||{})});
+            const text = await response.text(); let data = null; try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+            if (!response.ok) return {data:null,error:{message:data?.error||data?.message||`Meta OAuth function returned HTTP ${response.status}`,status:response.status,context:response},response};
+            return {data,error:null,response};
+          } catch (error) { return {data:null,error,response:undefined}; }
+        }};
       }
     });
   };
@@ -58,10 +50,8 @@ window.TECH_SOCIAL_CONFIG = {
   if (window.__TECH_SOCIAL_META_OAUTH_DIRECT__) return;
   window.__TECH_SOCIAL_META_OAUTH_DIRECT__ = true;
   document.addEventListener('click', async event => {
-    const button = event.target?.closest?.('#connectMetaButton');
-    if (!button) return;
-    event.preventDefault(); event.stopImmediatePropagation();
-    if (button.dataset.oauthBusy === '1') return;
+    const button = event.target?.closest?.('#connectMetaButton'); if (!button) return;
+    event.preventDefault(); event.stopImmediatePropagation(); if (button.dataset.oauthBusy === '1') return;
     button.dataset.oauthBusy = '1'; button.disabled = true; const originalText = button.textContent; button.textContent = 'Opening Meta…';
     try {
       const authClient = window.supabase.createClient(window.TECH_SOCIAL_CONFIG.supabaseUrl,window.TECH_SOCIAL_CONFIG.supabaseAnonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
@@ -82,11 +72,7 @@ window.TECH_SOCIAL_CONFIG = {
   window.__TECH_SOCIAL_MARKETING_LOADER__ = true;
   const load = () => {
     if (document.querySelector('script[data-tech-social-marketing]')) return;
-    const script = document.createElement('script');
-    script.src = `marketing.js?v=${Date.now()}`;
-    script.defer = true;
-    script.dataset.techSocialMarketing = '1';
-    document.head.appendChild(script);
+    const script = document.createElement('script'); script.src = `marketing.js?v=${Date.now()}`; script.defer = true; script.dataset.techSocialMarketing = '1'; document.head.appendChild(script);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
 })();
@@ -94,11 +80,15 @@ window.TECH_SOCIAL_CONFIG = {
 /* Load the sidebar visual layer after the base stylesheet. */
 (() => {
   if (document.querySelector('link[data-tech-social-sidebar]')) return;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = `sidebar-redesign.css?v=${Date.now()}`;
-  link.dataset.techSocialSidebar = '1';
-  document.head.appendChild(link);
+  const link = document.createElement('link'); link.rel = 'stylesheet'; link.href = `sidebar-redesign.css?v=${Date.now()}`; link.dataset.techSocialSidebar = '1'; document.head.appendChild(link);
 })();
 
-/* Force-refresh marker: 2026-08-15 sidebar redesign deployment. */
+/* Load the central version information system after the CRM UI exists. */
+(() => {
+  if (document.querySelector('script[data-tech-social-version-manager]')) return;
+  const load = () => {
+    if (document.querySelector('script[data-tech-social-version-manager]')) return;
+    const script = document.createElement('script'); script.src = `version-manager.js?v=${Date.now()}`; script.defer = true; script.dataset.techSocialVersionManager = '1'; document.head.appendChild(script);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
+})();
