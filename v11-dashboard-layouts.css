@@ -19,6 +19,6 @@
 #v11DashboardRoot .v11-layout[data-layout="executive"] .v11-stats-zone{order:1;grid-column:span 8}.v11-layout[data-layout="executive"] .v11-top-zone{order:1;grid-column:span 4}.v11-layout[data-layout="executive"] .v11-platform-zone{order:2;grid-column:span 6}.v11-layout[data-layout="executive"] .v11-recent-zone{order:2;grid-column:span 6}.v11-layout[data-layout="executive"] .v11-actions-zone{order:3}
 /* Existing dashboard is retained as a data source but hidden visually. */
 #dashboardView>.welcome-row,#dashboardView>.stats-grid,#dashboardView>.dashboard-grid,#dashboardView>.recent-panel{display:none!important}
-#dashboardView{display:block!important}
+/* IMPORTANT: do not force #dashboardView to display. The main app controls page visibility. */
 @media(max-width:1050px){#v11DashboardRoot .v11-platforms{grid-template-columns:repeat(3,minmax(0,1fr))}.v11-cloned-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.v11-layout[data-layout] .v11-zone{grid-column:span 12!important}}
 @media(max-width:650px){#v11DashboardRoot .v11-dashboard-toolbar{align-items:flex-start;flex-direction:column}.v11-dashboard-toolbar label{width:100%}.v11-dashboard-toolbar select{flex:1;min-width:0}.v11-platforms{grid-template-columns:repeat(2,minmax(0,1fr))!important}.v11-cloned-stats{grid-template-columns:1fr!important}.v11-actions{grid-template-columns:repeat(2,1fr)}.v11-table-wrap th:nth-child(2),.v11-table-wrap td:nth-child(2),.v11-table-wrap th:nth-child(3),.v11-table-wrap td:nth-child(3){display:none}}
