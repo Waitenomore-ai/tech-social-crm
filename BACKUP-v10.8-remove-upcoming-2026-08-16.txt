@@ -1,0 +1,2 @@
+Backup checkpoint before hiding the dashboard Upcoming Content / Publishing schedule panel.
+No authentication, sidebar, or database logic is changed.
