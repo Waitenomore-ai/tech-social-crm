@@ -1,24 +1,78 @@
-/* V11.0 — five dashboard layouts. Presentation-only; does not alter auth, navigation or CRM data. */
-#v11DashboardRoot{display:block;margin-top:10px}
-#v11DashboardRoot .v11-dashboard-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 14px;padding:10px 2px}
-#v11DashboardRoot .v11-dashboard-toolbar>div{display:grid;gap:3px}.v11-eyebrow{font-size:9px;font-weight:850;letter-spacing:.14em;color:#8a93a3}.v11-dashboard-toolbar strong{font-size:14px;color:#111216}
-#v11DashboardRoot .v11-dashboard-toolbar label{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:750;color:#5f6672;white-space:nowrap}.v11-dashboard-toolbar select{border:1px solid #dfe3e8;border-radius:8px;background:#fff;padding:8px 28px 8px 10px;font:inherit;color:#111216;cursor:pointer}
-#v11DashboardRoot .v11-layout{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}.v11-zone{min-width:0}.v11-platform-zone{grid-column:span 12}.v11-stats-zone{grid-column:span 12}.v11-recent-zone{grid-column:span 8}.v11-top-zone{grid-column:span 4}.v11-actions-zone{grid-column:span 12}
-#v11DashboardRoot .v11-card{background:#fff;border:1px solid #e3e6ea;border-radius:14px;padding:16px;box-shadow:0 4px 16px rgba(17,18,22,.035);height:100%;box-sizing:border-box}.v11-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:13px}.v11-card-head p{margin:0 0 3px;font-size:9px;font-weight:850;letter-spacing:.13em;color:#8a93a3}.v11-card-head h3{margin:0;font-size:16px;color:#111216}.v11-card-head button{border:0;background:transparent;color:#111216;font-size:10px;font-weight:800;cursor:pointer}.v11-card-head button:hover{text-decoration:underline}
-#v11DashboardRoot .v11-platforms{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.v11-platforms>*{min-width:0}.v11-platform-card .mini-account,.v11-platform-card .account-mini,.v11-platform-card .v11-platform-fallback{min-height:58px;border:1px solid #e5e8ec;border-radius:10px;padding:10px;box-sizing:border-box}.v11-platform-fallback{display:grid;align-content:center;gap:4px}.v11-platform-fallback strong{font-size:11px}.v11-platform-fallback span{font-size:8px;color:#7b8390}
-#v11DashboardRoot .v11-cloned-stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.v11-cloned-stats article{min-width:0}.v11-cloned-stats button{pointer-events:none}.v11-table-wrap{overflow:auto}.v11-table-wrap table{width:100%;border-collapse:collapse}.v11-table-wrap th{font-size:8px;letter-spacing:.08em;color:#9299a4;text-align:left;padding:7px 8px;border-bottom:1px solid #edf0f2}.v11-table-wrap td{font-size:10px;color:#333842;padding:9px 8px;border-bottom:1px solid #f0f2f4}.v11-empty{padding:18px;text-align:center;color:#8b929d;font-size:10px}.v11-signal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v11-signal-grid div{background:#f7f8f9;border-radius:10px;padding:13px}.v11-signal-grid strong{display:block;font-size:22px;color:#111216}.v11-signal-grid span{font-size:8px;color:#7b8390}.v11-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.v11-actions button{border:1px solid #e1e4e8;background:#fff;border-radius:9px;padding:11px 8px;font-size:10px;font-weight:800;color:#111216;cursor:pointer}.v11-actions button:hover{border-color:#c9ced5;background:#fafafa}
-/* Platform Hub — default */
-#v11DashboardRoot .v11-layout[data-layout="platform"] .v11-platform-zone{grid-column:span 12;order:1}.v11-layout[data-layout="platform"] .v11-stats-zone{grid-column:span 12;order:2}.v11-layout[data-layout="platform"] .v11-recent-zone{grid-column:span 8;order:3}.v11-layout[data-layout="platform"] .v11-top-zone{grid-column:span 4;order:4}.v11-layout[data-layout="platform"] .v11-actions-zone{order:5}
-/* Overview First */
-#v11DashboardRoot .v11-layout[data-layout="overview"] .v11-platform-zone{order:3;grid-column:span 4}.v11-layout[data-layout="overview"] .v11-stats-zone{order:1;grid-column:span 12}.v11-layout[data-layout="overview"] .v11-recent-zone{order:2;grid-column:span 8}.v11-layout[data-layout="overview"] .v11-top-zone{order:3;grid-column:span 4}.v11-layout[data-layout="overview"] .v11-actions-zone{order:4}
-/* Focus on Performance */
-#v11DashboardRoot .v11-layout[data-layout="performance"] .v11-platform-zone{order:4;grid-column:span 5}.v11-layout[data-layout="performance"] .v11-stats-zone{order:1;grid-column:span 12}.v11-layout[data-layout="performance"] .v11-top-zone{order:2;grid-column:span 7}.v11-layout[data-layout="performance"] .v11-recent-zone{order:3;grid-column:span 7}.v11-layout[data-layout="performance"] .v11-actions-zone{order:5;grid-column:span 5}
-/* Activity First */
-#v11DashboardRoot .v11-layout[data-layout="activity"] .v11-recent-zone{order:1;grid-column:span 12}.v11-layout[data-layout="activity"] .v11-stats-zone{order:2;grid-column:span 12}.v11-layout[data-layout="activity"] .v11-platform-zone{order:3;grid-column:span 8}.v11-layout[data-layout="activity"] .v11-top-zone{order:3;grid-column:span 4}.v11-layout[data-layout="activity"] .v11-actions-zone{order:4}
-/* Executive Summary */
-#v11DashboardRoot .v11-layout[data-layout="executive"] .v11-stats-zone{order:1;grid-column:span 8}.v11-layout[data-layout="executive"] .v11-top-zone{order:1;grid-column:span 4}.v11-layout[data-layout="executive"] .v11-platform-zone{order:2;grid-column:span 6}.v11-layout[data-layout="executive"] .v11-recent-zone{order:2;grid-column:span 6}.v11-layout[data-layout="executive"] .v11-actions-zone{order:3}
-/* Existing dashboard is retained as a data source but hidden visually. */
+/* V11.0 — Tech Lab reference dashboard. Presentation-only; navigation and CRM data remain unchanged. */
+#v11DashboardRoot{display:block;width:100%;margin:0;padding:0}
+#dashboardView>#v11DashboardRoot{display:block!important}
 #dashboardView>.welcome-row,#dashboardView>.stats-grid,#dashboardView>.dashboard-grid,#dashboardView>.recent-panel{display:none!important}
-/* IMPORTANT: do not force #dashboardView to display. The main app controls page visibility. */
-@media(max-width:1050px){#v11DashboardRoot .v11-platforms{grid-template-columns:repeat(3,minmax(0,1fr))}.v11-cloned-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.v11-layout[data-layout] .v11-zone{grid-column:span 12!important}}
-@media(max-width:650px){#v11DashboardRoot .v11-dashboard-toolbar{align-items:flex-start;flex-direction:column}.v11-dashboard-toolbar label{width:100%}.v11-dashboard-toolbar select{flex:1;min-width:0}.v11-platforms{grid-template-columns:repeat(2,minmax(0,1fr))!important}.v11-cloned-stats{grid-template-columns:1fr!important}.v11-actions{grid-template-columns:repeat(2,1fr)}.v11-table-wrap th:nth-child(2),.v11-table-wrap td:nth-child(2),.v11-table-wrap th:nth-child(3),.v11-table-wrap td:nth-child(3){display:none}}
+#v11DashboardRoot .v11-reference-dashboard{display:grid;gap:18px;padding:4px 0 28px}
+
+/* Welcome hero */
+#v11DashboardRoot .v11-welcome-hero{min-height:150px;border-radius:24px;padding:28px 30px;box-sizing:border-box;display:flex;align-items:center;background:linear-gradient(110deg,#ed1017 0%,#f21b22 48%,#ff7379 100%);box-shadow:0 12px 28px rgba(239,17,27,.12);color:#fff}
+#v11DashboardRoot .v11-welcome-hero h2{margin:0;font-size:31px;line-height:1.12;letter-spacing:-.035em;font-weight:850;color:#fff;white-space:nowrap}
+#v11DashboardRoot .v11-welcome-hero p{margin:14px 0 0;font-size:15px;line-height:1;font-weight:800;letter-spacing:.02em;color:#fff;text-transform:uppercase}
+
+/* Quick access */
+#v11DashboardRoot .v11-quick-access{border:1px solid #f1c6c9;border-left:8px solid #ed1017;border-radius:22px;background:linear-gradient(180deg,#fffafa 0%,#fff 100%);padding:25px 25px 22px;box-sizing:border-box;box-shadow:0 6px 20px rgba(17,18,22,.035)}
+#v11DashboardRoot .v11-quick-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:0 0 18px}
+#v11DashboardRoot .v11-quick-head h3{margin:0;font-size:22px;line-height:1.1;color:#111b31;font-weight:850;letter-spacing:-.02em}
+#v11DashboardRoot .v11-quick-head h3 span{font-size:20px;margin-right:7px}
+#v11DashboardRoot .v11-quick-head p{margin:7px 0 0;color:#64748b;font-size:13px}
+#v11DashboardRoot .v11-shortcut-count{background:#ffe2e4;color:#dc111a;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:850;white-space:nowrap}
+#v11DashboardRoot .v11-quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#v11DashboardRoot .v11-quick-item{min-width:0;min-height:96px;display:grid;grid-template-columns:46px minmax(0,1fr) 18px;align-items:center;gap:12px;text-align:left;padding:15px 14px;border:1px solid #f2cdd0;border-radius:17px;background:#fff;cursor:pointer;color:#111b31;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+#v11DashboardRoot .v11-quick-item:hover{transform:translateY(-1px);border-color:#ef9da2;box-shadow:0 7px 18px rgba(17,18,22,.07)}
+#v11DashboardRoot .v11-quick-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#fff1f2;color:#d90e17}
+#v11DashboardRoot .v11-quick-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#v11DashboardRoot .v11-quick-copy{min-width:0;display:grid;gap:4px}
+#v11DashboardRoot .v11-quick-copy strong{font-size:14px;line-height:1.15;font-weight:850;color:#24334d}
+#v11DashboardRoot .v11-quick-copy small{font-size:10px;line-height:1.25;color:#728096}
+#v11DashboardRoot .v11-quick-star{font-size:17px;color:#e20d16;justify-self:end}
+
+/* Cards and statistics */
+#v11DashboardRoot .v11-card{background:#fff;border:1px solid #e3e7ed;border-radius:18px;padding:18px;box-sizing:border-box;box-shadow:0 5px 18px rgba(17,18,22,.035);min-width:0}
+#v11DashboardRoot .v11-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+#v11DashboardRoot .v11-section-head p{margin:0 0 4px;font-size:9px;font-weight:850;letter-spacing:.13em;color:#8a93a3}
+#v11DashboardRoot .v11-section-head h3{margin:0;font-size:18px;line-height:1.15;color:#111b31}
+#v11DashboardRoot .v11-section-head button{border:0;background:transparent;color:#dc111a;font-size:11px;font-weight:850;cursor:pointer;padding:3px 0}
+#v11DashboardRoot .v11-cloned-stats{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;background:transparent!important;margin:0!important;padding:0!important}
+#v11DashboardRoot .v11-cloned-stats article{min-width:0;background:#fff;border:1px solid #e7ebef;border-radius:14px;padding:14px;box-sizing:border-box;box-shadow:none!important}
+#v11DashboardRoot .v11-cloned-stats article>button{pointer-events:none}
+#v11DashboardRoot .v11-cloned-stats .stat-icon{width:34px;height:34px;border-radius:10px}
+#v11DashboardRoot .v11-cloned-stats strong{font-size:23px}
+#v11DashboardRoot .v11-cloned-stats p{font-size:10px}
+
+/* Main dashboard grid */
+#v11DashboardRoot .v11-dashboard-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.85fr);gap:18px;align-items:start}
+#v11DashboardRoot .v11-platforms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#v11DashboardRoot .v11-platforms>*{min-width:0}
+#v11DashboardRoot .v11-platform-card .mini-account,#v11DashboardRoot .v11-platform-card .account-mini,#v11DashboardRoot .v11-platform-card .v11-platform-fallback{min-height:70px;border:1px solid #e7ebef;border-radius:12px;padding:10px;box-sizing:border-box}
+#v11DashboardRoot .v11-platform-fallback{display:grid;align-content:center;gap:4px}.v11-platform-fallback strong{font-size:11px}.v11-platform-fallback span{font-size:8px;color:#7b8390}
+
+/* Recent posts table */
+#v11DashboardRoot .v11-table-wrap{overflow:auto}
+#v11DashboardRoot .v11-table-wrap table{width:100%;border-collapse:collapse;min-width:560px}
+#v11DashboardRoot .v11-table-wrap th{font-size:8px;letter-spacing:.08em;color:#9299a4;text-align:left;padding:7px 8px;border-bottom:1px solid #edf0f2}
+#v11DashboardRoot .v11-table-wrap td{font-size:10px;color:#333842;padding:10px 8px;border-bottom:1px solid #f0f2f4;vertical-align:middle}
+#v11DashboardRoot .v11-table-wrap td:first-child{font-weight:750}
+#v11DashboardRoot .v11-empty{padding:18px;text-align:center;color:#8b929d;font-size:10px}
+
+@media(max-width:1100px){
+  #v11DashboardRoot .v11-welcome-hero h2{font-size:27px}
+  #v11DashboardRoot .v11-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #v11DashboardRoot .v11-dashboard-grid{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  #v11DashboardRoot .v11-welcome-hero{min-height:126px;padding:22px;border-radius:18px}
+  #v11DashboardRoot .v11-welcome-hero h2{font-size:21px;white-space:normal}
+  #v11DashboardRoot .v11-welcome-hero p{font-size:11px;margin-top:10px}
+  #v11DashboardRoot .v11-quick-access{padding:18px 16px;border-left-width:5px;border-radius:18px}
+  #v11DashboardRoot .v11-quick-head{align-items:flex-start}
+  #v11DashboardRoot .v11-quick-head h3{font-size:19px}
+  #v11DashboardRoot .v11-shortcut-count{font-size:9px;padding:6px 8px}
+  #v11DashboardRoot .v11-quick-grid{grid-template-columns:1fr;gap:9px}
+  #v11DashboardRoot .v11-quick-item{min-height:72px}
+  #v11DashboardRoot .v11-cloned-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  #v11DashboardRoot .v11-platforms{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:450px){
+  #v11DashboardRoot .v11-cloned-stats{grid-template-columns:1fr!important}
+  #v11DashboardRoot .v11-platforms{grid-template-columns:1fr}
+}
