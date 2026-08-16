@@ -1,28 +1,40 @@
 {
   "product": "Tech Social CRM",
   "current": {
-    "version": "5.0",
+    "version": "6.0",
     "date": "16 August 2026",
-    "summary": "Version 5 marketing foundation and supporting CRM workflow updates.",
+    "summary": "Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.",
     "changes": [
-      "Started Version 5 from the stable 4.3 baseline with protected rollback checkpoints",
-      "Content Calendar: month, week and day planning with platform and workflow filtering",
-      "Content / Media Library: photos, videos, graphics, logos, folders, search and post attachments",
-      "Content Approval: Idea → Draft → Review → Approved → Scheduled → Published workflow",
-      "Content Ideas: idea bank, priorities and conversion into posts",
-      "Google Review Management: review-request queue, status tracking and review-request export workflow",
-      "Social Enquiries / Leads: source tracking and lead-status workflow",
-      "Temporary repair handoff: repair leads can be exported as a Tech Lab CRM import CSV",
-      "Temporary repair email handoff prepared for chris@techfixlab.co.uk with Sales@techfixlab.co.uk copied",
-      "Customer Segments: Repair, Laptop, Gaming, Phone and Other filtering",
-      "Campaign Attribution: campaign → posts → enquiries → customers → attributed revenue reporting",
-      "Monthly Marketing Reports: posts, enquiries, customers, attributed revenue, engagements and conversion rate",
-      "Follow-up Campaigns roadmap retained for the next V5 update",
-      "Meta/Facebook/Instagram publishing intentionally deferred until Monday as requested",
-      "Version information is centrally managed through this manifest and refreshed automatically by the Versions page"
+      "Integrated shared Social Leads and Enquiries into the live CRM with lead status tracking",
+      "Integrated customer segmentation with Repair, Laptop, Gaming, Phone and Refurbished Device groups",
+      "Integrated Google Review Management with request queue and customer email workflow",
+      "Integrated temporary repair-lead export and email handoff to chris@techfixlab.co.uk with Sales@techfixlab.co.uk copied",
+      "Integrated Campaign Attribution into the live Campaigns screen",
+      "Integrated Monthly Marketing Reporting into Analytics",
+      "Integrated Follow-up Campaigns and lead follow-up tracking",
+      "Added central Version 6.0 manifest refresh across the Versions page, Settings badge, sidebar badge and footer",
+      "Created a protected pre-integration backup checkpoint before the live integration pass",
+      "Meta/Facebook/Instagram publishing remains intentionally deferred until Monday"
     ]
   },
   "history": [
+    {
+      "version": "6.0",
+      "date": "16 August 2026",
+      "summary": "Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.",
+      "changes": [
+        "Integrated Social Leads and Enquiries",
+        "Integrated customer segmentation",
+        "Integrated Google Review Management",
+        "Integrated temporary repair-lead CSV and email handoff",
+        "Integrated Campaign Attribution",
+        "Integrated Monthly Marketing Reporting",
+        "Integrated Follow-up Campaigns",
+        "Central Version 6.0 manifest refresh",
+        "Protected pre-integration backup checkpoint",
+        "Meta/Facebook/Instagram publishing intentionally deferred until Monday"
+      ]
+    },
     {
       "version": "5.0",
       "date": "16 August 2026",
