@@ -1,72 +1,48 @@
 {
   "product": "Tech Social CRM",
   "current": {
-    "version": "6.0",
+    "version": "6.1",
     "date": "16 August 2026",
-    "summary": "Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.",
+    "summary": "Discord webhook notification integration added without changing Meta publishing.",
     "changes": [
-      "Integrated shared Social Leads and Enquiries into the live CRM with lead status tracking",
-      "Integrated customer segmentation with Repair, Laptop, Gaming, Phone and Refurbished Device groups",
-      "Integrated Google Review Management with request queue and customer email workflow",
-      "Integrated temporary repair-lead export and email handoff to chris@techfixlab.co.uk with Sales@techfixlab.co.uk copied",
-      "Integrated Campaign Attribution into the live Campaigns screen",
-      "Integrated Monthly Marketing Reporting into Analytics",
-      "Integrated Follow-up Campaigns and lead follow-up tracking",
-      "Added central Version 6.0 manifest refresh across the Versions page, Settings badge, sidebar badge and footer",
-      "Created a protected pre-integration backup checkpoint before the live integration pass",
-      "Meta/Facebook/Instagram publishing remains intentionally deferred until Monday"
+      "Added Discord webhook connection in Settings → Integrations",
+      "Added secure local webhook storage so the Discord URL is never committed to GitHub",
+      "Added Discord test notification and disconnect controls",
+      "Added reusable CRM Discord notification helper for future lead, review, approval and campaign alerts",
+      "Meta/Facebook/Instagram publishing remains intentionally unchanged"
     ]
   },
   "history": [
     {
+      "version": "6.1",
+      "date": "16 August 2026",
+      "summary": "Discord webhook notification integration.",
+      "changes": ["Discord webhook connection settings","Local webhook storage","Test notification","Disconnect control","Reusable CRM notification helper","Meta publishing unchanged"]
+    },
+    {
       "version": "6.0",
       "date": "16 August 2026",
       "summary": "Integrated V5 marketing workflows into the live CRM and established the temporary Tech Lab CRM handoff.",
-      "changes": [
-        "Integrated Social Leads and Enquiries",
-        "Integrated customer segmentation",
-        "Integrated Google Review Management",
-        "Integrated temporary repair-lead CSV and email handoff",
-        "Integrated Campaign Attribution",
-        "Integrated Monthly Marketing Reporting",
-        "Integrated Follow-up Campaigns",
-        "Central Version 6.0 manifest refresh",
-        "Protected pre-integration backup checkpoint",
-        "Meta/Facebook/Instagram publishing intentionally deferred until Monday"
-      ]
+      "changes": ["Integrated Social Leads and Enquiries","Integrated customer segmentation","Integrated Google Review Management","Integrated temporary repair-lead CSV and email handoff","Integrated Campaign Attribution","Integrated Monthly Marketing Reporting","Integrated Follow-up Campaigns","Central Version 6.0 manifest refresh","Protected pre-integration backup checkpoint","Meta/Facebook/Instagram publishing intentionally deferred until Monday"]
     },
     {
       "version": "5.0",
       "date": "16 August 2026",
       "summary": "Version 5 marketing foundation and supporting CRM workflow updates.",
-      "changes": [
-        "Content Calendar and publishing planning",
-        "Content / Media Library",
-        "Content Approval workflow",
-        "Content Ideas",
-        "Google Review Management and review-request queue",
-        "Social Enquiries / Leads",
-        "Temporary repair-lead CSV handoff to the existing Tech Lab CRM",
-        "Temporary repair email handoff to chris@techfixlab.co.uk with Sales@techfixlab.co.uk copied",
-        "Customer Segments",
-        "Campaign Attribution",
-        "Monthly Marketing Reports",
-        "Meta/Facebook/Instagram publishing intentionally deferred until Monday",
-        "Central automatic version information refresh"
-      ]
+      "changes": ["Content Calendar and publishing planning","Content / Media Library","Content Approval workflow","Content Ideas","Google Review Management and review-request queue","Social Enquiries / Leads","Temporary repair-lead CSV handoff","Temporary repair email handoff","Customer Segments","Campaign Attribution","Monthly Marketing Reports","Meta publishing intentionally deferred","Central automatic version refresh"]
     },
-    {"version":"4.3","date":"14 August 2026","summary":"In-app update installer and stable CRM release.","changes":["Added Check for updates and Update now controls with cache clearing, service-worker refresh and colour-coded readiness status","Maintained the shared content, team and system workspace introduced through version 4"]},
-    {"version":"4.2","date":"14 August 2026","summary":"Sidebar organisation and team accountability.","changes":["Reorganised navigation into collapsible Content, Team and System groups with remembered browser state","Personalised the workspace card with the signed-in member name and role","Added combined login history and human-readable social post change records"]},
-    {"version":"4.1","date":"14 August 2026","summary":"Streamlined dashboard layout.","changes":["Removed the large dashboard hero card so summary cards and working panels appear immediately"]},
-    {"version":"4.0","date":"14 August 2026","summary":"Complete planning, collaboration and administration suite.","changes":["Added approval comments, reasons and complete decision history","Added recurring weekly and monthly draft generation","Added drag-and-drop monthly/weekly calendar and unscheduled tray","Added media folders, tags, archive and cleanup indicators","Added Content Ideas board and convert-to-post workflow","Added comprehensive activity and audit log","Added internal publishing and team analytics with CSV reports","Added administrator-controlled company defaults and branding","Added daily metadata backups and downloadable restore points","Expanded notifications for requested changes and workflow events"]},
-    {"version":"3.2","date":"14 August 2026","summary":"Persistent real-time notification centre.","changes":["Added notification bell and unread badge","Added dedicated Notification Centre","Added automatic approval, request and inbox alerts","Added due-soon and overdue post reminders","Added synchronised per-user read and unread states"]},
-    {"version":"3.1","date":"14 August 2026","summary":"Reusable post templates.","changes":["Added Post Templates library","Added reusable captions and hashtag sets","Added saved social-channel selections","Added reusable campaign assignments","Added Save as template from the post editor"]},
-    {"version":"3.0","date":"14 August 2026","summary":"Server-enforced team roles and permissions.","changes":["Added Administrator, Editor, Approver and Viewer roles","Added administrator team-member management","Added database Row Level Security by role","Added read-only Viewer experience","Added Editor content and media controls","Added Approver review and publishing workflow","Added secure approval-only database function","Added role restrictions to Meta OAuth and publishing","Added profile role display"]},
-    {"version":"2.3","date":"14 August 2026","summary":"Safe Meta OAuth and automatic publishing.","changes":["Added official Meta OAuth account connection","Added encrypted token storage through Supabase Vault","Added direct Facebook Page text and image publishing","Added direct Instagram Professional image publishing","Added per-platform publishing history and error reporting"]},
-    {"version":"2.2","date":"14 August 2026","summary":"Post management controls update.","changes":["Added explicit delete buttons to the All Posts library and post editor"]},
-    {"version":"2.1","date":"14 August 2026","summary":"Meta webhook connector foundation.","changes":["Added verified Meta webhook receiver","Added duplicate-event protection and message normalisation","Added Facebook and Instagram connection status","Added Connections settings tab"]},
-    {"version":"2.0","date":"14 August 2026","summary":"Major team collaboration and application-management release.","changes":["Added user profile settings","Added secure password changes","Added version checker and dedicated changelog tab","Added shared information-request workflow","Added content-approval requests","Added manual social inbox conversations","Added internal team notes and reply records","Added private optimised media library","Added persistent browser social-session workflow","Made login resilient when optional feature migrations are pending"]},
-    {"version":"1.5","date":"14 August 2026","summary":"Publishing workflow and personalisation update.","changes":["Personalised dashboard greeting","Fixed Tech Fix Lab website link","White sidebar redesign","Browser session readiness","Publishing-calendar improvements"]},
-    {"version":"1.0","date":"14 August 2026","summary":"Initial Tech Social CRM release.","changes":["Secure Supabase login","Shared post calendar","Campaigns and publishing queue","Official social posting launchers"]}
+    {"version":"4.3","date":"14 August 2026","summary":"In-app update installer and stable CRM release.","changes":["Added Check for updates and Update now controls","Maintained the shared content, team and system workspace"]},
+    {"version":"4.2","date":"14 August 2026","summary":"Sidebar organisation and team accountability.","changes":["Reorganised navigation into collapsible groups","Personalised the workspace card","Added login history and change records"]},
+    {"version":"4.1","date":"14 August 2026","summary":"Streamlined dashboard layout.","changes":["Removed the large dashboard hero card"]},
+    {"version":"4.0","date":"14 August 2026","summary":"Complete planning, collaboration and administration suite.","changes":["Approval history","Recurring content","Calendar improvements","Media folders and tags","Content Ideas","Audit log","Analytics","Company defaults","Backups","Notifications"]},
+    {"version":"3.2","date":"14 August 2026","summary":"Persistent real-time notification centre.","changes":["Notification bell","Notification Centre","Workflow alerts","Due and overdue reminders","Read states"]},
+    {"version":"3.1","date":"14 August 2026","summary":"Reusable post templates.","changes":["Post Templates library","Reusable captions and hashtags","Saved channels","Campaign assignments","Save as template"]},
+    {"version":"3.0","date":"14 August 2026","summary":"Server-enforced team roles and permissions.","changes":["Administrator, Editor, Approver and Viewer roles","Team management","Row Level Security","Viewer experience","Editor controls","Approver workflow","Secure approval function","Role restrictions"]},
+    {"version":"2.3","date":"14 August 2026","summary":"Safe Meta OAuth and automatic publishing.","changes":["Meta OAuth","Secure token storage","Facebook publishing","Instagram publishing","Publishing history"]},
+    {"version":"2.2","date":"14 August 2026","summary":"Post management controls update.","changes":["Delete controls"]},
+    {"version":"2.1","date":"14 August 2026","summary":"Meta webhook connector foundation.","changes":["Meta webhook receiver","Duplicate protection","Connection status","Connections settings"]},
+    {"version":"2.0","date":"14 August 2026","summary":"Major team collaboration and application-management release.","changes":["Profile settings","Password changes","Version checker","Information requests","Approval requests","Social inbox","Team notes","Media library","Browser session workflow","Login resilience"]},
+    {"version":"1.5","date":"14 August 2026","summary":"Publishing workflow and personalisation update.","changes":["Personalised greeting","Website link","Sidebar redesign","Browser session readiness","Calendar improvements"]},
+    {"version":"1.0","date":"14 August 2026","summary":"Initial Tech Social CRM release.","changes":["Secure Supabase login","Shared post calendar","Campaigns and publishing queue","Social posting launchers"]}
   ]
 }
