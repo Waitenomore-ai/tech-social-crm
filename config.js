@@ -66,6 +66,7 @@ window.TECH_SOCIAL_CONFIG = {
     if(!document.querySelector('link[data-tech-social-sidebar]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`sidebar-redesign.css?v=${Date.now()}`;link.dataset.techSocialSidebar='1';document.head.appendChild(link);}
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
+    loadScript('v9-calendar-integration.js','techSocialV9Calendar');
     loadScript('v5-media.js','techSocialV5Media');
     loadScript('v5-approval.js','techSocialV5Approval');
     loadScript('sidebar-dedupe.js','techSocialSidebarDedupe');
