@@ -55,13 +55,15 @@ window.TECH_SOCIAL_CONFIG = {
 
 (() => {
   const loadScript = (src, marker) => { if(document.querySelector(`script[data-${marker}]`)) return; const script=document.createElement('script'); script.src=`${src}?v=${Date.now()}`; script.defer=true; script.dataset[marker]='1'; document.head.appendChild(script); };
+  const loadStyle = (href, marker) => { if(document.querySelector(`link[data-${marker}]`)) return; const link=document.createElement('link'); link.rel='stylesheet'; link.href=`${href}?v=${Date.now()}`; link.dataset[marker]='1'; document.head.appendChild(link); };
   const load=()=>{
     loadScript('marketing.js','techSocialMarketing');
     if(!document.querySelector('link[data-tech-social-sidebar]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`sidebar-redesign.css?v=${Date.now()}`;link.dataset.techSocialSidebar='1';document.head.appendChild(link);}
-    if(!document.querySelector('link[data-v10-dashboard-cleanup]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`v10.4-dashboard-cleanup.css?v=${Date.now()}`;link.dataset.v10DashboardCleanup='1';document.head.appendChild(link);}
-    if(!document.querySelector('link[data-v10-dashboard-order]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`v10.5-dashboard-order.css?v=${Date.now()}`;link.dataset.v10DashboardOrder='1';document.head.appendChild(link);}
-    if(!document.querySelector('link[data-v10-dashboard-intro]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`v10.7-dashboard-intro.css?v=${Date.now()}`;link.dataset.v10DashboardIntro='1';document.head.appendChild(link);}
-    if(!document.querySelector('link[data-v10-dashboard-remove-upcoming]')){const link=document.createElement('link');link.rel='stylesheet';link.href=`v10.8-remove-upcoming.css?v=${Date.now()}`;link.dataset.v10DashboardRemoveUpcoming='1';document.head.appendChild(link);}
+    loadStyle('v10.4-dashboard-cleanup.css','v10DashboardCleanup');
+    loadStyle('v10.5-dashboard-order.css','v10DashboardOrder');
+    loadStyle('v10.7-dashboard-intro.css','v10DashboardIntro');
+    loadStyle('v10.8-remove-upcoming.css','v10DashboardRemoveUpcoming');
+    loadStyle('v11-dashboard-layouts.css','v11DashboardLayouts');
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v9-calendar-integration.js','techSocialV9Calendar');
@@ -72,6 +74,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('v5-integration.js','techSocialV5Integration');
     loadScript('lead-workflow.js','techSocialLeadWorkflow');
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
+    loadScript('v11-dashboard-layouts.js','techSocialV11DashboardLayouts');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
