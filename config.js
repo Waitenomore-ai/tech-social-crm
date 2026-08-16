@@ -111,4 +111,18 @@ window.TECH_SOCIAL_CONFIG = {
   document.head.appendChild(script);
 })();
 
-/* Force-refresh marker: 2026-08-15 Version 5.2 display synchronisation. */
+/* Load the login recovery guard after app.js has bound the normal auth flow. */
+(() => {
+  if (document.querySelector('script[data-tech-social-login-fix]')) return;
+  const load = () => {
+    if (document.querySelector('script[data-tech-social-login-fix]')) return;
+    const script = document.createElement('script');
+    script.src = `auth-login-fix.js?v=${Date.now()}`;
+    script.defer = true;
+    script.dataset.techSocialLoginFix = '1';
+    document.head.appendChild(script);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, {once:true}); else load();
+})();
+
+/* Force-refresh marker: 2026-08-16 login recovery guard. */
