@@ -64,6 +64,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadStyle('v10.7-dashboard-intro.css','v10DashboardIntro');
     loadStyle('v10.8-remove-upcoming.css','v10DashboardRemoveUpcoming');
     loadStyle('v11-dashboard-layouts.css','v11DashboardLayouts');
+    loadStyle('media-redesign.css','techSocialMediaRedesign');
     loadScript('version-manager.js','techSocialVersionManager');
     loadScript('v5-calendar.js','techSocialV5Calendar');
     loadScript('v9-calendar-integration.js','techSocialV9Calendar');
@@ -75,6 +76,7 @@ window.TECH_SOCIAL_CONFIG = {
     loadScript('lead-workflow.js','techSocialLeadWorkflow');
     loadScript('discord-webhook.js','techSocialDiscordWebhook');
     loadScript('v11-dashboard-layouts.js','techSocialV11DashboardLayouts');
+    loadScript('media-redesign.js','techSocialMediaRedesign');
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();
 })();
