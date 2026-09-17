@@ -48,6 +48,11 @@ Deno.serve(async (request) => {
   const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 
   if (request.method === "GET") {
+    if (!verifyToken) {
+      console.error("META_VERIFY_TOKEN is not configured");
+      return response({ error: "Connector is not configured" }, 503);
+    }
+
     const url = new URL(request.url);
     const mode = url.searchParams.get("hub.mode");
     const token = url.searchParams.get("hub.verify_token");
@@ -76,6 +81,10 @@ Deno.serve(async (request) => {
     payload = JSON.parse(rawBody);
   } catch {
     return response({ error: "Invalid JSON" }, 400);
+  }
+
+  if (!["page", "instagram"].includes(payload?.object)) {
+    return response({ error: "Unsupported Meta webhook object" }, 400);
   }
 
   // The secret key is server-side only and bypasses RLS for verified webhook ingestion.
