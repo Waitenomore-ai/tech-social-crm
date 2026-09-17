@@ -1,8 +1,10 @@
-# Tech Social CRM 4.0
+# Tech Social CRM 1.2.0-rc.1
 
 **Where Tech Meets Social**
 
 A secure social-media content CRM for Tech Lab.
+
+**Release status:** Release Candidate 1. Repository-side production hardening is in place; live Supabase and Meta verification remains an explicit go-live gate documented in `PRODUCTION_READINESS.md`.
 
 ## Security and team access
 
@@ -42,7 +44,9 @@ A secure social-media content CRM for Tech Lab.
 - No service-role key in the browser
 - Social-network passwords are never collected
 
-Start with **`SUPABASE_SETUP.md`**. Existing version 3.0 installations can add every version 4.0 feature by running **`supabase-v4-combined-migration.sql`** in the Supabase SQL Editor. The public Project URL and anon/publishable key remain in **`config.js`**.
+Start with **`SUPABASE_SETUP.md`**. Existing installations that still need the historical version 4 schema baseline can run **`supabase-v4-combined-migration.sql`** in the Supabase SQL Editor, followed by later migrations required by the features in use. The public Project URL and anon/publishable key remain in **`config.js`**.
+
+Before production deployment, complete **`PRODUCTION_READINESS.md`**.
 
 ## CRM features
 
@@ -56,18 +60,18 @@ Start with **`SUPABASE_SETUP.md`**. Existing version 3.0 installations can add e
 - Publishing queue ordered by date and time
 - Instagram, TikTok, Facebook, X, LinkedIn and YouTube destinations
 - Official sign-in links and shared account-ready reminders
-- One publishing action copies the caption and opens selected official composers
+- Connected Meta publishing plus official composer workflows for unsupported/unconnected platforms
 - Cloud backup export and import
 - Responsive mobile layout
 - Installable PWA with a locally bundled Supabase browser client
 
-## Important social-network limitation
+## Important social-network limitations
 
-This no-developer-account version cannot publish automatically in the background. It opens each social network's official composer for final confirmation. Social passwords are never collected or stored.
+Connected Facebook Pages and Instagram Professional accounts can publish the supported text/image formats through the approved Meta OAuth/API connector. Other networks continue to open their official composer/upload pages for final confirmation.
 
-The social inbox stores manual customer-message records and internal team notes. Version 2.1 adds the first automatic connector foundation for verified Facebook Messenger and Instagram Professional message webhooks. Other platforms still require separate approved APIs and webhook functions.
+Meta video, Reels, Stories and carousel publishing are not part of this release candidate. The Social Inbox can ingest verified Facebook/Instagram webhook messages, but sending live replies through Meta's messaging API remains a separate connector step and must follow Meta messaging-window policies.
 
-Media filenames can be kept as a reference, but browsers do not allow one website to insert the local file into another website. Select the same media again on the official publishing page.
+Media filenames can be kept as a reference, but browsers do not allow one website to insert a local file into another website. For manual-composer destinations, select the same media again on the official publishing page.
 
 ## Run locally
 
@@ -76,5 +80,12 @@ python3 -m http.server 4180 --bind 0.0.0.0
 ```
 
 Then open `http://localhost:4180`.
+
+For repository checks with Node 22+:
+
+```bash
+npm test
+npm run check
+```
 
 Until `config.js` contains valid Supabase public credentials, the app intentionally displays the one-time setup screen instead of an insecure local workspace.
