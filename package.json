@@ -1,6 +1,6 @@
 {
   "name": "tech-social",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Tech Lab's private social publishing dashboard",
   "scripts": {
