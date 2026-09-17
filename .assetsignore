@@ -42,4 +42,4 @@
 !v5-media.css
 
 !vendor/
-!vendor/**
+!vendor/supabase.js
