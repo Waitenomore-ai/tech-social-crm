@@ -51,8 +51,9 @@ Historical migration files include:
 - `supabase-v3.2-notifications-migration.sql` — persistent notifications
 - `supabase-v4-suite-migration.sql` / `supabase-v4-combined-migration.sql` — v4 collaboration/admin suite
 - `supabase-v4.2-login-log-migration.sql` — login/change logging additions
-- `supabase-v5-lead-workflow.sql` — lead workflow additions
 - `supabase-v5-marketing-migration.sql` — marketing workspace, segmentation, reviews and reporting layer
+- `supabase-v5-lead-workflow.sql` — lead assignment, follow-up, conversion and history additions
+- `supabase-v5.1-rls-hardening.sql` — required security hardening for marketing/lead role policies; run after both v5 migrations above
 
 For the marketing layer, follow **`V5_MARKETING_SETUP.md`**. For Meta connection and direct publishing, follow **`META_WEBHOOK_SETUP.md`** and **`META_PUBLISHING_SETUP.md`**.
 
@@ -124,7 +125,7 @@ On the login screen, enter the approved email and select **Forgot your password?
 
 After setup or migration work, verify at minimum:
 
-1. Administrator, Editor, Approver and Viewer permissions with separate accounts.
+1. Administrator, Editor, Approver and Viewer permissions with separate accounts. Viewer must remain read-only, including Marketing and lead-history RPC paths.
 2. Login, logout, password reset and expired-session behaviour.
 3. Media upload, deduplication, reuse and deletion/archive behaviour.
 4. Calendar scheduling, drag/drop and recurring content.
