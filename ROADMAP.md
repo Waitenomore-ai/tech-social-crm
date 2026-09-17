@@ -88,7 +88,11 @@ Until a platform has an approved API connector, its official composer remains th
 - ✅ Monthly marketing reports
 - ✅ Attributed-revenue reporting foundation
 - ✅ Marketing workspace
-- 🟡 Confirm `supabase-v5-marketing-migration.sql` has been applied to the active Supabase project
+- ✅ Static RLS audit identified Viewer write bypasses in the V5 lead workflow/RPC path
+- ✅ `supabase-v5.1-rls-hardening.sql` added to restore Viewer read-only permissions and align lead RPC writes with Administrator/Editor/Approver roles
+- ✅ `supabase-beta-security-audit.sql` added as a read-only live-policy inspection script
+- 🟡 Confirm `supabase-v5-marketing-migration.sql`, `supabase-v5-lead-workflow.sql` and `supabase-v5.1-rls-hardening.sql` have been applied to the active Supabase project
+- 🟡 Verify live RLS behaviour with separate Administrator, Editor, Approver and Viewer accounts
 - 🟡 Run end-to-end tests for lead, segment, review and reporting workflows
 - ⬜ Connect outbound follow-up sending through approved email/Meta APIs
 
@@ -107,6 +111,7 @@ Tech Lab CRM remains the source of truth for customers, repairs, stock, sales an
 These items should be cleared before calling the application production-ready:
 
 - ⬜ Confirm all required Supabase migrations are applied in the active environment
+- 🟡 Static RLS review completed for core role and V5 marketing/lead paths; live role verification still required
 - ⬜ Verify RLS policies for Administrator, Editor, Approver and Viewer with real test accounts
 - ⬜ Verify authentication, reset-password and session-expiry flows
 - ⬜ Complete supported-browser and mobile regression testing
@@ -115,7 +120,7 @@ These items should be cleared before calling the application production-ready:
 - ⬜ Verify approval, notification and activity-log integrity
 - ⬜ Verify backup creation and restore procedure
 - ⬜ Complete Meta OAuth/webhook/publishing E2E testing
-- ⬜ Confirm no server/service-role secrets are exposed to browser code or committed files
+- 🟡 Browser config checked for obvious service-role/admin secret exposure; broader live/deployment secret verification still required
 - ⬜ Add a repeatable smoke-test checklist for every release
 - ⬜ Establish a release-candidate tag/build after beta blockers pass
 
