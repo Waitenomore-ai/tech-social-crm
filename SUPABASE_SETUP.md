@@ -1,6 +1,10 @@
 # Secure login and shared database setup
 
-Tech Social CRM uses Supabase Auth, Postgres and Row Level Security. Allow about 10 minutes for this one-time setup.
+Tech Social CRM uses Supabase Auth, Postgres and Row Level Security.
+
+**Current application release:** V1.1 Beta/Test.
+
+> This document covers the core Supabase setup. The repository contains historical incremental migrations because the application evolved through several alpha generations. Existing installations should audit which migrations have already been applied before running anything again. See `ROADMAP.md` for the current beta-blocker checklist.
 
 ## 1. Create the project
 
@@ -32,21 +36,27 @@ on conflict (email) do nothing;
 
 The SQL enables Row Level Security. Signing in is not enough to read CRM records—the signed-in email must also exist in `allowed_users`.
 
-### Add the private media library
+### Migration history / existing installations
 
-After the main SQL succeeds, create another SQL Editor query and run the complete contents of `supabase-media-migration.sql`. This creates the private Storage bucket, compressed-media metadata table, post relationship, Row Level Security policies and live updates.
+The repository contains both incremental migrations and later combined migrations. **Do not blindly rerun every historical migration against an existing database.** First identify the current schema level, then apply only the required later migrations.
 
-Then run `supabase-v2-migration.sql`. This adds profile updates, team information and approval requests, shared social-inbox conversations, internal team notes and their real-time security policies.
+Historical migration files include:
 
-For Meta webhooks and publishing, run `supabase-meta-webhooks-migration.sql` and `supabase-meta-publishing-migration.sql`, then deploy the supplied Edge Functions.
+- `supabase-media-migration.sql` — private media Storage, media metadata and policies
+- `supabase-v2-migration.sql` / `supabase-complete-v2-migration.sql` — profiles, team information, requests, social inbox and notes
+- `supabase-meta-webhooks-migration.sql` — Meta webhook foundation
+- `supabase-meta-publishing-migration.sql` — Meta OAuth/publishing storage and history
+- `supabase-v3-roles-migration.sql` — Administrator, Editor, Approver and Viewer roles
+- `supabase-v3.1-templates-migration.sql` — post templates
+- `supabase-v3.2-notifications-migration.sql` — persistent notifications
+- `supabase-v4-suite-migration.sql` / `supabase-v4-combined-migration.sql` — v4 collaboration/admin suite
+- `supabase-v4.2-login-log-migration.sql` — login/change logging additions
+- `supabase-v5-lead-workflow.sql` — lead workflow additions
+- `supabase-v5-marketing-migration.sql` — marketing workspace, segmentation, reviews and reporting layer
 
-For version 3.0 roles, run `supabase-v3-roles-migration.sql`. It promotes the oldest approved user to Administrator if no administrator exists.
+For the marketing layer, follow **`V5_MARKETING_SETUP.md`**. For Meta connection and direct publishing, follow **`META_WEBHOOK_SETUP.md`** and **`META_PUBLISHING_SETUP.md`**.
 
-For version 3.1 templates, run `supabase-v3.1-templates-migration.sql` after the roles migration.
-
-For version 3.2 notifications, run `supabase-v3.2-notifications-migration.sql` after the roles migration.
-
-For the complete version 4.0 suite, run `supabase-v4-suite-migration.sql` after roles, templates and notifications.
+Before production sign-off, record which migrations are present in the active Supabase project and verify the resulting RLS policies using real test accounts for each role.
 
 ## 3. Configure email/password authentication
 
@@ -62,7 +72,7 @@ For the complete version 4.0 suite, run `supabase-v4-suite-migration.sql` after 
 1. Open the project’s **Connect** panel or **Project Settings → API**.
 2. Copy the **Project URL**.
 3. Copy the **anon** or **publishable** key.
-4. Open `config.js` and replace the two placeholders:
+4. Open `config.js` and replace the two public browser values:
 
 ```js
 window.TECH_SOCIAL_CONFIG = {
@@ -71,9 +81,15 @@ window.TECH_SOCIAL_CONFIG = {
 };
 ```
 
-The anon/publishable key is designed for browser use and is restricted by the SQL policies. **Never use or expose the service_role key.**
+The anon/publishable key is designed for browser use and is restricted by the SQL policies. **Never use or expose the service_role key, Supabase admin/secret key, Meta app secret or any other server-only credential in `config.js`, browser code, GitHub commits or chat messages.**
 
-## 5. Create team accounts
+## 5. Configure server-only Meta secrets when using direct publishing
+
+Meta OAuth, webhook handling and direct publishing use Supabase Edge Functions. Keep all server-only values in the Supabase Edge Function secret store and follow `META_PUBLISHING_SETUP.md` for the exact currently required names.
+
+The browser must only receive the public Supabase URL, public anon/publishable key and the signed-in user's normal session token.
+
+## 6. Create team accounts
 
 1. Open the CRM.
 2. Select **Create account**.
@@ -94,8 +110,8 @@ values ('newperson@yourcompany.co.uk', 'New person')
 on conflict (email) do update set display_name = excluded.display_name;
 
 -- Remove access immediately
- delete from public.allowed_users
- where email = 'person@yourcompany.co.uk';
+delete from public.allowed_users
+where email = 'person@yourcompany.co.uk';
 ```
 
 Removing an allowlist row immediately prevents that email from reading or changing shared data, even if the user still has an Auth account.
@@ -103,3 +119,18 @@ Removing an allowlist row immediately prevents that email from reading or changi
 ## Password reset
 
 On the login screen, enter the approved email and select **Forgot your password?** Supabase sends a secure reset link to the configured Site URL.
+
+## Beta/Test verification before production
+
+After setup or migration work, verify at minimum:
+
+1. Administrator, Editor, Approver and Viewer permissions with separate accounts.
+2. Login, logout, password reset and expired-session behaviour.
+3. Media upload, deduplication, reuse and deletion/archive behaviour.
+4. Calendar scheduling, drag/drop and recurring content.
+5. Approval, notifications and activity history.
+6. Backup creation and a documented restore procedure.
+7. Meta OAuth, webhook and supported publishing flows if Meta is enabled.
+8. No server-only secret is present in browser-delivered files.
+
+Track completion in `ROADMAP.md`.
