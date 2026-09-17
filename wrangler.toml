@@ -2,7 +2,7 @@ name = "social-lab"
 compatibility_date = "2026-08-14"
 
 [assets]
-directory = "./site"
+directory = "."
 not_found_handling = "single-page-application"
 
 [observability]
