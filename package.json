@@ -1,9 +1,11 @@
 {
   "name": "tech-social",
-  "version": "1.0.0",
+  "version": "1.2.0-rc.1",
   "private": true,
   "description": "Tech Lab's private social publishing dashboard",
   "scripts": {
+    "test": "node --test tests/production-readiness.test.mjs",
+    "check": "node scripts/check-runtime.mjs",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },
