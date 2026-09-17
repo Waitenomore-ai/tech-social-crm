@@ -5,14 +5,16 @@ const corsHeaders = (request: Request) => {
   const allowedOrigins = new Set([
     "https://waitenomore-ai.github.io",
     "http://localhost:3000",
+    "http://localhost:4180",
     "http://localhost:5173",
     "http://127.0.0.1:3000",
+    "http://127.0.0.1:4180",
     "http://127.0.0.1:5173",
   ]);
 
   return {
     "content-type": "application/json",
-    "access-control-allow-origin": allowedOrigins.has(origin) ? origin : "https://waitenomore-ai.github.io",
+    ...(allowedOrigins.has(origin) ? { "access-control-allow-origin": origin } : {}),
     "access-control-allow-headers": "authorization, x-client-info, apikey, content-type",
     "access-control-allow-methods": "POST, OPTIONS",
     "vary": "Origin",
@@ -21,6 +23,24 @@ const corsHeaders = (request: Request) => {
 
 const reply = (request: Request, body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: corsHeaders(request) });
+
+function safeReturnUrl(candidate: unknown, configuredReturnUrl: string) {
+  const configured = new URL(configuredReturnUrl);
+  if (typeof candidate !== "string" || !candidate) return configured.toString();
+
+  try {
+    const requested = new URL(candidate);
+    const basePath = configured.pathname.endsWith("/") ? configured.pathname : `${configured.pathname}/`;
+    const requestedPath = requested.pathname.endsWith("/") ? requested.pathname : `${requested.pathname}/`;
+
+    if (requested.origin !== configured.origin) return configured.toString();
+    if (requestedPath !== basePath && !requestedPath.startsWith(basePath)) return configured.toString();
+
+    return requested.toString();
+  } catch {
+    return configured.toString();
+  }
+}
 
 Deno.serve(async (request) => {
   // Browser clients make a CORS preflight before the authenticated POST.
@@ -54,12 +74,10 @@ Deno.serve(async (request) => {
   if (allowed.error || !allowed.data) return reply(request, { error: "This user is not approved" }, 403);
   if (allowed.data.role !== "admin") return reply(request, { error: "Administrator role is required to connect social accounts" }, 403);
 
-  let requestedReturnUrl = configuredReturnUrl;
+  let requestedReturnUrl = new URL(configuredReturnUrl).toString();
   try {
     const payload = await request.json();
-    if (payload?.returnUrl && new URL(payload.returnUrl).origin === new URL(configuredReturnUrl).origin) {
-      requestedReturnUrl = payload.returnUrl;
-    }
+    requestedReturnUrl = safeReturnUrl(payload?.returnUrl, configuredReturnUrl);
   } catch {
     // The configured return URL is used when no JSON body is sent.
   }
