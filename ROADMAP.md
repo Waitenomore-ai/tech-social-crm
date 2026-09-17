@@ -65,6 +65,14 @@ This file is the authoritative roadmap for Tech Social CRM. Historical version d
 - ✅ Instagram Professional single-image feed publishing implementation
 - ✅ Per-platform publish history and errors
 - ✅ Meta webhook connector foundation
+- ✅ OAuth return URLs restricted to the configured Tech Social CRM path
+- ✅ OAuth state is atomically consumed before token exchange to prevent callback replay
+- ✅ Local development CORS coverage includes the documented `localhost:4180` port
+- ✅ `publish-meta` now enforces that requested Meta destinations are actually selected on the stored post
+- ✅ Webhook verification now fails closed when `META_VERIFY_TOKEN` is missing
+- ✅ Webhook POST rejects unsupported Meta object types after signature validation
+- ✅ Meta setup documentation now includes required `META_CONFIG_ID`
+- 🟡 Redeploy `meta-oauth-start`, `meta-oauth-callback`, `publish-meta` and `meta-webhook` so the live Supabase functions match the hardened repository source
 - 🟡 Verify production Meta app configuration and required permissions
 - 🟡 Verify OAuth connect/reconnect flow end to end
 - 🟡 Verify Facebook publishing against the connected production Page
@@ -119,6 +127,7 @@ These items should be cleared before calling the application production-ready:
 - ⬜ Verify calendar drag/drop and recurring content generation
 - ⬜ Verify approval, notification and activity-log integrity
 - ⬜ Verify backup creation and restore procedure
+- 🟡 Meta Edge Function static security hardening completed in source; live redeploy and E2E verification remain
 - ⬜ Complete Meta OAuth/webhook/publishing E2E testing
 - 🟡 Browser config checked for obvious service-role/admin secret exposure; broader live/deployment secret verification still required
 - ⬜ Add a repeatable smoke-test checklist for every release
