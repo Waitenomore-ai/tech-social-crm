@@ -1,5 +1,23 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
+function safeReturnUrl(candidate: unknown, fallbackReturnUrl: string) {
+  const fallback = new URL(fallbackReturnUrl);
+  if (typeof candidate !== "string" || !candidate) return fallback.toString();
+
+  try {
+    const requested = new URL(candidate);
+    const basePath = fallback.pathname.endsWith("/") ? fallback.pathname : `${fallback.pathname}/`;
+    const requestedPath = requested.pathname.endsWith("/") ? requested.pathname : `${requested.pathname}/`;
+
+    if (requested.origin !== fallback.origin) return fallback.toString();
+    if (requestedPath !== basePath && !requestedPath.startsWith(basePath)) return fallback.toString();
+
+    return requested.toString();
+  } catch {
+    return fallback.toString();
+  }
+}
+
 function redirectWith(url: string, key: string, value: string) {
   const target = new URL(url);
   target.searchParams.set(key, value);
@@ -21,13 +39,23 @@ Deno.serve(async (request) => {
   if (!code || !state || providerError) return redirectWith(fallbackReturnUrl, "meta_error", providerError || "Authorisation was cancelled");
 
   const admin = createClient(supabaseUrl, adminKey, { auth: { persistSession: false } });
-  const stateResult = await admin.from("social_oauth_states").select("*").eq("state", state).eq("provider", "meta").maybeSingle();
+  const consumedAt = new Date().toISOString();
+  const stateResult = await admin
+    .from("social_oauth_states")
+    .update({ used_at: consumedAt })
+    .eq("state", state)
+    .eq("provider", "meta")
+    .is("used_at", null)
+    .gt("expires_at", consumedAt)
+    .select("*")
+    .maybeSingle();
+
   const oauthState = stateResult.data;
-  if (stateResult.error || !oauthState || oauthState.used_at || new Date(oauthState.expires_at) < new Date()) {
+  if (stateResult.error || !oauthState) {
     return redirectWith(fallbackReturnUrl, "meta_error", "Authorisation state expired or was already used");
   }
 
-  const returnUrl = oauthState.return_url || fallbackReturnUrl;
+  const returnUrl = safeReturnUrl(oauthState.return_url, fallbackReturnUrl);
   const redirectUri = `${supabaseUrl}/functions/v1/meta-oauth-callback`;
   try {
     const shortParams = new URLSearchParams({ client_id: metaAppId, client_secret: metaAppSecret, redirect_uri: redirectUri, code });
@@ -82,11 +110,9 @@ Deno.serve(async (request) => {
       }
     }
 
-    await admin.from("social_oauth_states").update({ used_at: new Date().toISOString() }).eq("state", state);
     return redirectWith(returnUrl, "meta_connected", String(connected));
   } catch (error) {
     console.error("Meta OAuth callback failed", error);
-    await admin.from("social_oauth_states").update({ used_at: new Date().toISOString() }).eq("state", state);
     return redirectWith(returnUrl, "meta_error", error instanceof Error ? error.message : String(error));
   }
 });
