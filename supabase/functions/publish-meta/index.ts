@@ -1,6 +1,28 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
-const reply = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+const corsHeaders = (request: Request) => {
+  const origin = request.headers.get("origin") ?? "";
+  const allowedOrigins = new Set([
+    "https://waitenomore-ai.github.io",
+    "http://localhost:3000",
+    "http://localhost:4180",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:4180",
+    "http://127.0.0.1:5173",
+  ]);
+
+  return {
+    "content-type": "application/json",
+    ...(allowedOrigins.has(origin) ? { "access-control-allow-origin": origin } : {}),
+    "access-control-allow-headers": "authorization, x-client-info, apikey, content-type",
+    "access-control-allow-methods": "POST, OPTIONS",
+    "vary": "Origin",
+  };
+};
+
+const reply = (request: Request, body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), { status, headers: corsHeaders(request) });
 
 function captionFor(post: any) {
   const tags = String(post.hashtags || "").split(/[\s,]+/).filter(Boolean).map((tag) => `#${tag.replace(/^#+/, "")}`).join(" ");
@@ -16,31 +38,46 @@ async function graphRequest(version: string, path: string, token: string, values
 }
 
 Deno.serve(async (request) => {
-  if (request.method !== "POST") return reply({ error: "Method not allowed" }, 405);
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: corsHeaders(request) });
+  }
+  if (request.method !== "POST") return reply(request, { error: "Method not allowed" }, 405);
+
   const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
   const adminKey = Deno.env.get("TECH_SOCIAL_ADMIN_KEY") ?? Deno.env.get("SUPABASE_ADMIN_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const graphVersion = Deno.env.get("META_GRAPH_VERSION") ?? "v25.0";
-  if (!supabaseUrl || !adminKey) return reply({ error: "Publishing backend is not configured" }, 503);
+  if (!supabaseUrl || !adminKey) return reply(request, { error: "Publishing backend is not configured" }, 503);
 
   const authorization = request.headers.get("authorization") ?? "";
   const jwt = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
+  if (!jwt) return reply(request, { error: "Authentication required" }, 401);
+
   const admin = createClient(supabaseUrl, adminKey, { auth: { persistSession: false } });
   const userResult = await admin.auth.getUser(jwt);
   const user = userResult.data.user;
-  if (userResult.error || !user?.email) return reply({ error: "Authentication required" }, 401);
+  if (userResult.error || !user?.email) return reply(request, { error: "Authentication required" }, 401);
+
   const allowed = await admin.from("allowed_users").select("email,role").eq("email", user.email.toLowerCase()).maybeSingle();
-  if (!allowed.data) return reply({ error: "User is not approved" }, 403);
-  if (!["admin", "approver"].includes(allowed.data.role)) return reply({ error: "Approver role is required to publish" }, 403);
+  if (allowed.error || !allowed.data) return reply(request, { error: "User is not approved" }, 403);
+  if (!["admin", "approver"].includes(allowed.data.role)) return reply(request, { error: "Approver role is required to publish" }, 403);
 
   let input: any;
-  try { input = await request.json(); } catch { return reply({ error: "Invalid JSON" }, 400); }
-  if (!input.postId) return reply({ error: "postId is required" }, 400);
+  try { input = await request.json(); } catch { return reply(request, { error: "Invalid JSON" }, 400); }
+  if (typeof input.postId !== "string" || !input.postId.trim()) return reply(request, { error: "postId is required" }, 400);
 
   const postResult = await admin.from("posts").select("*").eq("id", input.postId).maybeSingle();
-  if (postResult.error || !postResult.data) return reply({ error: "Post not found" }, 404);
+  if (postResult.error || !postResult.data) return reply(request, { error: "Post not found" }, 404);
   const post = postResult.data;
-  const requested = Array.isArray(input.platforms) ? input.platforms.filter((value: string) => ["facebook", "instagram"].includes(value)) : (post.platforms || []).filter((value: string) => ["facebook", "instagram"].includes(value));
-  if (!requested.length) return reply({ error: "This post has no Meta destinations" }, 400);
+
+  const postMetaPlatforms = Array.isArray(post.platforms)
+    ? post.platforms.filter((value: string) => ["facebook", "instagram"].includes(value))
+    : [];
+  const requestedInput = Array.isArray(input.platforms)
+    ? input.platforms.filter((value: string) => ["facebook", "instagram"].includes(value))
+    : postMetaPlatforms;
+  const requested = [...new Set(requestedInput.filter((value: string) => postMetaPlatforms.includes(value)))];
+
+  if (!requested.length) return reply(request, { error: "This post has no selected Meta destinations" }, 400);
 
   let media: any = null;
   let mediaUrl = "";
@@ -49,13 +86,13 @@ Deno.serve(async (request) => {
     media = mediaResult.data;
     if (media) {
       const signed = await admin.storage.from("tech-social-media").createSignedUrl(media.storage_path, 60 * 60);
-      if (signed.error) return reply({ error: `Could not prepare media: ${signed.error.message}` }, 500);
+      if (signed.error) return reply(request, { error: `Could not prepare media: ${signed.error.message}` }, 500);
       mediaUrl = signed.data.signedUrl;
     }
   }
 
   const connectionsResult = await admin.from("social_connections").select("*").in("platform", requested).eq("status", "connected");
-  if (connectionsResult.error) return reply({ error: connectionsResult.error.message }, 500);
+  if (connectionsResult.error) return reply(request, { error: connectionsResult.error.message }, 500);
   const results: any[] = [];
   const caption = captionFor(post);
 
@@ -98,5 +135,5 @@ Deno.serve(async (request) => {
     await admin.from("posts").update({ status: "published", updated_at: new Date().toISOString(), updated_by: user.id }).eq("id", post.id);
   }
 
-  return reply({ success: allSucceeded, complete: allSucceeded && allPostPlatformsWereHandled, results }, allSucceeded ? 200 : 207);
+  return reply(request, { success: allSucceeded, complete: allSucceeded && allPostPlatformsWereHandled, results }, allSucceeded ? 200 : 207);
 });
